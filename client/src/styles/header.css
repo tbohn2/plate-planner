@@ -1,0 +1,15 @@
+header {
+    height: 15vh;
+}
+
+.logoContainer1 {
+    overflow: hidden;
+    width: 400px;
+    height: 15vh;
+}
+
+.logo1 {
+    scale: 4;
+    height: 15vh;
+    object-position: center;
+}
