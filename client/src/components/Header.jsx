@@ -27,10 +27,14 @@ const Header = () => {
                 )
                 :
                 (
-                    <header className='d-flex border border-dark'>
-                        <div className='border border-dark logoContainer1 d-flex justify-content-center align-items-center'>
-                            <img src={logo1} alt='logo1' className='logo1' />
-                        </div>
+                    <header className='d-flex justify-content-between border-bottom border-dark'>
+                        <img src={logo1} alt='logo1' className='ms-5' />
+                        <nav className='d-flex align-items-center justify-content-evenly col-6'>
+                            <Link className='text-decoration-none navBtn' to='/myRecipes'>My Recipes</Link>
+                            <Link className='text-decoration-none navBtn' to='/list'>My List</Link>
+                            <Link className='text-decoration-none navBtn' to='/browse'>Browse Recipes</Link>
+                            <Link className='text-decoration-none loginBtn' to='/login'>Login</Link>
+                        </nav>
                     </header>
                 )
             }

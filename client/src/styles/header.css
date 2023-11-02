@@ -1,15 +1,39 @@
 header {
     height: 15vh;
+    font-size: 32px;
 }
 
-.logoContainer1 {
-    overflow: hidden;
-    width: 400px;
-    height: 15vh;
+.navBtn {
+    color: black;
+    border-radius: 7px;
 }
 
-.logo1 {
-    scale: 4;
-    height: 15vh;
-    object-position: center;
+.navBtn:hover {
+    color: white;
+    background-color: var(--orange);
+}
+
+.navBtn,
+.navBtn:hover {
+    transition: color 0.2s ease-in-out;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.loginBtn {
+    color: white;
+    background-color: var(--orange);
+    border-radius: 7px;
+    text-align: center;
+    width: 115px;
+}
+
+.loginBtn:hover {
+    color: white;
+    background-color: var(--orange);
+}
+
+.loginBtn,
+.loginBtn:hover {
+    transition: color 0.2s ease-in-out;
+    transition: background-color 0.2s ease-in-out;
 }
