@@ -21,7 +21,8 @@ const fetchRandomMeal = async () => {
 const fetchMealByName = async (name, category) => {
     if (name && category) {
         try {
-            const response = await fetch(`${apiUrl}search.php?s=${name}&filter.php?c=${category}`);
+            const url = `${apiUrl}search.php?s=${name}&filter.php?c=${category}`;
+            const response = await fetch(url);
             const data = await response.json();
             console.log(data);
             if (response.status !== 200) {
@@ -34,7 +35,8 @@ const fetchMealByName = async (name, category) => {
     }
     if (name && !category) {
         try {
-            const response = await fetch(`${apiUrl}search.php?s=${name}`);
+            const url = `${apiUrl}search.php?s=${name}`
+            const response = await fetch(url);
             const data = await response.json();
             console.log(data);
             if (response.status !== 200) {
@@ -47,3 +49,5 @@ const fetchMealByName = async (name, category) => {
     }
 
 };
+
+module.exports = { fetchRandomMeal, fetchMealByName };
