@@ -22,6 +22,11 @@ const typeDefs = gql`
         name: String
         quantity: Int
     }
+    
+    input IngredientInput {
+        name: String
+        quantity: Int
+    }
 
     type Auth {
         token: ID!
@@ -38,9 +43,9 @@ const typeDefs = gql`
     type Mutation {
         addUser(name: String!, email: String!, password: String!): Auth
         login(email: String!, password: String!): Auth
-        updateUserList(userId: ID!, shoppingList: [Ingredient]): User
+        updateUserList(userId: ID!, shoppingList: [IngredientInput]): User
         deleteUser(userId: ID!): User
-        createRecipe(name: String!, img: String, ingredients: [Ingredient], URL: String, custom: Boolean): Recipe
+        createRecipe(name: String!, img: String, ingredients: [IngredientInput], URL: String, custom: Boolean): Recipe
         saveRecipeToUser(userId: ID!, recipeId: ID!): User
         addIngredientToRecipe(recipeId: ID!, name: String!, quantity: Int!): Recipe
         removeIngredient(recipeId: ID!, name: String!): Recipe
