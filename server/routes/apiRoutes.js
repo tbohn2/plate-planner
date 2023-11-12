@@ -1,5 +1,5 @@
 const express = require('express');
-const { fetchRandomMeal, fetchMealByName } = require('./routes/mealdb');
+const { fetchRandomMeal, fetchMealByName } = require('./mealdb');
 const router = express.Router();
 
 router.get('/api/random', async (req, res) => {
