@@ -7,7 +7,7 @@ const resolvers = {
             return User.find();
         },
         user: async (parent, { username }) => {
-            return User.findOne({ username });
+            return User.findOne({ username }).populate('savedRecipes');
         },
         recipes: async () => {
             return Recipe.find();
@@ -37,5 +37,37 @@ const resolvers = {
         updateUserList: async (parent, { userId, shoppingList }) => {
             return User.findOneAndUpdate({ _id: userId }, { shoppingList }, { new: true });
         },
+        deleteUser: async (parent, { userId }) => {
+            return User.findOneAndDelete({ _id: userId });
+        },
+        createRecipe: async (parent, { name, img, ingredients, URL, custom }) => {
+            return Recipe.create({ name, img, ingredients, URL, custom });
+        },
+        saveRecipeToUser: async (parent, { userId, recipeId }) => {
+            return User.findOneAndUpdate(
+                { _id: userId },
+                { $addToSet: { savedRecipes: recipeId } },
+                { new: true }
+            );
+        },
+        addIngredientToRecipe: async (parent, { recipeId, name, quantity }) => {
+            return Recipe.findOneAndUpdate(
+                { _id: recipeId },
+                { $addToSet: { ingredients: { name, quantity } } },
+                { new: true }
+            );
+        },
+        removeIngredient: async (parent, { recipeId, name }) => {
+            return Recipe.findOneAndUpdate(
+                { _id: recipeId },
+                { $pull: { ingredients: { name } } },
+                { new: true }
+            );
+        },
+        deleteRecipe: async (parent, { recipeId }) => {
+            return Recipe.findOneAndDelete({ _id: recipeId });
+        }
     }
 };
+
+module.exports = resolvers;
