@@ -48,7 +48,7 @@ const resolvers = {
                 { _id: userId },
                 { $addToSet: { savedRecipes: recipeId } },
                 { new: true }
-            );
+            ).populate('savedRecipes');
         },
         addIngredientToRecipe: async (parent, { recipeId, name, quantity }) => {
             return Recipe.findOneAndUpdate(
