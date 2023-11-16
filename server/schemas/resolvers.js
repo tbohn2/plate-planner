@@ -6,8 +6,8 @@ const resolvers = {
         users: async () => {
             return User.find().populate('savedRecipes');
         },
-        user: async (parent, { username }) => {
-            return User.findOne({ username }).populate('savedRecipes');
+        user: async (parent, { _id }) => {
+            return User.findById({ _id }).populate('savedRecipes');
         },
         recipes: async () => {
             return Recipe.find();
