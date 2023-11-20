@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { Home } from './pages';
+import { Home, Login } from './pages';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import './styles/root.css'
@@ -12,6 +12,7 @@ function App() {
         <div>
           <Routes>
             <Route exact path='/' element={<Home />} />
+            <Route exact path='/login' element={<Login />} />
           </Routes>
         </div>
         <div>
