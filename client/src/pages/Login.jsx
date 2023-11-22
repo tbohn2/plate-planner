@@ -38,7 +38,7 @@ const Login = () => {
         <div className=''>
             <div className=''>
                 <h2 className=''>Login</h2>
-                <form className=''>
+                <form onSubmit={loginUser} className=''>
                     <input
                         className=''
                         placeholder='Email'
@@ -55,7 +55,7 @@ const Login = () => {
                         required
                     />
                     <div className=''>
-                        <button className='' type='submit' onSubmit={loginUser}>
+                        <button className='' type='submit'>
                             Log In
                         </button>
                     </div>
