@@ -5,11 +5,18 @@ import Auth from '../utils/auth';
 
 const Login = () => {
     const [formState, setFormState] = useState({
+        name: '',
         email: '',
         password: '',
     });
 
-    const handleChange = (event) => {
+    const [signingUp, setSigningUp] = useState(false);
+
+    const toggleSignup = () => {
+        setSigningUp(!signingUp);
+    };
+
+    const updateForm = (event) => {
         const { name, value } = event.target;
         setFormState({
             ...formState,
@@ -20,11 +27,11 @@ const Login = () => {
     const [addUser] = useMutation(ADD_USER);
     const [login] = useMutation(LOGIN_USER);
 
-    // Page keeps refreshing when I click the login button
     const loginUser = async (event) => {
         event.preventDefault();
         try {
             const { email, password } = formState;
+            console.log(email, password);
             const { data } = await login({
                 variables: { email, password },
             });
@@ -34,33 +41,88 @@ const Login = () => {
         }
     };
 
+    const addNewUser = async (event) => {
+        event.preventDefault();
+        try {
+            const { name, email, password } = formState;
+            const { data } = await addUser({
+                variables: { name, email, password },
+            });
+            console.log(data);
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
     return (
         <div className=''>
-            <div className=''>
-                <h2 className=''>Login</h2>
-                <form onSubmit={loginUser} className=''>
-                    <input
-                        className=''
-                        placeholder='Email'
-                        name='email'
-                        onChange={handleChange}
-                        required
-                    />
-                    <input
-                        className=''
-                        type='password'
-                        placeholder='Password'
-                        name='password'
-                        onChange={handleChange}
-                        required
-                    />
-                    <div className=''>
-                        <button className='' type='submit'>
-                            Log In
-                        </button>
-                    </div>
-                </form>
-            </div>
+            {signingUp ? (
+                <div className=''>
+                    <h2 className=''>Create Account</h2>
+                    <form onSubmit={addNewUser} className=''>
+                        <input
+                            className=''
+                            placeholder='First Name'
+                            name='name'
+                            onChange={updateForm}
+                            required
+                        />
+                        <input
+                            className=''
+                            placeholder='Email'
+                            name='email'
+                            onChange={updateForm}
+                            required
+                        />
+                        <input
+                            className=''
+                            type='password'
+                            placeholder='Password'
+                            name='password'
+                            onChange={updateForm}
+                            required
+                        />
+                        <div className=''>
+                            <button className='' type='submit'>
+                                Create Account
+                            </button>
+                        </div>
+                    </form>
+                    <button className='' onClick={toggleSignup}>
+                        Already have an account?
+                    </button>
+                </div>
+            ) : (
+                <div className=''>
+                    <h2 className=''>Login</h2>
+                    <form onSubmit={loginUser} className=''>
+                        <input
+                            className=''
+                            placeholder='Email'
+                            name='email'
+                            onChange={updateForm}
+                            required
+                        />
+                        <input
+                            className=''
+                            type='password'
+                            placeholder='Password'
+                            name='password'
+                            onChange={updateForm}
+                            required
+                        />
+                        <div className=''>
+                            <button className='' type='submit'>
+                                Log In
+                            </button>
+                        </div>
+                    </form>
+                    <button className='' onClick={toggleSignup}>
+                        Click here to create an account
+                    </button>
+                </div>
+            )}
+
         </div>
     );
 };
