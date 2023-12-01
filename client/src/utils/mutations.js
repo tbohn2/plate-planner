@@ -78,22 +78,9 @@ export const SAVE_RECIPE_TO_USER = gql`
   }
 `;
 
-export const ADD_INGREDIENT_TO_RECIPE = gql`
-  mutation addIngredientToRecipe($recipeId: ID!, $name: String!, $quantity: Int!) {
-    addIngredientToRecipe(recipeId: $recipeId, name: $name, quantity: $quantity) {
-      _id
-      name
-      ingredients {
-        name
-        quantity
-      }
-    }
-  }
-`;
-
-export const REMOVE_INGREDIENT = gql`
-  mutation removeIngredient($recipeId: ID!, $name: String!) {
-    removeIngredient(recipeId: $recipeId, name: $name) {
+export const UPDATE_RECIPE = gql`
+  mutation updateRecipe($recipeId: ID!, $name: String!, $quantity: Int!) {
+    updateRecipe(recipeId: $recipeId, name: $name, quantity: $quantity) {
       _id
       name
       ingredients {
