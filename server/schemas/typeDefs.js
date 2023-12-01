@@ -47,8 +47,7 @@ const typeDefs = gql`
         deleteUser(userId: ID!): User
         createRecipe(name: String!, img: String, ingredients: [IngredientInput], URL: String, custom: Boolean): Recipe
         saveRecipeToUser(userId: ID!, recipeId: ID!): User
-        addIngredientToRecipe(recipeId: ID!, name: String!, quantity: Int!): Recipe
-        removeIngredient(recipeId: ID!, name: String!): Recipe
+        updateRecipe(recipeId: ID!, name: String, quantity: Int): Recipe
         deleteRecipe(recipeId: ID!): Recipe
     }
     `

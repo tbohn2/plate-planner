@@ -50,18 +50,8 @@ const resolvers = {
                 { new: true }
             ).populate('savedRecipes');
         },
-        addIngredientToRecipe: async (parent, { recipeId, name, quantity }) => {
-            return Recipe.findOneAndUpdate(
-                { _id: recipeId },
-                { $addToSet: { ingredients: { name, quantity } } },
-                { new: true }
-            );
-        },
-        removeIngredient: async (parent, { recipeId, name }) => {
-            return Recipe.findOneAndUpdate(
-                { _id: recipeId },
-                { $pull: { ingredients: { name } } },
-                { new: true }
+        updateRecipe: async (parent, { recipeId, name, quantity }) => {
+            return Recipe.findOneAndUpdate({ _id: recipeId }, { ingredients: { name, quantity } }, { new: true }
             );
         },
         deleteRecipe: async (parent, { recipeId }) => {
