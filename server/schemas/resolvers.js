@@ -7,6 +7,7 @@ const resolvers = {
             return User.find().populate('savedRecipes');
         },
         user: async (parent, { _id }) => {
+            console.log(_id);
             return User.findById({ _id }).populate('savedRecipes');
         },
         recipes: async () => {

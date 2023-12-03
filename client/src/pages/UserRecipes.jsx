@@ -13,10 +13,12 @@ const UserRecipes = () => {
     const id = user.data._id;
 
     const { loading, error, data } = useQuery(QUERY_SAVED_RECIPES, {
-        variables: { userId: id },
+        variables: { id: "655d5165a31127980ac207bd" },
     });
 
-    const recipes = data.savedRecipes || [];
+    console.log(data);
+
+    // const recipes = data.savedRecipes || [];
 
     if (loading) {
         return <div>Loading...</div>;
@@ -26,9 +28,9 @@ const UserRecipes = () => {
         return <div>Error! {error.message}</div>;
     }
 
-    const [createRecipe] = useMutation(CREATE_RECIPE);
-    const [updateRecipe] = useMutation(UPDATE_RECIPE);
-    const [saveRecipeToUser] = useMutation(SAVE_RECIPE_TO_USER);
+    // const [createRecipe] = useMutation(CREATE_RECIPE);
+    // const [updateRecipe] = useMutation(UPDATE_RECIPE);
+    // const [saveRecipeToUser] = useMutation(SAVE_RECIPE_TO_USER);
 
 
 
