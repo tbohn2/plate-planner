@@ -35,7 +35,7 @@ const Login = () => {
             const { data } = await login({
                 variables: { email, password },
             });
-            console.log(data);
+            Auth.login(data.login.token);
         } catch (err) {
             console.error(err);
         }
@@ -48,7 +48,7 @@ const Login = () => {
             const { data } = await addUser({
                 variables: { name, email, password },
             });
-            console.log(data);
+            Auth.login(data.addUser.token);
         } catch (err) {
             console.error(err);
         }
