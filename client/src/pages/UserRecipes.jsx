@@ -13,7 +13,7 @@ const UserRecipes = () => {
     const id = user.data._id;
 
     const [newRecipe, setNewRecipe] = useState({
-        title: '',
+        name: '',
         ingredients: '',
         instructions: '',
     });
@@ -80,11 +80,11 @@ const UserRecipes = () => {
                         </div>
                         <div className="modal-body">
                             <form onSubmit={handleNewRecipe}>
-                                <p>Recipe Title</p>
+                                <p>Recipe Name</p>
                                 <input
                                     type="text"
-                                    name="title"
-                                    value={newRecipe.title}
+                                    name="name"
+                                    value={newRecipe.name}
                                     onChange={handleRecipeChange}
                                 />
                                 <p>Ingredients</p>
