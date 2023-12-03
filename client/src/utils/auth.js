@@ -26,13 +26,11 @@ class AuthService {
 
     login(idToken) {
         localStorage.setItem('id_token', idToken);
-        localStorage.setItem('userId', jwtDecode(idToken).data._id);
         window.location.assign('/');
     }
 
     logout() {
         localStorage.removeItem('id_token');
-        localStorage.removeItem('userId');
         window.location.assign('/');
     }
 }
