@@ -12,11 +12,25 @@ const UserRecipes = () => {
     const user = Auth.getProfile();
     const id = user.data._id;
 
+    const [newIngredientNumber, setNewIngredientNumber] = useState(1);
+
+    const addAnotherIngredient = () => {
+        setNewIngredientNumber(newIngredientNumber + 1);
+    };
+
+    let ingredients = [];
+    for (let i = 0; i < newIngredientNumber; i++) {
+        ingredients.push({
+            name: '',
+            quantity: '',
+        });
+    };
+
     const [newRecipe, setNewRecipe] = useState({
         name: '',
-        ingredients: '',
-        instructions: '',
+        ingredients: ingredients
     });
+
 
     const { loading, error, data } = useQuery(QUERY_SAVED_RECIPES, {
         variables: { id: id },
@@ -35,12 +49,6 @@ const UserRecipes = () => {
     const customRecipes = recipes.filter((recipe) => recipe.custom);
     const savedRecipes = recipes.filter((recipe) => !recipe.custom);
 
-    // const [createRecipe] = useMutation(CREATE_RECIPE);
-    // const [updateRecipe] = useMutation(UPDATE_RECIPE);
-    // const [saveRecipeToUser] = useMutation(SAVE_RECIPE_TO_USER);
-
-
-
     const handleRecipeChange = (e) => {
         const { name, value } = e.target;
         setNewRecipe((prevState) => ({
@@ -49,10 +57,50 @@ const UserRecipes = () => {
         }));
     };
 
+    const handleIngredientChange = (e) => {
+        const { name, value, index } = e.target;
+        const list = [...newRecipe.ingredients];
+        list[index][name] = value;
+        setNewRecipe((prevState) => ({
+            ...prevState,
+            ingredients: list,
+        }));
+    }
+
     const handleNewRecipe = (e) => {
         e.preventDefault();
         console.log(newRecipe);
     };
+
+    const IngredientInput = (numberOfIngredients) => {
+        for (let i = 0; i < newIngredientNumber; i++) {
+            return (
+                <div className=''>
+                    <input
+                        index={i}
+                        type='text'
+                        name='name'
+                        placeholder='Ingredient'
+                        value={ingredient.name}
+                        onChange={(e) => handleIngredientChange(e)}
+                    />
+                    <input
+                        index={i}
+                        type='text'
+                        name='quantity'
+                        placeholder='Quantity'
+                        value={ingredient.quantity}
+                        onChange={(e) => handleIngredientChange(e, index)}
+                    />
+                </div>
+            );
+        }
+    };
+
+    // const [createRecipe] = useMutation(CREATE_RECIPE);
+    // const [updateRecipe] = useMutation(UPDATE_RECIPE);
+    // const [saveRecipeToUser] = useMutation(SAVE_RECIPE_TO_USER);
+
 
 
 
@@ -68,7 +116,7 @@ const UserRecipes = () => {
                 ))}
             </div>
             <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                Launch demo modal
+                Create New Recipe
             </button>
 
             <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -87,25 +135,12 @@ const UserRecipes = () => {
                                     value={newRecipe.name}
                                     onChange={handleRecipeChange}
                                 />
+                                {/* Add inputs for multiple ingredients; update recipe state correctly */}
                                 <p>Ingredients</p>
                                 <input
                                     type="text"
                                     name="ingredients"
                                     value={newRecipe.ingredients}
-                                    onChange={handleRecipeChange}
-                                />
-                                <p>Instructions</p>
-                                <input
-                                    type="text"
-                                    name="instructions"
-                                    value={newRecipe.instructions}
-                                    onChange={handleRecipeChange}
-                                />
-                                <p>Image</p>
-                                <input
-                                    type="text"
-                                    name="image"
-                                    value={newRecipe.image}
                                     onChange={handleRecipeChange}
                                 />
                                 <div className="modal-footer">
