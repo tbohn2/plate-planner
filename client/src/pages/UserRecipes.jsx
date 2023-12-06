@@ -12,25 +12,19 @@ const UserRecipes = () => {
     const user = Auth.getProfile();
     const id = user.data._id;
 
-    const [newIngredientNumber, setNewIngredientNumber] = useState(1);
+    const [newRecipe, setNewRecipe] = useState({ recipeName: '', });
+    const [ingredients, setIngredients] = useState([{ ingredientName: '', quantity: '' }]);
 
-    const addAnotherIngredient = () => {
-        setNewIngredientNumber(newIngredientNumber + 1);
-    };
+    // console.log(newRecipe);
+    // console.log(ingredients);
 
-    let ingredients = [];
-    for (let i = 0; i < newIngredientNumber; i++) {
-        ingredients.push({
-            name: '',
+    const increaseIngredientNumber = () => {
+        const newIngredientsArray = ingredients.push({
+            ingredientName: '',
             quantity: '',
         });
+        setIngredients(newIngredientsArray);
     };
-
-    const [newRecipe, setNewRecipe] = useState({
-        name: '',
-        ingredients: ingredients
-    });
-
 
     const { loading, error, data } = useQuery(QUERY_SAVED_RECIPES, {
         variables: { id: id },
@@ -57,14 +51,11 @@ const UserRecipes = () => {
         }));
     };
 
-    const handleIngredientChange = (e) => {
-        const { name, value, index } = e.target;
-        const list = [...newRecipe.ingredients];
+    const handleIngredientChange = (e, index) => {
+        const { name, value } = e.target;
+        const list = [...ingredients];
         list[index][name] = value;
-        setNewRecipe((prevState) => ({
-            ...prevState,
-            ingredients: list,
-        }));
+        setIngredients(list);
     }
 
     const handleNewRecipe = (e) => {
@@ -72,24 +63,26 @@ const UserRecipes = () => {
         console.log(newRecipe);
     };
 
-    const IngredientInput = (numberOfIngredients) => {
-        for (let i = 0; i < newIngredientNumber; i++) {
+    // Verify that state updates correctly after adding new ingredient
+    const IngredientInput = () => {
+        for (let i = 0; i < ingredients.length; i++) {
+            const index = i;
             return (
                 <div className=''>
                     <input
                         index={i}
                         type='text'
-                        name='name'
+                        name='ingredientName'
                         placeholder='Ingredient'
-                        value={ingredient.name}
-                        onChange={(e) => handleIngredientChange(e)}
+                        value={ingredients[i].ingredientName}
+                        onChange={(e) => handleIngredientChange(e, index)}
                     />
                     <input
                         index={i}
                         type='text'
                         name='quantity'
                         placeholder='Quantity'
-                        value={ingredient.quantity}
+                        value={ingredients[i].quantity}
                         onChange={(e) => handleIngredientChange(e, index)}
                     />
                 </div>
@@ -131,18 +124,13 @@ const UserRecipes = () => {
                                 <p>Recipe Name</p>
                                 <input
                                     type="text"
-                                    name="name"
-                                    value={newRecipe.name}
+                                    name="recipeName"
+                                    value={newRecipe.recipeName}
                                     onChange={handleRecipeChange}
                                 />
-                                {/* Add inputs for multiple ingredients; update recipe state correctly */}
+                                {IngredientInput()}
+                                <button onClick={increaseIngredientNumber}>Add Another Ingredient</button>
                                 <p>Ingredients</p>
-                                <input
-                                    type="text"
-                                    name="ingredients"
-                                    value={newRecipe.ingredients}
-                                    onChange={handleRecipeChange}
-                                />
                                 <div className="modal-footer">
                                     <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                     <button type="submit" className="btn btn-primary">Save Recipe</button>
