@@ -18,9 +18,7 @@ const UserRecipes = () => {
     // console.log(newRecipe);
     console.log(ingredients);
 
-    const increaseIngredientNumber = () => {
-        setIngredients(prevIngredients => [...prevIngredients, { ingredientName: '', quantity: '' }]);
-    };
+
 
     const { loading, error, data } = useQuery(QUERY_SAVED_RECIPES, {
         variables: { id: id },
@@ -54,11 +52,22 @@ const UserRecipes = () => {
         setIngredients(list);
     }
 
+    const increaseIngredientNumber = () => {
+        setIngredients(prevIngredients => [...prevIngredients, { ingredientName: '', quantity: '' }]);
+    };
+
+    const removeIngredient = (index) => {
+        const list = [...ingredients];
+        list.splice(index, 1);
+        setIngredients(list);
+    };
+
     const handleNewRecipe = (e) => {
         e.preventDefault();
         console.log(newRecipe);
     };
 
+    // Add delete ingredient button
     const IngredientInput = () => {
         return (
             <div className=''>
@@ -78,6 +87,7 @@ const UserRecipes = () => {
                             value={ingredient.quantity}
                             onChange={(e) => handleIngredientChange(e, index)}
                         />
+                        <button type='button' onClick={() => removeIngredient(index)}>Remove Ingredient</button>
                     </div>
                 ))}
             </div>
@@ -87,6 +97,7 @@ const UserRecipes = () => {
     // const [createRecipe] = useMutation(CREATE_RECIPE);
     // const [updateRecipe] = useMutation(UPDATE_RECIPE);
     // const [saveRecipeToUser] = useMutation(SAVE_RECIPE_TO_USER);
+
 
 
 
