@@ -59,31 +59,29 @@ const UserRecipes = () => {
         console.log(newRecipe);
     };
 
-    // Verify that state updates correctly after adding new ingredient
     const IngredientInput = () => {
-        for (let i = 0; i < ingredients.length; i++) {
-            const index = i;
-            return (
-                <div className=''>
-                    <input
-                        index={i}
-                        type='text'
-                        name='ingredientName'
-                        placeholder='Ingredient'
-                        value={ingredients[i].ingredientName}
-                        onChange={(e) => handleIngredientChange(e, index)}
-                    />
-                    <input
-                        index={i}
-                        type='text'
-                        name='quantity'
-                        placeholder='Quantity'
-                        value={ingredients[i].quantity}
-                        onChange={(e) => handleIngredientChange(e, index)}
-                    />
-                </div>
-            );
-        }
+        return (
+            <div className=''>
+                {ingredients.map((ingredient, index) => (
+                    <div key={index}>
+                        <input
+                            type='text'
+                            name='ingredientName'
+                            placeholder='Ingredient'
+                            value={ingredient.ingredientName}
+                            onChange={(e) => handleIngredientChange(e, index)}
+                        />
+                        <input
+                            type='text'
+                            name='quantity'
+                            placeholder='Quantity'
+                            value={ingredient.quantity}
+                            onChange={(e) => handleIngredientChange(e, index)}
+                        />
+                    </div>
+                ))}
+            </div>
+        );
     };
 
     // const [createRecipe] = useMutation(CREATE_RECIPE);
@@ -125,7 +123,7 @@ const UserRecipes = () => {
                                     onChange={handleRecipeChange}
                                 />
                                 {IngredientInput()}
-                                <button onClick={increaseIngredientNumber}>Add Another Ingredient</button>
+                                <button type='button' onClick={increaseIngredientNumber}>Add Another Ingredient</button>
                                 <p>Ingredients</p>
                                 <div className="modal-footer">
                                     <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
