@@ -16,14 +16,10 @@ const UserRecipes = () => {
     const [ingredients, setIngredients] = useState([{ ingredientName: '', quantity: '' }]);
 
     // console.log(newRecipe);
-    // console.log(ingredients);
+    console.log(ingredients);
 
     const increaseIngredientNumber = () => {
-        const newIngredientsArray = ingredients.push({
-            ingredientName: '',
-            quantity: '',
-        });
-        setIngredients(newIngredientsArray);
+        setIngredients(prevIngredients => [...prevIngredients, { ingredientName: '', quantity: '' }]);
     };
 
     const { loading, error, data } = useQuery(QUERY_SAVED_RECIPES, {
