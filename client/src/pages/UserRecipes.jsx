@@ -51,7 +51,7 @@ const UserRecipes = () => {
             </button>
 
             <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                {NewRecipeForm()}
+                <NewRecipeForm />
             </div>
 
             <h1>Saved Recipes</h1>
