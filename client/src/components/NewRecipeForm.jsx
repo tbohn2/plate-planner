@@ -1,11 +1,19 @@
 import React, { useState } from "react";
 import { useMutation } from '@apollo/client';
-import { CREATE_RECIPE } from '../utils/mutations';
+import { CREATE_RECIPE, SAVE_RECIPE_TO_USER } from '../utils/mutations';
+import Auth from '../utils/auth';
 
 const NewRecipeForm = () => {
 
+    const user = Auth.getProfile();
+    const id = user.data._id;
+
+    const [createRecipe] = useMutation(CREATE_RECIPE);
+    const [saveRecipeToUser] = useMutation(SAVE_RECIPE_TO_USER);
+
     const [newRecipe, setNewRecipe] = useState({ recipeName: '', });
-    const [ingredients, setIngredients] = useState([{ ingredientName: '', quantity: '' }]);
+    const [ingredients, setIngredients] = useState([{ ingredientName: '', quantity: 0 }]);
+
 
     const handleRecipeChange = (e) => {
         const { name, value } = e.target;
@@ -18,12 +26,12 @@ const NewRecipeForm = () => {
     const handleIngredientChange = (e, index) => {
         const { name, value } = e.target;
         const list = [...ingredients];
-        list[index][name] = value;
+        list[index][name] = name === 'quantity' ? Number(value) : value;
         setIngredients(list);
     }
 
     const increaseIngredientNumber = () => {
-        setIngredients(prevIngredients => [...prevIngredients, { ingredientName: '', quantity: '' }]);
+        setIngredients(prevIngredients => [...prevIngredients, { ingredientName: '', quantity: 0 }]);
     };
 
     const removeIngredient = (index) => {
@@ -32,10 +40,29 @@ const NewRecipeForm = () => {
         setIngredients(list);
     };
 
-    const handleNewRecipe = (e) => {
+    const handleNewRecipe = async (e) => {
         e.preventDefault();
-        console.log(newRecipe);
-    };
+        console.log(newRecipe, ingredients);
+        try {
+            const { data } = await createRecipe({
+                variables: {
+                    name: newRecipe.recipeName,
+                    ingredients: ingredients,
+                },
+            });
+            console.log(data);
+            const recipeId = data.createRecipe._id;
+            console.log(recipeId);
+            await saveRecipeToUser({
+                variables: {
+                    userId: id,
+                    recipeId: recipeId,
+                },
+            });
+        } catch (err) {
+            console.error(err);
+        }
+    }
 
     return (
         <div className="modal-dialog modal-lg">
@@ -63,7 +90,7 @@ const NewRecipeForm = () => {
                                     onChange={(e) => handleIngredientChange(e, index)}
                                 />
                                 <input
-                                    type='text'
+                                    type='number'
                                     name='quantity'
                                     placeholder='Quantity'
                                     value={ingredient.quantity}
@@ -73,7 +100,6 @@ const NewRecipeForm = () => {
                             </div>
                         ))}
                         <button type='button' onClick={increaseIngredientNumber}>Add Another Ingredient</button>
-                        <label>Ingredients</label>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             <button type="submit" className="btn btn-primary">Save Recipe</button>
