@@ -4,4 +4,5 @@
 
 .myBody {
     font-family: 'Nunito Sans', sans-serif;
+    min-height: 100vh;
 }
