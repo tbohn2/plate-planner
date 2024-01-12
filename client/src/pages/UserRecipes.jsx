@@ -3,6 +3,7 @@ import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_SAVED_RECIPES } from '../utils/queries';
 import { CREATE_RECIPE, SAVE_RECIPE_TO_USER, UPDATE_RECIPE } from '../utils/mutations';
 import Auth from '../utils/auth';
+import NewRecipeForm from '../components/NewRecipeForm';
 
 const UserRecipes = () => {
     if (!Auth.loggedIn()) {
@@ -11,14 +12,6 @@ const UserRecipes = () => {
 
     const user = Auth.getProfile();
     const id = user.data._id;
-
-    const [newRecipe, setNewRecipe] = useState({ recipeName: '', });
-    const [ingredients, setIngredients] = useState([{ ingredientName: '', quantity: '' }]);
-
-    // console.log(newRecipe);
-    console.log(ingredients);
-
-
 
     const { loading, error, data } = useQuery(QUERY_SAVED_RECIPES, {
         variables: { id: id },
@@ -37,70 +30,10 @@ const UserRecipes = () => {
     const customRecipes = recipes.filter((recipe) => recipe.custom);
     const savedRecipes = recipes.filter((recipe) => !recipe.custom);
 
-    const handleRecipeChange = (e) => {
-        const { name, value } = e.target;
-        setNewRecipe((prevState) => ({
-            ...prevState,
-            [name]: value,
-        }));
-    };
-
-    const handleIngredientChange = (e, index) => {
-        const { name, value } = e.target;
-        const list = [...ingredients];
-        list[index][name] = value;
-        setIngredients(list);
-    }
-
-    const increaseIngredientNumber = () => {
-        setIngredients(prevIngredients => [...prevIngredients, { ingredientName: '', quantity: '' }]);
-    };
-
-    const removeIngredient = (index) => {
-        const list = [...ingredients];
-        list.splice(index, 1);
-        setIngredients(list);
-    };
-
-    const handleNewRecipe = (e) => {
-        e.preventDefault();
-        console.log(newRecipe);
-    };
-
-    // Add delete ingredient button
-    const IngredientInput = () => {
-        return (
-            <div className=''>
-                {ingredients.map((ingredient, index) => (
-                    <div key={index}>
-                        <input
-                            type='text'
-                            name='ingredientName'
-                            placeholder='Ingredient'
-                            value={ingredient.ingredientName}
-                            onChange={(e) => handleIngredientChange(e, index)}
-                        />
-                        <input
-                            type='text'
-                            name='quantity'
-                            placeholder='Quantity'
-                            value={ingredient.quantity}
-                            onChange={(e) => handleIngredientChange(e, index)}
-                        />
-                        <button type='button' onClick={() => removeIngredient(index)}>Remove Ingredient</button>
-                    </div>
-                ))}
-            </div>
-        );
-    };
-
+    // Save recipe to user after creating it
     // const [createRecipe] = useMutation(CREATE_RECIPE);
     // const [updateRecipe] = useMutation(UPDATE_RECIPE);
     // const [saveRecipeToUser] = useMutation(SAVE_RECIPE_TO_USER);
-
-
-
-
 
     return (
         <div className=''>
@@ -118,32 +51,7 @@ const UserRecipes = () => {
             </button>
 
             <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div className="modal-dialog">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <h1 className="modal-title fs-5" id="exampleModalLabel">Create New Recipe</h1>
-                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div className="modal-body">
-                            <form onSubmit={handleNewRecipe}>
-                                <p>Recipe Name</p>
-                                <input
-                                    type="text"
-                                    name="recipeName"
-                                    value={newRecipe.recipeName}
-                                    onChange={handleRecipeChange}
-                                />
-                                {IngredientInput()}
-                                <button type='button' onClick={increaseIngredientNumber}>Add Another Ingredient</button>
-                                <p>Ingredients</p>
-                                <div className="modal-footer">
-                                    <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                    <button type="submit" className="btn btn-primary">Save Recipe</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
+                {NewRecipeForm()}
             </div>
 
             <h1>Saved Recipes</h1>
