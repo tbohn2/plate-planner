@@ -1,12 +1,10 @@
 import React, { useState } from "react";
 import RecipeModal from '../components/RecipeModal';
 
-const RecipeCards = (recipes) => {
-    const recipeArray = recipes.recipes;
-
+const RecipeCards = ({ recipes }) => {
     return (
         <div className=''>
-            {recipeArray.map((recipe) => (
+            {recipes.map((recipe) => (
                 <div>
                     <div key={recipe._id} className='border' data-bs-toggle="modal" data-bs-target={`#RecipeModal-${recipe._id}`}>
                         <h3>{recipe.name}</h3>
@@ -14,7 +12,7 @@ const RecipeCards = (recipes) => {
                     </div>
 
                     <div className="modal fade" id={`RecipeModal-${recipe._id}`} tabIndex="-1" aria-labelledby={`RecipeModalLabel-${recipe._id}`} aria-hidden="true">
-                        <RecipeModal />
+                        <RecipeModal id={recipe._id} />
                     </div>
                 </div>
             ))}
