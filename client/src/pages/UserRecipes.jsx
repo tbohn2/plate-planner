@@ -4,7 +4,7 @@ import { QUERY_SAVED_RECIPES } from '../utils/queries';
 import { CREATE_RECIPE, SAVE_RECIPE_TO_USER, UPDATE_RECIPE } from '../utils/mutations';
 import Auth from '../utils/auth';
 import NewRecipeForm from '../components/NewRecipeForm';
-import RecipeModal from '../components/RecipeModal';
+import RecipeCards from '../components/RecipeCard';
 
 const UserRecipes = () => {
     if (!Auth.loggedIn()) {
@@ -31,25 +31,10 @@ const UserRecipes = () => {
     const customRecipes = recipes.filter((recipe) => recipe.custom);
     const savedRecipes = recipes.filter((recipe) => !recipe.custom);
 
-
-
     return (
         <div className=''>
             <h1>My Recipes</h1>
-            <div className=''>
-                {customRecipes.map((recipe) => (
-                    <div>
-                        <div key={recipe._id} className='border' data-bs-toggle="modal" data-bs-target={`#RecipeModal-${recipe._id}`}>
-                            <h3>{recipe.name}</h3>
-                            <p>{recipe.img}</p>
-                        </div>
-
-                        <div className="modal fade" id={`RecipeModal-${recipe._id}`} tabIndex="-1" aria-labelledby={`RecipeModalLabel-${recipe._id}`} aria-hidden="true">
-                            <RecipeModal />
-                        </div>
-                    </div>
-                ))}
-            </div>
+            <RecipeCards recipes={customRecipes} />
 
             <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#NewRecipeModal">
                 Create New Recipe
@@ -60,14 +45,7 @@ const UserRecipes = () => {
             </div>
 
             <h1>Saved Recipes</h1>
-            <div className=''>
-                {savedRecipes.map((recipe) => (
-                    <div key={recipe._id} className='border'>
-                        <h3>{recipe.name}</h3>
-                        <p>{recipe.img}</p>
-                    </div>
-                ))}
-            </div>
+            <RecipeCards recipes={savedRecipes} />
         </div>
     );
 };
