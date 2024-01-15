@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation } from '@apollo/client';
-import { QUERY_SAVED_RECIPES } from '../utils/queries';
+import { QUERY_USER } from '../utils/queries';
 import { CREATE_RECIPE, SAVE_RECIPE_TO_USER, UPDATE_RECIPE } from '../utils/mutations';
 import Auth from '../utils/auth';
 import NewRecipeForm from '../components/NewRecipeForm';
@@ -14,7 +14,7 @@ const UserRecipes = () => {
     const user = Auth.getProfile();
     const id = user.data._id;
 
-    const { loading, error, data } = useQuery(QUERY_SAVED_RECIPES, {
+    const { loading, error, data } = useQuery(QUERY_USER, {
         variables: { id: id },
     });
 

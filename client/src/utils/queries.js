@@ -1,15 +1,23 @@
 import { gql } from '@apollo/client';
 
-export const QUERY_SAVED_RECIPES = gql`
+export const QUERY_USER = gql`
   query user($id: ID!) {
     user(_id: $id) {
-      _id
       name
       savedRecipes {
         _id
         name
+        ingredients {
+          name
+          quantity
+        }
         img
+        URL
         custom
+      }
+      shoppingList {
+        name
+        quantity
       }
     }
   }
@@ -18,7 +26,6 @@ export const QUERY_SAVED_RECIPES = gql`
 export const QUERY_SHOPPING_LIST = gql`
   query user($id: ID!) {
     user(_id: $id) {
-      _id
       name
       shoppingList {
         name

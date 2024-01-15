@@ -7,7 +7,10 @@ const resolvers = {
             return User.find().populate('savedRecipes');
         },
         user: async (parent, { _id }) => {
-            return User.findById({ _id }).populate('savedRecipes');
+            return User.findById({ _id }).populate('savedRecipes').populate({
+                path: 'savedRecipes',
+                populate: { path: 'ingredients' }
+            });
         },
         recipes: async () => {
             return Recipe.find();
