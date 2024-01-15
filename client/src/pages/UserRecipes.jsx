@@ -4,7 +4,7 @@ import { QUERY_USER } from '../utils/queries';
 import { CREATE_RECIPE, SAVE_RECIPE_TO_USER, UPDATE_RECIPE } from '../utils/mutations';
 import Auth from '../utils/auth';
 import NewRecipeForm from '../components/NewRecipeForm';
-import RecipeCards from '../components/RecipeCard';
+import RecipeCard from '../components/RecipeCard';
 
 const UserRecipes = () => {
     if (!Auth.loggedIn()) {
@@ -37,7 +37,9 @@ const UserRecipes = () => {
         <div className='d-flex'>
             <div className='col-8'>
                 <h1>My Recipes</h1>
-                <RecipeCards recipes={customRecipes} />
+                {customRecipes.map((recipe) => (
+                    <RecipeCard recipe={recipe} />
+                ))}
 
                 <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#NewRecipeModal">
                     Create New Recipe
@@ -48,7 +50,9 @@ const UserRecipes = () => {
                 </div>
 
                 <h1>Saved Recipes</h1>
-                <RecipeCards recipes={savedRecipes} />
+                {savedRecipes.map((recipe) => (
+                    <RecipeCard recipe={recipe} />
+                ))}
             </div>
 
             <div className='col-4 border'>
