@@ -1,23 +1,28 @@
 import React, { useState } from "react";
 import { useQuery, useMutation } from '@apollo/client';
-import { QUERY_RECIPE } from '../utils/queries';
-import { UPDATE_RECIPE } from '../utils/mutations';
+import { UPDATE_USER_LIST, UPDATE_RECIPE, DELETE_RECIPE } from '../utils/mutations';
 
-const RecipeModal = ({ id }) => {
-    const { loading, error, data } = useQuery(QUERY_RECIPE, {
-        variables: { recipeId: id },
-    });
+const RecipeModal = ({ recipe, refetch }) => {
 
-    if (loading) {
-        return <div>Loading...</div>;
-    }
+    const { _id, name, ingredients, URL, img } = recipe;
 
-    if (error) {
-        return <div>Error! {error.message}</div>;
-    }
+    const [updateUserList] = useMutation(UPDATE_USER_LIST);
+    const [updateRecipe] = useMutation(UPDATE_RECIPE);
+    const [deleteRecipe] = useMutation(DELETE_RECIPE);
 
-    const { URL, name, ingredients } = data.recipe;
-    console.log(data.recipe);
+    const removeRecipe = async (event) => {
+        event.preventDefault();
+        try {
+            const { data } = await deleteRecipe({
+                variables: { recipeId: _id },
+            });
+            console.log(data);
+            refetch();
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
 
     return (
         <div className="modal-dialog modal-lg">
@@ -26,18 +31,18 @@ const RecipeModal = ({ id }) => {
                     <h1 className="modal-title fs-5" id="exampleModalLabel">{name}</h1>
                     <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div className="modal-body">
+                <div className="modal-body d-flex flex-column align-items-center">
                     {ingredients.map((ingredient) => (
-                        <div key={ingredient._id}>
+                        <div key={ingredient._id} className="col-6 d-flex justify-content-between">
                             <p>{ingredient.name}</p>
                             <p>{ingredient.quantity}</p>
                         </div>
                     ))}
                 </div>
                 <div className="modal-footer">
-                    <button type="button" className="btn btn-primary">Add to List</button>
+                    <button type="button" className="btn btn-success">Add to List</button>
                     <button type="button" className="btn btn-primary">Edit Recipe</button>
-                    <button type="button" className="btn btn-danger">Delete Recipe</button>
+                    <button type="button" className="btn btn-danger" onClick={removeRecipe} data-bs-dismiss="modal">Delete Recipe</button>
                     <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>

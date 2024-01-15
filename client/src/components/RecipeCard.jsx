@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import RecipeModal from '../components/RecipeModal';
 
-const RecipeCard = ({ recipe }) => {
-    console.log(recipe);
+const RecipeCard = ({ recipe, refetch }) => {
+    console.log(refetch);
     return (
         <div className=''>
             <div key={recipe._id} className='border' data-bs-toggle="modal" data-bs-target={`#RecipeModal-${recipe._id}`}>
@@ -11,7 +11,7 @@ const RecipeCard = ({ recipe }) => {
             </div>
 
             <div className="modal fade" id={`RecipeModal-${recipe._id}`} tabIndex="-1" aria-labelledby={`RecipeModalLabel-${recipe._id}`} aria-hidden="true">
-                <RecipeModal id={recipe._id} />
+                <RecipeModal recipe={recipe} refetch={refetch} />
             </div>
         </div>
     )

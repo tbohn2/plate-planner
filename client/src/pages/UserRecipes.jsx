@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_USER } from '../utils/queries';
-import { CREATE_RECIPE, SAVE_RECIPE_TO_USER, UPDATE_RECIPE } from '../utils/mutations';
 import Auth from '../utils/auth';
 import NewRecipeForm from '../components/NewRecipeForm';
 import RecipeCard from '../components/RecipeCard';
@@ -14,7 +13,7 @@ const UserRecipes = () => {
     const user = Auth.getProfile();
     const id = user.data._id;
 
-    const { loading, error, data } = useQuery(QUERY_USER, {
+    const { loading, error, data, refetch } = useQuery(QUERY_USER, {
         variables: { id: id },
     });
 
@@ -38,7 +37,7 @@ const UserRecipes = () => {
             <div className='col-8'>
                 <h1>My Recipes</h1>
                 {customRecipes.map((recipe) => (
-                    <RecipeCard recipe={recipe} />
+                    <RecipeCard recipe={recipe} refetch={refetch} />
                 ))}
 
                 <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#NewRecipeModal">
@@ -51,7 +50,7 @@ const UserRecipes = () => {
 
                 <h1>Saved Recipes</h1>
                 {savedRecipes.map((recipe) => (
-                    <RecipeCard recipe={recipe} />
+                    <RecipeCard recipe={recipe} refetch={refetch} />
                 ))}
             </div>
 
