@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useMutation } from '@apollo/client';
 import { CREATE_RECIPE, SAVE_RECIPE_TO_USER } from '../utils/mutations';
-import Auth from '../utils/auth';
 
 const NewRecipeForm = ({ id, refetch }) => {
 
@@ -9,7 +8,7 @@ const NewRecipeForm = ({ id, refetch }) => {
     const [saveRecipeToUser] = useMutation(SAVE_RECIPE_TO_USER);
 
     const [newRecipe, setNewRecipe] = useState({ recipeName: '', });
-    const [ingredients, setIngredients] = useState([{ ingredientName: '', quantity: 0 }]);
+    const [ingredients, setIngredients] = useState([{ name: '', quantity: 0 }]);
 
 
     const handleRecipeChange = (e) => {
@@ -28,7 +27,7 @@ const NewRecipeForm = ({ id, refetch }) => {
     }
 
     const increaseIngredientNumber = () => {
-        setIngredients(prevIngredients => [...prevIngredients, { ingredientName: '', quantity: 0 }]);
+        setIngredients(prevIngredients => [...prevIngredients, { name: '', quantity: 0 }]);
     };
 
     const removeIngredient = (index) => {
@@ -55,7 +54,7 @@ const NewRecipeForm = ({ id, refetch }) => {
             });
             if (saveRecipeToUser) {
                 setNewRecipe({ recipeName: '', });
-                setIngredients([{ ingredientName: '', quantity: 0 }]);
+                setIngredients([{ name: '', quantity: 0 }]);
                 refetch();
             }
         } catch (err) {
@@ -83,9 +82,9 @@ const NewRecipeForm = ({ id, refetch }) => {
                             <div key={index}>
                                 <input
                                     type='text'
-                                    name='ingredientName'
+                                    name='name'
                                     placeholder='Ingredient'
-                                    value={ingredient.ingredientName}
+                                    value={ingredient.name}
                                     onChange={(e) => handleIngredientChange(e, index)}
                                 />
                                 <input

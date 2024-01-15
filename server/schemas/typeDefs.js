@@ -24,7 +24,7 @@ const typeDefs = gql`
     }
     
     input IngredientInput {
-        ingredientName: String
+        name: String
         quantity: Int
     }
 
