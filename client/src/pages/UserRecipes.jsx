@@ -45,7 +45,7 @@ const UserRecipes = () => {
                 </button>
 
                 <div className="modal fade" id="NewRecipeModal" tabIndex="-1" aria-labelledby="NewRecipeModalLabel" aria-hidden="true">
-                    <NewRecipeForm />
+                    <NewRecipeForm id={id} refetch={refetch} />
                 </div>
 
                 <h1>Saved Recipes</h1>
