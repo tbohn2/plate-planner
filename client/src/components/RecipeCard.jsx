@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import RecipeModal from '../components/RecipeModal';
 
 const RecipeCard = ({ recipe, refetch }) => {
-    console.log(refetch);
     return (
         <div className=''>
             <div key={recipe._id} className='border' data-bs-toggle="modal" data-bs-target={`#RecipeModal-${recipe._id}`}>
