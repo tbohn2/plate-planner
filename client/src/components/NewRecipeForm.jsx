@@ -3,10 +3,7 @@ import { useMutation } from '@apollo/client';
 import { CREATE_RECIPE, SAVE_RECIPE_TO_USER } from '../utils/mutations';
 import Auth from '../utils/auth';
 
-const NewRecipeForm = () => {
-
-    const user = Auth.getProfile();
-    const id = user.data._id;
+const NewRecipeForm = ({ id, refetch }) => {
 
     const [createRecipe] = useMutation(CREATE_RECIPE);
     const [saveRecipeToUser] = useMutation(SAVE_RECIPE_TO_USER);
@@ -42,7 +39,6 @@ const NewRecipeForm = () => {
 
     const handleNewRecipe = async (e) => {
         e.preventDefault();
-        console.log(newRecipe, ingredients);
         try {
             const { data } = await createRecipe({
                 variables: {
@@ -50,15 +46,18 @@ const NewRecipeForm = () => {
                     ingredients: ingredients,
                 },
             });
-            console.log(data);
             const recipeId = data.createRecipe._id;
-            console.log(recipeId);
             await saveRecipeToUser({
                 variables: {
                     userId: id,
                     recipeId: recipeId,
                 },
             });
+            if (saveRecipeToUser) {
+                setNewRecipe({ recipeName: '', });
+                setIngredients([{ ingredientName: '', quantity: 0 }]);
+                refetch();
+            }
         } catch (err) {
             console.error(err);
         }
@@ -102,7 +101,7 @@ const NewRecipeForm = () => {
                         <button type='button' onClick={increaseIngredientNumber}>Add Another Ingredient</button>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" className="btn btn-primary">Save Recipe</button>
+                            <button type="submit" className="btn btn-primary" data-bs-dismiss="modal">Save Recipe</button>
                         </div>
                     </form>
                 </div>
