@@ -37,6 +37,13 @@ const resolvers = {
             const token = signToken(user);
             return { token, user };
         },
+        addItemsToList: async (parent, { userId, items }) => {
+            return User.findOneAndUpdate(
+                { _id: userId },
+                { $addToSet: { shoppingList: items } },
+                { new: true }
+            )
+        },
         updateUserList: async (parent, { userId, shoppingList }) => {
             return User.findOneAndUpdate({ _id: userId }, { shoppingList }, { new: true });
         },

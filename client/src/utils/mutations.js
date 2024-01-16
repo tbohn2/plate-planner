@@ -26,6 +26,19 @@ export const LOGIN_USER = gql`
 }
 `;
 
+export const ADD_ITEMS_TO_LIST = gql`
+  mutation addItemsToList($userId: ID!, $items: [IngredientInput]) {
+    addItemsToList(userId: $userId, items: $items) {
+      _id
+      name
+      shoppingList {
+        name
+        quantity
+      }
+    }
+  }
+`;
+
 export const UPDATE_USER_LIST = gql`
   mutation updateUserList($userId: ID!, $shoppingList: [IngredientInput]) {
     updateUserList(userId: $userId, shoppingList: $shoppingList) {
