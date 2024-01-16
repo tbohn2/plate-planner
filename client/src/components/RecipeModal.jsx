@@ -1,14 +1,33 @@
 import React, { useState } from "react";
 import { useQuery, useMutation } from '@apollo/client';
-import { UPDATE_USER_LIST, UPDATE_RECIPE, DELETE_RECIPE } from '../utils/mutations';
+import { ADD_ITEMS_TO_LIST, UPDATE_RECIPE, DELETE_RECIPE } from '../utils/mutations';
 
-const RecipeModal = ({ recipe, refetch }) => {
+const RecipeModal = ({ recipe, refetch, userId }) => {
 
     const { _id, name, ingredients, URL, img } = recipe;
 
-    const [updateUserList] = useMutation(UPDATE_USER_LIST);
+    const [addItemsToList] = useMutation(ADD_ITEMS_TO_LIST);
     const [updateRecipe] = useMutation(UPDATE_RECIPE);
     const [deleteRecipe] = useMutation(DELETE_RECIPE);
+
+    const addItemsToListHandler = async (event) => {
+        event.preventDefault();
+        let newIngredients = []
+        for (let i = 0; i < ingredients.length; i++) {
+            const newIngredient = { name: ingredients[i].name, quantity: ingredients[i].quantity };
+            newIngredients.push(newIngredient)
+        }
+        console.log(userId, newIngredients)
+        try {
+            const { data } = await addItemsToList({
+                variables: { userId: userId, items: newIngredients },
+            });
+            console.log(data);
+            refetch();
+        } catch (err) {
+            console.error(err);
+        }
+    }
 
     const removeRecipe = async (event) => {
         event.preventDefault();
@@ -40,7 +59,7 @@ const RecipeModal = ({ recipe, refetch }) => {
                     ))}
                 </div>
                 <div className="modal-footer">
-                    <button type="button" className="btn btn-success">Add to List</button>
+                    <button type="button" className="btn btn-success" onClick={addItemsToListHandler}>Add to List</button>
                     <button type="button" className="btn btn-primary">Edit Recipe</button>
                     <button type="button" className="btn btn-danger" onClick={removeRecipe} data-bs-dismiss="modal">Delete Recipe</button>
                     <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>

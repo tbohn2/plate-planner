@@ -37,7 +37,7 @@ const UserRecipes = () => {
             <div className='col-8'>
                 <h1>My Recipes</h1>
                 {customRecipes.map((recipe) => (
-                    <RecipeCard recipe={recipe} refetch={refetch} />
+                    <RecipeCard recipe={recipe} refetch={refetch} userId={id} />
                 ))}
 
                 <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#NewRecipeModal">
@@ -50,7 +50,7 @@ const UserRecipes = () => {
 
                 <h1>Saved Recipes</h1>
                 {savedRecipes.map((recipe) => (
-                    <RecipeCard recipe={recipe} refetch={refetch} />
+                    <RecipeCard recipe={recipe} refetch={refetch} userId={id} />
                 ))}
             </div>
 
