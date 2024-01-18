@@ -32,20 +32,25 @@ const RecipeModal = ({ recipe, refetch, userId }) => {
         });
     };
 
+    const removeIngredient = (index) => {
+        // Creates shallow copy of editFormIngedientsState to avoid mutating state directly
+        const list = [...editFormIngedientsState];
+        list.splice(index, 1);
+        setEditFormIngredientsState(list);
+    };
+
     const addItemsToListHandler = async (event) => {
         event.preventDefault();
         let newIngredients = []
-        for (let i = 0; i < ingredients.length; i++) {
-            const newIngredient = { name: ingredients[i].name, quantity: ingredients[i].quantity };
+        for (let i = 0; i < editFormIngedientsState.length; i++) {
+            const newIngredient = { name: editFormIngedientsState[i].name, quantity: editFormIngedientsState[i].quantity };
             newIngredients.push(newIngredient)
         }
-        console.log(userId, newIngredients)
         try {
             const { data } = await addItemsToList({
                 variables: { userId: userId, items: newIngredients },
             });
-            console.log(data);
-            refetch();
+            if (data) { refetch(); }
         } catch (err) {
             console.error(err);
         }
@@ -59,8 +64,7 @@ const RecipeModal = ({ recipe, refetch, userId }) => {
             const { data } = await deleteRecipe({
                 variables: { recipeId: _id },
             });
-            console.log(data);
-            refetch();
+            if (data) { refetch(); }
         } catch (err) {
             console.error(err);
         }
@@ -72,7 +76,7 @@ const RecipeModal = ({ recipe, refetch, userId }) => {
             <div className="modal-content">
                 <div className="modal-header">
                     <h1 className="modal-title fs-5" id="exampleModalLabel">{name}</h1>
-                    <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={() => setEditing(false)}></button>
                 </div>
                 {editing ? (
                     <div className="modal-body d-flex flex-column align-items-center">
@@ -81,10 +85,10 @@ const RecipeModal = ({ recipe, refetch, userId }) => {
                                 <div key={index} className="col-6 d-flex justify-content-between">
                                     <input type="text" name="name" value={ingredient.name} onChange={(e) => handleIngredientChange(e, index)} />
                                     <input type="number" name="quantity" value={ingredient.quantity} onChange={(e) => handleIngredientChange(e, index)} />
+                                    <button type='button' onClick={() => removeIngredient(index)}>Remove Ingredient</button>
                                 </div>
                             ))}
                         </form>
-                        <button type="button" className="btn btn-primary" onClick={toggleEdit}>Save</button>
                     </div>
                 ) : (
                     <div className="modal-body d-flex flex-column align-items-center">
@@ -96,13 +100,21 @@ const RecipeModal = ({ recipe, refetch, userId }) => {
                         ))}
                     </div>
                 )}
+                {editing ? (
+                    <div className="modal-footer">
+                        <button type="button" className="btn btn-success" onClick={addItemsToListHandler}>Add Items to Grocery List</button>
+                        <button type="button" className="btn btn-primary" onClick={toggleEdit}>Save Updated Recipe</button>
+                        <button type="button" className="btn btn-secondary" onClick={toggleEdit}>Cancel</button>
+                    </div>
+                ) : (
+                    <div className="modal-footer">
+                        <button type="button" className="btn btn-success" onClick={toggleEdit}>Add to List</button>
+                        <button type="button" className="btn btn-primary" onClick={toggleEdit}>Edit Recipe</button>
+                        <button type="button" className="btn btn-danger" onClick={removeRecipe} data-bs-dismiss="modal">Delete Recipe</button>
+                        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                )}
 
-                <div className="modal-footer">
-                    <button type="button" className="btn btn-success" onClick={addItemsToListHandler}>Add to List</button>
-                    <button type="button" className="btn btn-primary" onClick={toggleEdit}>Edit Recipe</button>
-                    <button type="button" className="btn btn-danger" onClick={removeRecipe} data-bs-dismiss="modal">Delete Recipe</button>
-                    <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                </div>
             </div>
         </div>
     )
