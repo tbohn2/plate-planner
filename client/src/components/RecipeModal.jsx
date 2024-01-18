@@ -49,7 +49,10 @@ const RecipeModal = ({ recipe, refetch, userId }) => {
             const { data } = await addItemsToList({
                 variables: { userId: userId, items: editFormIngedientsState },
             });
-            if (data) { refetch(); }
+            if (data) {
+                toggleEdit(event)
+                refetch();
+            }
         } catch (err) {
             console.error(err);
         }
@@ -65,7 +68,10 @@ const RecipeModal = ({ recipe, refetch, userId }) => {
                     ingredients: editFormIngedientsState,
                 },
             });
-            if (data) { refetch(); }
+            if (data) {
+                toggleEdit(event);
+                refetch();
+            }
         }
         catch (err) {
             console.error(err);
@@ -116,7 +122,7 @@ const RecipeModal = ({ recipe, refetch, userId }) => {
                 )}
                 {editing ? (
                     <div className="modal-footer">
-                        <button type="button" className="btn btn-success" onClick={addItemsToListHandler}>Add Items to Grocery List</button>
+                        <button type="button" className="btn btn-success" data-bs-dismiss="modal" onClick={addItemsToListHandler}>Add Items to Grocery List</button>
                         <button type="button" className="btn btn-primary" onClick={updateRecipeHandler}>Save Updated Recipe</button>
                         <button type="button" className="btn btn-secondary" onClick={toggleEdit}>Cancel</button>
                     </div>
@@ -124,7 +130,7 @@ const RecipeModal = ({ recipe, refetch, userId }) => {
                     <div className="modal-footer">
                         <button type="button" className="btn btn-success" onClick={toggleEdit}>Add to List</button>
                         <button type="button" className="btn btn-primary" onClick={toggleEdit}>Edit Recipe</button>
-                        <button type="button" className="btn btn-danger" onClick={removeRecipe} data-bs-dismiss="modal">Delete Recipe</button>
+                        <button type="button" className="btn btn-danger" data-bs-dismiss="modal" onClick={removeRecipe}>Delete Recipe</button>
                         <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     </div>
                 )}
