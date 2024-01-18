@@ -32,6 +32,33 @@ const UserRecipes = () => {
 
     const shoppingList = data.user.shoppingList;
 
+    const [editing, setEditing] = useState(false);
+    const [shoppingListState, setShoppingListState] = useState(shoppingList);
+
+    const toggleEdit = (e) => {
+        e.preventDefault();
+        setEditing(!editing);
+    };
+
+    const handleItemChange = (event, index) => {
+        const { name, value } = event.target;
+        setShoppingListState(prevItems => {
+            const updatedItems = [...prevItems];
+            updatedItems[index] = {
+                ...updatedItems[index],
+                [name]: name === 'quantity' ? Number(value) : value
+            };
+            return updatedItems;
+        });
+    };
+
+    const removeItem = (index) => {
+        // Creates shallow copy of shoppingListState to avoid mutating state directly
+        const list = [...shoppingListState];
+        list.splice(index, 1);
+        setShoppingListState(list);
+    };
+
     return (
         <div className='d-flex'>
             <div className='col-8'>
@@ -62,16 +89,23 @@ const UserRecipes = () => {
                 </div>
                 <div className='d-flex'>
                     <ul className='list-unstyled col-8'>
-                        {shoppingList.map((ingredient) => (
-                            <li key={ingredient._id}>{ingredient.name}</li>
-                        ))}
-                    </ul>
-                    <ul className='list-unstyled col-4'>
-                        {shoppingList.map((ingredient) => (
-                            <li key={ingredient._id}>{ingredient.quantity}</li>
-                        ))}
+                        {shoppingListState.map((ingredient, index) =>
+                            editing ? (
+                                <div key={index} className="col-12 d-flex justify-content-between">
+                                    <input type="text" name="name" value={ingredient.name} onChange={(e) => handleItemChange(e, index)} />
+                                    <input type="number" name="quantity" value={ingredient.quantity} onChange={(e) => handleItemChange(e, index)} />
+                                    <button type='button' onClick={() => removeItem(index)}>X</button>
+                                </div>
+                            ) : (
+                                <div key={index} className="col-12 d-flex justify-content-between">
+                                    <p name="name">{ingredient.name} </p>
+                                    <p name="name">{ingredient.quantity} </p>
+                                </div>
+                            )
+                        )}
                     </ul>
                 </div>
+                <button type="button" className="btn btn-primary" onClick={toggleEdit}>Edit List</button>
             </div>
         </div>
     );
