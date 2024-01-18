@@ -49,6 +49,7 @@ const NewRecipeForm = ({ id, refetch }) => {
                 variables: {
                     name: newRecipe.recipeName,
                     ingredients: ingredients,
+                    custom: true,
                 },
             });
             const recipeId = data.createRecipe._id;
