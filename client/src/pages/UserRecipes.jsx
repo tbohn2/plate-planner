@@ -18,13 +18,16 @@ const UserRecipes = () => {
         variables: { id: id },
     });
 
-    if (loading) {
-        return <div>Loading...</div>;
-    }
+    useEffect(() => {
+        if (loading) {
+            return <div>Loading...</div>;
+        }
 
-    if (error) {
-        return <div>Error! {error.message}</div>;
-    }
+        if (error) {
+            return <div>Error! {error.message}</div>;
+        }
+    }, [loading, error, data]);
+
 
     const [updateUserList] = useMutation(UPDATE_USER_LIST);
 
