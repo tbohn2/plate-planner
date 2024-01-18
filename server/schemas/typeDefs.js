@@ -44,7 +44,7 @@ const typeDefs = gql`
         addUser(name: String!, email: String!, password: String!): Auth
         login(email: String!, password: String!): Auth
         addItemsToList(userId: ID!, items: [IngredientInput]): User
-        updateUserList(userId: ID!, shoppingList: [IngredientInput]): User
+        updateUserList(userId: ID!, shoppingList: [IngredientInput]!): User
         deleteUser(userId: ID!): User
         createRecipe(name: String!, img: String, ingredients: [IngredientInput], URL: String, custom: Boolean): Recipe
         saveRecipeToUser(userId: ID!, recipeId: ID!): User
