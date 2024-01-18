@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_USER } from '../utils/queries';
+import { UPDATE_USER_LIST } from '../utils/mutations';
 import Auth from '../utils/auth';
 import NewRecipeForm from '../components/NewRecipeForm';
 import RecipeCard from '../components/RecipeCard';
@@ -25,6 +26,8 @@ const UserRecipes = () => {
         return <div>Error! {error.message}</div>;
     }
 
+    const [updateUserList] = useMutation(UPDATE_USER_LIST);
+
     const recipes = data.user.savedRecipes || [];
 
     const customRecipes = recipes.filter((recipe) => recipe.custom);
@@ -32,8 +35,12 @@ const UserRecipes = () => {
 
     const shoppingList = data.user.shoppingList;
 
+    const typelessItems = shoppingList.map(item => {
+        return { name: item.name, quantity: item.quantity }
+    });
+
     const [editing, setEditing] = useState(false);
-    const [shoppingListState, setShoppingListState] = useState(shoppingList);
+    const [shoppingListState, setShoppingListState] = useState(typelessItems);
 
     const toggleEdit = (e) => {
         e.preventDefault();
@@ -58,6 +65,21 @@ const UserRecipes = () => {
         list.splice(index, 1);
         setShoppingListState(list);
     };
+
+    const updateShoppingListHandler = async (event) => {
+        event.preventDefault();
+        try {
+            const { data } = await updateUserList({
+                variables: { userId: id, items: shoppingListState },
+            });
+            if (data) {
+                toggleEdit(event)
+                refetch();
+            }
+        } catch (err) {
+            console.error(err);
+        }
+    }
 
     return (
         <div className='d-flex'>
@@ -105,7 +127,16 @@ const UserRecipes = () => {
                         )}
                     </ul>
                 </div>
-                <button type="button" className="btn btn-primary" onClick={toggleEdit}>Edit List</button>
+                {editing ? (
+                    <div>
+                        <button type="button" className="btn btn-primary" onClick={updateShoppingListHandler}>Save changes</button>
+                        <button type="button" className="btn btn-secondary" onClick={toggleEdit}>Cancel</button>
+                    </div>
+                ) : (
+                    <div>
+                        <button type="button" className="btn btn-primary" onClick={toggleEdit}>Edit List</button>
+                    </div>
+                )}
             </div>
         </div>
     );
