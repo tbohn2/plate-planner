@@ -21,9 +21,14 @@ const NewRecipeForm = ({ id, refetch }) => {
 
     const handleIngredientChange = (e, index) => {
         const { name, value } = e.target;
-        const list = [...ingredients];
-        list[index][name] = name === 'quantity' ? Number(value) : value;
-        setIngredients(list);
+        setIngredients(prevIngredients => {
+            const updatedIngredients = [...prevIngredients];
+            updatedIngredients[index] = {
+                ...updatedIngredients[index],
+                [name]: name === 'quantity' ? Number(value) : value
+            };
+            return updatedIngredients;
+        });
     }
 
     const increaseIngredientNumber = () => {
