@@ -6,9 +6,13 @@ const RecipeModal = ({ recipe, refetch, userId }) => {
 
     const { _id, name, ingredients, URL, img } = recipe;
 
+    const typelessIngredients = ingredients.map(ingredient => {
+        return { name: ingredient.name, quantity: ingredient.quantity }
+    });
+
     const [editing, setEditing] = useState(false);
     const [editFormNameState, setEditFormNameState] = useState(name);
-    const [editFormIngedientsState, setEditFormIngredientsState] = useState(ingredients);
+    const [editFormIngedientsState, setEditFormIngredientsState] = useState(typelessIngredients);
 
     const [addItemsToList] = useMutation(ADD_ITEMS_TO_LIST);
     const [updateRecipe] = useMutation(UPDATE_RECIPE);
@@ -16,7 +20,7 @@ const RecipeModal = ({ recipe, refetch, userId }) => {
 
     const toggleEdit = (e) => {
         e.preventDefault();
-        setEditFormIngredientsState(ingredients);
+        setEditFormIngredientsState(typelessIngredients);
         setEditing(!editing);
     };
 
@@ -41,14 +45,9 @@ const RecipeModal = ({ recipe, refetch, userId }) => {
 
     const addItemsToListHandler = async (event) => {
         event.preventDefault();
-        let newIngredients = []
-        for (let i = 0; i < editFormIngedientsState.length; i++) {
-            const newIngredient = { name: editFormIngedientsState[i].name, quantity: editFormIngedientsState[i].quantity };
-            newIngredients.push(newIngredient)
-        }
         try {
             const { data } = await addItemsToList({
-                variables: { userId: userId, items: newIngredients },
+                variables: { userId: userId, items: editFormIngedientsState },
             });
             if (data) { refetch(); }
         } catch (err) {
@@ -56,7 +55,22 @@ const RecipeModal = ({ recipe, refetch, userId }) => {
         }
     }
 
-
+    const updateRecipeHandler = async (event) => {
+        event.preventDefault();
+        try {
+            const { data } = await updateRecipe({
+                variables: {
+                    recipeId: _id,
+                    name: editFormNameState,
+                    ingredients: editFormIngedientsState,
+                },
+            });
+            if (data) { refetch(); }
+        }
+        catch (err) {
+            console.error(err);
+        }
+    };
 
     const removeRecipe = async (event) => {
         event.preventDefault();
@@ -103,7 +117,7 @@ const RecipeModal = ({ recipe, refetch, userId }) => {
                 {editing ? (
                     <div className="modal-footer">
                         <button type="button" className="btn btn-success" onClick={addItemsToListHandler}>Add Items to Grocery List</button>
-                        <button type="button" className="btn btn-primary" onClick={toggleEdit}>Save Updated Recipe</button>
+                        <button type="button" className="btn btn-primary" onClick={updateRecipeHandler}>Save Updated Recipe</button>
                         <button type="button" className="btn btn-secondary" onClick={toggleEdit}>Cancel</button>
                     </div>
                 ) : (
