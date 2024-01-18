@@ -36,6 +36,7 @@ const NewRecipeForm = ({ id, refetch }) => {
     };
 
     const removeIngredient = (index) => {
+        // Creates shallow copy of editFormIngedientsState to avoid mutating state directly
         const list = [...ingredients];
         list.splice(index, 1);
         setIngredients(list);
