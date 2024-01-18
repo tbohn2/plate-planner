@@ -92,14 +92,9 @@ export const SAVE_RECIPE_TO_USER = gql`
 `;
 
 export const UPDATE_RECIPE = gql`
-  mutation updateRecipe($recipeId: ID!, $name: String!, $quantity: Int!) {
-    updateRecipe(recipeId: $recipeId, name: $name, quantity: $quantity) {
+  mutation Mutation($recipeId: ID!, $name: String!, $ingredients: [IngredientInput]) {
+    updateRecipe(recipeId: $recipeId, name: $name, ingredients: $ingredients) {
       _id
-      name
-      ingredients {
-        name
-        quantity
-      }
     }
   }
 `;
