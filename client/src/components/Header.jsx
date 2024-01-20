@@ -32,7 +32,7 @@ const Header = () => {
                         <nav className='d-flex align-items-center justify-content-evenly col-6'>
                             <Link className='text-decoration-none navBtn' to='/myRecipes'>My Recipes</Link>
                             <Link className='text-decoration-none navBtn' to='/list'>My List</Link>
-                            <Link className='text-decoration-none navBtn' to='/browse'>Browse Recipes</Link>
+                            <Link className='text-decoration-none navBtn' to='/search'>Browse Recipes</Link>
                             <Link className='text-decoration-none loginBtn' to='/login'>Login</Link>
                         </nav>
                     </header>
