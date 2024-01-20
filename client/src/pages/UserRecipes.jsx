@@ -16,16 +16,25 @@ const UserRecipes = () => {
 
     const [editing, setEditing] = useState(false);
     const [shoppingList, setShoppingList] = useState([]);
-    const [shoppingListEditState, setshoppingListEditState] = useState([]);
+    const [shoppingListEditState, setShoppingListEditState] = useState([]);
     const [customRecipes, setCustomRecipes] = useState([]);
     const [savedRecipes, setSavedRecipes] = useState([]);
 
     const [updateUserList] = useMutation(UPDATE_USER_LIST);
 
-    const removeTypes = (list) => {
-        return list.map(item => {
+    const setStates = async (data) => {
+        const recipes = data.user.savedRecipes || [];
+        setCustomRecipes(recipes.filter((recipe) => recipe.custom));
+        setSavedRecipes(recipes.filter((recipe) => !recipe.custom));
+
+        const shoppingList = data.user.shoppingList || [];
+
+        const typelessShoppingList = shoppingList.map(item => {
             return { name: item.name, quantity: item.quantity };
         });
+
+        setShoppingList(shoppingList);
+        setShoppingListEditState(typelessShoppingList);
     }
 
     const { loading, error, data, refetch } = useQuery(QUERY_USER, {
@@ -39,33 +48,34 @@ const UserRecipes = () => {
         if (error) {
             console.log(error);
         }
-        if (!loading && !error && data) {
-            const recipes = data.user.savedRecipes || [];
-            setCustomRecipes(recipes.filter((recipe) => recipe.custom));
-            setSavedRecipes(recipes.filter((recipe) => !recipe.custom));
-        }
         if (!loading && !error && data && shoppingListEditState.length === 0) {
-            const shoppingList = data.user.shoppingList || [];
-
-            const typelessShoppingList = removeTypes(shoppingList);
-
-            setShoppingList(shoppingList);
-            setshoppingListEditState(typelessShoppingList);
+            setStates(data);
         }
     }, [loading, error, data, shoppingListEditState]);
+
+    const refetchHandler = async () => {
+        try {
+            const refetchedData = await refetch();
+            const updatedData = refetchedData.data;
+            if (updatedData) {
+                setStates(updatedData);
+            }
+        } catch (err) {
+            console.error(err);
+        }
+    }
 
     const toggleEdit = (e) => {
         e.preventDefault();
         if (!editing) {
-            const typelessShoppingList = removeTypes(shoppingList);
-            setshoppingListEditState(typelessShoppingList);
+            setShoppingListEditState([]);
         }
         setEditing(!editing);
     };
 
     const handleItemChange = (event, index) => {
         const { name, value } = event.target;
-        setshoppingListEditState(prevItems => {
+        setShoppingListEditState(prevItems => {
             const updatedItems = [...prevItems];
             updatedItems[index] = {
                 ...updatedItems[index],
@@ -79,7 +89,7 @@ const UserRecipes = () => {
         // Creates shallow copy of shoppingListEditState to avoid mutating state directly
         const list = [...shoppingListEditState];
         list.splice(index, 1);
-        setshoppingListEditState(list);
+        setShoppingListEditState(list);
     };
 
     const updateShoppingListHandler = async (event) => {
@@ -90,8 +100,8 @@ const UserRecipes = () => {
                 variables: { userId: id, shoppingList: shoppingListEditState },
             });
             if (data) {
+                refetchHandler();
                 toggleEdit(event)
-                refetch();
             }
         } catch (err) {
             console.error(err);
@@ -103,7 +113,7 @@ const UserRecipes = () => {
             <div className='col-8'>
                 <h1>My Recipes</h1>
                 {customRecipes.map((recipe) => (
-                    <RecipeCard recipe={recipe} refetch={refetch} userId={id} />
+                    <RecipeCard recipe={recipe} refetch={refetchHandler} userId={id} />
                 ))}
 
                 <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#NewRecipeModal">
@@ -111,12 +121,12 @@ const UserRecipes = () => {
                 </button>
 
                 <div className="modal fade" id="NewRecipeModal" tabIndex="-1" aria-labelledby="NewRecipeModalLabel" aria-hidden="true">
-                    <NewRecipeForm id={id} refetch={refetch} />
+                    <NewRecipeForm id={id} refetch={refetchHandler} />
                 </div>
 
                 <h1>Saved Recipes</h1>
                 {savedRecipes.map((recipe) => (
-                    <RecipeCard recipe={recipe} refetch={refetch} userId={id} />
+                    <RecipeCard recipe={recipe} refetch={refetchHandler} userId={id} />
                 ))}
             </div>
 
