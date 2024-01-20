@@ -84,9 +84,10 @@ const UserRecipes = () => {
 
     const updateShoppingListHandler = async (event) => {
         event.preventDefault();
+        console.log(shoppingListEditState);
         try {
             const { data } = await updateUserList({
-                variables: { userId: id, items: shoppingListEditState },
+                variables: { userId: id, shoppingList: shoppingListEditState },
             });
             if (data) {
                 toggleEdit(event)
