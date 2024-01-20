@@ -22,6 +22,12 @@ const UserRecipes = () => {
 
     const [updateUserList] = useMutation(UPDATE_USER_LIST);
 
+    const removeTypes = (list) => {
+        return list.map(item => {
+            return { name: item.name, quantity: item.quantity };
+        });
+    }
+
     const { loading, error, data, refetch } = useQuery(QUERY_USER, {
         variables: { id: id },
     });
@@ -41,9 +47,7 @@ const UserRecipes = () => {
         if (!loading && !error && data && shoppingListEditState.length === 0) {
             const shoppingList = data.user.shoppingList || [];
 
-            const typelessShoppingList = shoppingList.map(item => {
-                return { name: item.name, quantity: item.quantity };
-            });
+            const typelessShoppingList = removeTypes(shoppingList);
 
             setShoppingList(shoppingList);
             setshoppingListEditState(typelessShoppingList);
@@ -53,7 +57,8 @@ const UserRecipes = () => {
     const toggleEdit = (e) => {
         e.preventDefault();
         if (!editing) {
-            setshoppingListEditState(shoppingList);
+            const typelessShoppingList = removeTypes(shoppingList);
+            setshoppingListEditState(typelessShoppingList);
         }
         setEditing(!editing);
     };
