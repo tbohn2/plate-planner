@@ -14,45 +14,53 @@ const UserRecipes = () => {
     const user = Auth.getProfile();
     const id = user.data._id;
 
+    const [editing, setEditing] = useState(false);
+    const [shoppingList, setShoppingList] = useState([]);
+    const [shoppingListEditState, setshoppingListEditState] = useState([]);
+    const [customRecipes, setCustomRecipes] = useState([]);
+    const [savedRecipes, setSavedRecipes] = useState([]);
+
+    const [updateUserList] = useMutation(UPDATE_USER_LIST);
+
     const { loading, error, data, refetch } = useQuery(QUERY_USER, {
         variables: { id: id },
     });
 
     useEffect(() => {
         if (loading) {
-            return <div>Loading...</div>;
+            console.log('Loading...');
         }
-
         if (error) {
-            return <div>Error! {error.message}</div>;
+            console.log(error);
         }
-    }, [loading, error, data]);
+        if (!loading && !error && data) {
+            const recipes = data.user.savedRecipes || [];
+            setCustomRecipes(recipes.filter((recipe) => recipe.custom));
+            setSavedRecipes(recipes.filter((recipe) => !recipe.custom));
+        }
+        if (!loading && !error && data && shoppingListEditState.length === 0) {
+            const shoppingList = data.user.shoppingList || [];
 
+            const typelessShoppingList = shoppingList.map(item => {
+                return { name: item.name, quantity: item.quantity };
+            });
 
-    const [updateUserList] = useMutation(UPDATE_USER_LIST);
-
-    const recipes = data.user.savedRecipes || [];
-
-    const customRecipes = recipes.filter((recipe) => recipe.custom);
-    const savedRecipes = recipes.filter((recipe) => !recipe.custom);
-
-    const shoppingList = data.user.shoppingList;
-
-    const typelessItems = shoppingList.map(item => {
-        return { name: item.name, quantity: item.quantity }
-    });
-
-    const [editing, setEditing] = useState(false);
-    const [shoppingListState, setShoppingListState] = useState(typelessItems);
+            setShoppingList(shoppingList);
+            setshoppingListEditState(typelessShoppingList);
+        }
+    }, [loading, error, data, shoppingListEditState]);
 
     const toggleEdit = (e) => {
         e.preventDefault();
+        if (!editing) {
+            setshoppingListEditState(shoppingList);
+        }
         setEditing(!editing);
     };
 
     const handleItemChange = (event, index) => {
         const { name, value } = event.target;
-        setShoppingListState(prevItems => {
+        setshoppingListEditState(prevItems => {
             const updatedItems = [...prevItems];
             updatedItems[index] = {
                 ...updatedItems[index],
@@ -63,17 +71,17 @@ const UserRecipes = () => {
     };
 
     const removeItem = (index) => {
-        // Creates shallow copy of shoppingListState to avoid mutating state directly
-        const list = [...shoppingListState];
+        // Creates shallow copy of shoppingListEditState to avoid mutating state directly
+        const list = [...shoppingListEditState];
         list.splice(index, 1);
-        setShoppingListState(list);
+        setshoppingListEditState(list);
     };
 
     const updateShoppingListHandler = async (event) => {
         event.preventDefault();
         try {
             const { data } = await updateUserList({
-                variables: { userId: id, items: shoppingListState },
+                variables: { userId: id, items: shoppingListEditState },
             });
             if (data) {
                 toggleEdit(event)
@@ -114,14 +122,16 @@ const UserRecipes = () => {
                 </div>
                 <div className='d-flex'>
                     <ul className='list-unstyled col-8'>
-                        {shoppingListState.map((ingredient, index) =>
-                            editing ? (
+                        {editing ? (
+                            shoppingListEditState.map((ingredient, index) =>
                                 <div key={index} className="col-12 d-flex justify-content-between">
                                     <input type="text" name="name" value={ingredient.name} onChange={(e) => handleItemChange(e, index)} />
                                     <input type="number" name="quantity" value={ingredient.quantity} onChange={(e) => handleItemChange(e, index)} />
                                     <button type='button' onClick={() => removeItem(index)}>X</button>
                                 </div>
-                            ) : (
+                            )
+                        ) : (
+                            shoppingList.map((ingredient, index) =>
                                 <div key={index} className="col-12 d-flex justify-content-between">
                                     <p name="name">{ingredient.name} </p>
                                     <p name="name">{ingredient.quantity} </p>
