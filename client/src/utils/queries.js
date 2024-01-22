@@ -9,8 +9,9 @@ export const QUERY_USER = gql`
         name
         ingredients {
           name
-          quantity
+          amount
         }
+        instructions
         img
         URL
         custom
@@ -54,8 +55,9 @@ export const QUERY_RECIPE = gql`
       img
       ingredients {
         name
-        quantity
+        amount
       }
+      instructions
       URL
       custom
     }
