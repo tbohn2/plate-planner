@@ -50,8 +50,8 @@ const resolvers = {
         deleteUser: async (parent, { userId }) => {
             return User.findOneAndDelete({ _id: userId });
         },
-        createRecipe: async (parent, { name, img, ingredients, URL, custom }) => {
-            return Recipe.create({ name, img, ingredients, URL, custom });
+        createRecipe: async (parent, { name, img, ingredients, instructions, URL, custom }) => {
+            return Recipe.create({ name, img, ingredients, instructions, URL, custom });
         },
         saveRecipeToUser: async (parent, { userId, recipeId }) => {
             return User.findOneAndUpdate(
@@ -60,10 +60,10 @@ const resolvers = {
                 { new: true }
             ).populate('savedRecipes');
         },
-        updateRecipe: async (parent, { recipeId, name, ingredients }) => {
+        updateRecipe: async (parent, { recipeId, name, ingredients, instructions }) => {
             return Recipe.findOneAndUpdate(
                 { _id: recipeId },
-                { name, ingredients },
+                { name, ingredients, instructions },
                 { new: true }
             )
         },
