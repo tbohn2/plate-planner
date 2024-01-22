@@ -8,10 +8,10 @@ const fetchRandomMeal = async () => {
     try {
         const response = await fetch(`${apiUrl}random.php`);
         const data = await response.json();
-        console.log(data);
         if (response.status !== 200) {
             console.log(response);
         }
+        return data;
     }
     catch (error) {
         console.error(error);
@@ -24,10 +24,10 @@ const fetchMealByName = async (name, category) => {
             const url = `${apiUrl}search.php?s=${name}&filter.php?c=${category}`;
             const response = await fetch(url);
             const data = await response.json();
-            console.log(data);
             if (response.status !== 200) {
                 console.log(response);
             }
+            return data;
         }
         catch (error) {
             console.error(error);
@@ -38,10 +38,10 @@ const fetchMealByName = async (name, category) => {
             const url = `${apiUrl}search.php?s=${name}`
             const response = await fetch(url);
             const data = await response.json();
-            console.log(data);
             if (response.status !== 200) {
                 console.log(response);
             }
+            return data;
         }
         catch (error) {
             console.error(error);
