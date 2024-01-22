@@ -6,7 +6,7 @@ const typeDefs = gql`
         name: String
         email: String
         savedRecipes: [Recipe]
-        shoppingList: [Ingredient]
+        shoppingList: [Item]
     }
 
     type Recipe {
@@ -22,6 +22,11 @@ const typeDefs = gql`
     type Ingredient {
         name: String
         amount: String
+    }
+
+    type Item {
+        name: String
+        quantity: Int
     }
     
     input IngredientInput {
