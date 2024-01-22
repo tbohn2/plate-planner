@@ -62,15 +62,16 @@ export const DELETE_USER = gql`
 `;
 
 export const CREATE_RECIPE = gql`
-  mutation createRecipe($name: String!, $img: String, $ingredients: [IngredientInput], $URL: String, $custom: Boolean) {
-    createRecipe(name: $name, img: $img, ingredients: $ingredients, URL: $URL, custom: $custom) {
+  mutation createRecipe($name: String!, $img: String, $ingredients: [IngredientInput], $instructions: String,  $URL: String, $custom: Boolean) {
+    createRecipe(name: $name, img: $img, ingredients: $ingredients, instructions: $instructions URL: $URL, custom: $custom) {
       _id
       name
       img
       ingredients {
         name
-        quantity
+        amount
       }
+      instructions
       URL
       custom
     }
@@ -92,8 +93,8 @@ export const SAVE_RECIPE_TO_USER = gql`
 `;
 
 export const UPDATE_RECIPE = gql`
-  mutation Mutation($recipeId: ID!, $name: String!, $ingredients: [IngredientInput]) {
-    updateRecipe(recipeId: $recipeId, name: $name, ingredients: $ingredients) {
+  mutation Mutation($recipeId: ID!, $name: String!, $ingredients: [IngredientInput], $instructions: String,) {
+    updateRecipe(recipeId: $recipeId, name: $name, ingredients: $ingredients, instructions: $instructions) {
       _id
     }
   }
