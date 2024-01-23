@@ -26,7 +26,7 @@ const typeDefs = gql`
 
     type Item {
         name: String
-        quantity: Int
+        quantity: Float
     }
     
     input IngredientInput {
@@ -36,7 +36,7 @@ const typeDefs = gql`
    
     input ItemInput {
         name: String
-        quantity: Int                
+        quantity: Float                
     }
 
     type Auth {
