@@ -7,12 +7,20 @@ const RecipeModal = ({ recipe, refetch, userId }) => {
     const { _id, name, ingredients, URL, img } = recipe;
 
     const typelessIngredients = ingredients.map(ingredient => {
-        return { name: ingredient.name, quantity: ingredient.quantity }
+        const quantity = ingredient.amount.replace(/[^0-9/]/g, '');
+        const unit = ingredient.amount.replace(/[0-9/]/g, '');
+        return { name: ingredient.name, quantity: quantity, unit: unit }
+    });
+
+    const defaultItemsList = ingredients.map(ingredient => {
+        return { name: ingredient.name, quantity: 1 }
     });
 
     const [editing, setEditing] = useState(false);
+    const [addingToList, setAddingToList] = useState(false);
     const [editFormNameState, setEditFormNameState] = useState(name);
     const [editFormIngedientsState, setEditFormIngredientsState] = useState(typelessIngredients);
+    const [addingFormIngedientsState, setAddingFormIngredientsState] = useState(defaultItemsList);
 
     const [addItemsToList] = useMutation(ADD_ITEMS_TO_LIST);
     const [updateRecipe] = useMutation(UPDATE_RECIPE);
@@ -24,16 +32,38 @@ const RecipeModal = ({ recipe, refetch, userId }) => {
         setEditing(!editing);
     };
 
+    const toggleAddingToList = (e) => {
+        e.preventDefault();
+        setAddingFormIngredientsState(typelessIngredients);
+        setAddingToList(!addingToList);
+    };
+
     const handleIngredientChange = (event, index) => {
         const { name, value } = event.target;
-        setEditFormIngredientsState(prevIngredients => {
-            const updatedIngredients = [...prevIngredients];
-            updatedIngredients[index] = {
-                ...updatedIngredients[index],
-                [name]: name === 'quantity' ? Number(value) : value
-            };
-            return updatedIngredients;
-        });
+        if (editing) {
+            setEditFormIngredientsState(prevIngredients => {
+                const updatedIngredients = [...prevIngredients];
+                updatedIngredients[index] = {
+                    ...updatedIngredients[index],
+                    [name]: value
+                };
+                return updatedIngredients;
+            });
+        }
+        if (addingToList) {
+            setAddingFormIngredientsState(prevIngredients => {
+                const updatedIngredients = [...prevIngredients];
+                updatedIngredients[index] = {
+                    ...updatedIngredients[index],
+                    [name]: value
+                };
+                return updatedIngredients;
+            });
+        }
+    };
+
+    const increaseIngredientNumber = () => {
+        setEditFormIngredientsState(prevIngredients => [...prevIngredients, { name: '', quantity: "0", unit: '' }]);
     };
 
     const removeIngredient = (index) => {
@@ -60,12 +90,15 @@ const RecipeModal = ({ recipe, refetch, userId }) => {
 
     const updateRecipeHandler = async (event) => {
         event.preventDefault();
+        const updatedIngredients = editFormIngedientsState.map(ingredient => {
+            return { name: ingredient.name, amount: `${ingredient.quantity}${ingredient.unit}` }
+        });
         try {
             const { data } = await updateRecipe({
                 variables: {
                     recipeId: _id,
                     name: editFormNameState,
-                    ingredients: editFormIngedientsState,
+                    ingredients: updatedIngredients,
                 },
             });
             if (data) {
@@ -90,48 +123,71 @@ const RecipeModal = ({ recipe, refetch, userId }) => {
         }
     };
 
-
     return (
         <div className="modal-dialog modal-lg">
             <div className="modal-content">
                 <div className="modal-header">
                     <h1 className="modal-title fs-5" id="exampleModalLabel">{name}</h1>
-                    <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={() => setEditing(false)}></button>
+                    <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={() => { setEditing(false); setAddingToList(false) }}></button>
                 </div>
-                {editing ? (
-                    <div className="modal-body d-flex flex-column align-items-center">
-                        <form className="d-flex flex-column align-items-center">
-                            {editFormIngedientsState.map((ingredient, index) => (
-                                <div key={index} className="col-6 d-flex justify-content-between">
-                                    <input type="text" name="name" value={ingredient.name} onChange={(e) => handleIngredientChange(e, index)} />
-                                    <input type="number" name="quantity" value={ingredient.quantity} onChange={(e) => handleIngredientChange(e, index)} />
-                                    <button type='button' onClick={() => removeIngredient(index)}>Remove Ingredient</button>
+                {editing || addingToList ? (
+                    <div>
+                        {editing ? (
+                            <div>
+                                <div className="modal-body d-flex flex-column align-items-center">
+                                    <form className="d-flex flex-column align-items-center">
+                                        {editFormIngedientsState.map((ingredient, index) => (
+                                            <div key={index} className="col-10 d-flex justify-content-between">
+                                                <input type="text" name="name" value={ingredient.name} onChange={(e) => handleIngredientChange(e, index)} />
+                                                <input type="text" name="quantity" value={ingredient.quantity} onChange={(e) => handleIngredientChange(e, index)} onInput={(e) => { e.target.value = e.target.value.replace(/[^0-9/ ]/g, ''); }} />
+                                                <input type="text" name="unit" value={ingredient.unit} onChange={(e) => handleIngredientChange(e, index)} />
+                                                <button type='button' onClick={() => removeIngredient(index)}>Remove Ingredient</button>
+                                            </div>
+                                        ))}
+                                        <button type='button' onClick={increaseIngredientNumber}>Add Another Ingredient</button>
+                                    </form>
+                                </div>
+                                <div className="modal-footer">
+                                    <button type="button" className="btn btn-primary" onClick={updateRecipeHandler}>Save Updated Recipe</button>
+                                    <button type="button" className="btn btn-secondary" onClick={toggleEdit}>Cancel</button>
+                                </div>
+                            </div>
+                        ) : (
+                            <div>
+                                <div className="modal-body d-flex flex-column align-items-center">
+                                    <form className="d-flex flex-column align-items-center">
+                                        {addingFormIngedientsState.map((ingredient, index) => (
+                                            <div key={index} className="col-10 d-flex justify-content-between">
+                                                <input type="text" name="name" value={ingredient.name} onChange={(e) => handleIngredientChange(e, index)} />
+                                                <input type="number" name="quantity" value={ingredient.quantity} onChange={(e) => handleIngredientChange(e, index)} />
+                                                <button type='button' onClick={() => removeIngredient(index)}>Remove Ingredient</button>
+                                            </div>
+                                        ))}
+                                    </form>
+                                </div>
+                                <div className="modal-footer">
+                                    <button type="button" className="btn btn-success" data-bs-dismiss="modal" onClick={addItemsToListHandler}>Add Items to Grocery List</button>
+                                    <button type="button" className="btn btn-secondary" onClick={toggleAddingToList}>Cancel</button>
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                ) : (
+                    <div>
+                        <div className="modal-body d-flex flex-column align-items-center">
+                            {ingredients.map((ingredient) => (
+                                <div key={ingredient._id} className="col-6 d-flex justify-content-between">
+                                    <p>{ingredient.name}</p>
+                                    <p>{ingredient.amount}</p>
                                 </div>
                             ))}
-                        </form>
-                    </div>
-                ) : (
-                    <div className="modal-body d-flex flex-column align-items-center">
-                        {ingredients.map((ingredient) => (
-                            <div key={ingredient._id} className="col-6 d-flex justify-content-between">
-                                <p>{ingredient.name}</p>
-                                <p>{ingredient.quantity}</p>
-                            </div>
-                        ))}
-                    </div>
-                )}
-                {editing ? (
-                    <div className="modal-footer">
-                        <button type="button" className="btn btn-success" data-bs-dismiss="modal" onClick={addItemsToListHandler}>Add Items to Grocery List</button>
-                        <button type="button" className="btn btn-primary" onClick={updateRecipeHandler}>Save Updated Recipe</button>
-                        <button type="button" className="btn btn-secondary" onClick={toggleEdit}>Cancel</button>
-                    </div>
-                ) : (
-                    <div className="modal-footer">
-                        <button type="button" className="btn btn-success" onClick={toggleEdit}>Add to List</button>
-                        <button type="button" className="btn btn-primary" onClick={toggleEdit}>Edit Recipe</button>
-                        <button type="button" className="btn btn-danger" data-bs-dismiss="modal" onClick={removeRecipe}>Delete Recipe</button>
-                        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-success" onClick={toggleAddingToList}>Add to List</button>
+                            <button type="button" className="btn btn-primary" onClick={toggleEdit}>Edit Recipe</button>
+                            <button type="button" className="btn btn-danger" data-bs-dismiss="modal" onClick={removeRecipe}>Delete Recipe</button>
+                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
                     </div>
                 )}
 
