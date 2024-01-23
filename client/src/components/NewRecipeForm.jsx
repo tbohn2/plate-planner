@@ -8,7 +8,7 @@ const NewRecipeForm = ({ id, refetch }) => {
     const [saveRecipeToUser] = useMutation(SAVE_RECIPE_TO_USER);
 
     const [newRecipe, setNewRecipe] = useState({ recipeName: '', });
-    const [ingredients, setIngredients] = useState([{ name: '', quantity: "0", unit: '' }]);
+    const [ingredients, setIngredients] = useState([{ name: '', quantity: "", unit: '' }]);
 
 
     const handleRecipeChange = (e) => {
@@ -32,7 +32,7 @@ const NewRecipeForm = ({ id, refetch }) => {
     }
 
     const increaseIngredientNumber = () => {
-        setIngredients(prevIngredients => [...prevIngredients, { name: '', quantity: "0", unit: '' }]);
+        setIngredients(prevIngredients => [...prevIngredients, { name: '', quantity: "", unit: '' }]);
     };
 
     const removeIngredient = (index) => {
@@ -44,11 +44,16 @@ const NewRecipeForm = ({ id, refetch }) => {
 
     const handleNewRecipe = async (e) => {
         e.preventDefault();
+        const newIngredients = ingredients.map(ingredient => {
+            const amount = `${ingredient.quantity} ${ingredient.unit}`;
+            return { name: ingredient.name, amount: amount };
+        }
+        );
         try {
             const { data } = await createRecipe({
                 variables: {
                     name: newRecipe.recipeName,
-                    ingredients: ingredients,
+                    ingredients: newIngredients,
                     custom: true,
                 },
             });
