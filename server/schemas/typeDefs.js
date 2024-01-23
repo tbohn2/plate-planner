@@ -59,7 +59,7 @@ const typeDefs = gql`
         deleteUser(userId: ID!): User
         createRecipe(name: String!, img: String, ingredients: [IngredientInput], instructions: String, URL: String, custom: Boolean): Recipe
         saveRecipeToUser(userId: ID!, recipeId: ID!): User
-        updateRecipe(recipeId: ID!, name: String!, ingredients: [IngredientInput]): Recipe
+        updateRecipe(recipeId: ID!, name: String!, ingredients: [IngredientInput], instructions: String): Recipe
         deleteRecipe(recipeId: ID!): Recipe
     }
     `
