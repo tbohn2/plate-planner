@@ -34,7 +34,7 @@ const RecipeModal = ({ recipe, refetch, userId }) => {
 
     const toggleAddingToList = (e) => {
         e.preventDefault();
-        setAddingFormIngredientsState(typelessIngredients);
+        setAddingFormIngredientsState(defaultItemsList);
         setAddingToList(!addingToList);
     };
 
@@ -77,10 +77,10 @@ const RecipeModal = ({ recipe, refetch, userId }) => {
         event.preventDefault();
         try {
             const { data } = await addItemsToList({
-                variables: { userId: userId, items: editFormIngedientsState },
+                variables: { userId: userId, items: addingFormIngedientsState },
             });
             if (data) {
-                toggleEdit(event)
+                toggleAddingToList(event);
                 refetch();
             }
         } catch (err) {
