@@ -8,7 +8,7 @@ const NewRecipeForm = ({ id, refetch }) => {
     const [saveRecipeToUser] = useMutation(SAVE_RECIPE_TO_USER);
 
     const [newRecipe, setNewRecipe] = useState({ recipeName: '', });
-    const [ingredients, setIngredients] = useState([{ name: '', quantity: 0 }]);
+    const [ingredients, setIngredients] = useState([{ name: '', quantity: "0", unit: '' }]);
 
 
     const handleRecipeChange = (e) => {
@@ -25,14 +25,14 @@ const NewRecipeForm = ({ id, refetch }) => {
             const updatedIngredients = [...prevIngredients];
             updatedIngredients[index] = {
                 ...updatedIngredients[index],
-                [name]: name === 'quantity' ? Number(value) : value
+                [name]: value
             };
             return updatedIngredients;
         });
     }
 
     const increaseIngredientNumber = () => {
-        setIngredients(prevIngredients => [...prevIngredients, { name: '', quantity: 0 }]);
+        setIngredients(prevIngredients => [...prevIngredients, { name: '', quantity: "0", unit: '' }]);
     };
 
     const removeIngredient = (index) => {
@@ -61,7 +61,7 @@ const NewRecipeForm = ({ id, refetch }) => {
             });
             if (saveRecipeToUser) {
                 setNewRecipe({ recipeName: '', });
-                setIngredients([{ name: '', quantity: 0 }]);
+                setIngredients([{ name: '', quantity: "0", unit: '' }]);
                 refetch();
             }
         } catch (err) {
@@ -95,10 +95,18 @@ const NewRecipeForm = ({ id, refetch }) => {
                                     onChange={(e) => handleIngredientChange(e, index)}
                                 />
                                 <input
-                                    type='number'
+                                    type='text'
                                     name='quantity'
                                     placeholder='Quantity'
                                     value={ingredient.quantity}
+                                    onInput={(e) => { e.target.value = e.target.value.replace(/[^0-9/ ]/g, ''); }}
+                                    onChange={(e) => handleIngredientChange(e, index)}
+                                />
+                                <input
+                                    type='text'
+                                    name='unit'
+                                    placeholder='Unit e.g. cups, tbsp, a dash, etc.'
+                                    value={ingredient.unit}
                                     onChange={(e) => handleIngredientChange(e, index)}
                                 />
                                 <button type='button' onClick={() => removeIngredient(index)}>Remove Ingredient</button>
