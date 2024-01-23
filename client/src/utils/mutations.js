@@ -27,7 +27,7 @@ export const LOGIN_USER = gql`
 `;
 
 export const ADD_ITEMS_TO_LIST = gql`
-  mutation addItemsToList($userId: ID!, $items: [IngredientInput]) {
+  mutation addItemsToList($userId: ID!, $items: [ItemInput]) {
     addItemsToList(userId: $userId, items: $items) {
       _id
       name
@@ -40,7 +40,7 @@ export const ADD_ITEMS_TO_LIST = gql`
 `;
 
 export const UPDATE_USER_LIST = gql`
-  mutation updateUserList($userId: ID!, $shoppingList: [IngredientInput]!) {
+  mutation updateUserList($userId: ID!, $shoppingList: [ItemInput]!) {
     updateUserList(userId: $userId, shoppingList: $shoppingList) {
       _id
       name
