@@ -8,7 +8,7 @@ const NewRecipeForm = ({ id, refetch }) => {
     const [saveRecipeToUser] = useMutation(SAVE_RECIPE_TO_USER);
 
     const [newRecipe, setNewRecipe] = useState({ recipeName: '', });
-    const [ingredients, setIngredients] = useState([{ name: '', quantity: "", unit: '' }]);
+    const [ingredients, setIngredients] = useState([{ name: '', quantity: '', unit: '' }]);
 
 
     const handleRecipeChange = (e) => {
@@ -32,7 +32,7 @@ const NewRecipeForm = ({ id, refetch }) => {
     }
 
     const increaseIngredientNumber = () => {
-        setIngredients(prevIngredients => [...prevIngredients, { name: '', quantity: "", unit: '' }]);
+        setIngredients(prevIngredients => [...prevIngredients, { name: '', quantity: '', unit: '' }]);
     };
 
     const removeIngredient = (index) => {
@@ -66,7 +66,7 @@ const NewRecipeForm = ({ id, refetch }) => {
             });
             if (saveRecipeToUser) {
                 setNewRecipe({ recipeName: '', });
-                setIngredients([{ name: '', quantity: "0", unit: '' }]);
+                setIngredients([{ name: '', quantity: '', unit: '' }]);
                 refetch();
             }
         } catch (err) {
