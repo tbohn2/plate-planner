@@ -93,7 +93,7 @@ export const SAVE_RECIPE_TO_USER = gql`
 `;
 
 export const UPDATE_RECIPE = gql`
-  mutation Mutation($recipeId: ID!, $name: String!, $ingredients: [IngredientInput], $instructions: String,) {
+  mutation Mutation($recipeId: ID!, $name: String!, $ingredients: [IngredientInput], $instructions: String) {
     updateRecipe(recipeId: $recipeId, name: $name, ingredients: $ingredients, instructions: $instructions) {
       _id
     }
