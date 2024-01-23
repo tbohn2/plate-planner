@@ -7,8 +7,8 @@ const RecipeModal = ({ recipe, refetch, userId }) => {
     const { _id, name, ingredients, URL, img } = recipe;
 
     const typelessIngredients = ingredients.map(ingredient => {
-        const quantity = ingredient.amount.replace(/[^0-9/]/g, '');
-        const unit = ingredient.amount.replace(/[0-9/]/g, '');
+        const quantity = ingredient.amount.replace(/[^0-9/.]/g, '');
+        const unit = ingredient.amount.replace(/[0-9/.]/g, '');
         return { name: ingredient.name, quantity: quantity, unit: unit }
     });
 
@@ -139,7 +139,7 @@ const RecipeModal = ({ recipe, refetch, userId }) => {
                                         {editFormIngedientsState.map((ingredient, index) => (
                                             <div key={index} className="col-10 d-flex justify-content-between">
                                                 <input type="text" name="name" value={ingredient.name} onChange={(e) => handleIngredientChange(e, index)} />
-                                                <input type="text" name="quantity" value={ingredient.quantity} onChange={(e) => handleIngredientChange(e, index)} onInput={(e) => { e.target.value = e.target.value.replace(/[^0-9/ ]/g, ''); }} />
+                                                <input type="text" name="quantity" value={ingredient.quantity} onChange={(e) => handleIngredientChange(e, index)} onInput={(e) => { e.target.value = e.target.value.replace(/[^0-9/. ]/g, ''); }} />
                                                 <input type="text" name="unit" value={ingredient.unit} onChange={(e) => handleIngredientChange(e, index)} />
                                                 <button type='button' onClick={() => removeIngredient(index)}>Remove Ingredient</button>
                                             </div>
