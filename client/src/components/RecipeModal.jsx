@@ -8,7 +8,7 @@ const RecipeModal = ({ recipe, refetch, userId }) => {
 
     const typelessIngredients = ingredients.map(ingredient => {
         const quantity = ingredient.amount.replace(/[^0-9/.]/g, '');
-        const unit = ingredient.amount.replace(/[0-9/.]/g, '');
+        const unit = ingredient.amount.replace(/[0-9/.]/g, '').trim();
         return { name: ingredient.name, quantity: quantity, unit: unit }
     });
 
@@ -91,7 +91,7 @@ const RecipeModal = ({ recipe, refetch, userId }) => {
     const updateRecipeHandler = async (event) => {
         event.preventDefault();
         const updatedIngredients = editFormIngedientsState.map(ingredient => {
-            return { name: ingredient.name, amount: `${ingredient.quantity}${ingredient.unit}` }
+            return { name: ingredient.name, amount: `${ingredient.quantity} ${ingredient.unit}` }
         });
         try {
             const { data } = await updateRecipe({
@@ -99,6 +99,7 @@ const RecipeModal = ({ recipe, refetch, userId }) => {
                     recipeId: _id,
                     name: editFormNameState,
                     ingredients: updatedIngredients,
+                    instructions: "",
                 },
             });
             if (data) {
