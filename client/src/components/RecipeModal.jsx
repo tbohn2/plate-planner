@@ -55,7 +55,7 @@ const RecipeModal = ({ recipe, refetch, userId }) => {
                 const updatedIngredients = [...prevIngredients];
                 updatedIngredients[index] = {
                     ...updatedIngredients[index],
-                    [name]: value
+                    [name]: name === 'quantity' ? Number(value) : value
                 };
                 return updatedIngredients;
             });
