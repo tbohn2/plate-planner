@@ -63,7 +63,7 @@ const RecipeModal = ({ recipe, refetch, userId }) => {
     };
 
     const increaseIngredientNumber = () => {
-        setEditFormIngredientsState(prevIngredients => [...prevIngredients, { name: '', quantity: "0", unit: '' }]);
+        setEditFormIngredientsState(prevIngredients => [...prevIngredients, { name: '', quantity: "", unit: '' }]);
     };
 
     const removeIngredient = (index) => {
@@ -138,9 +138,9 @@ const RecipeModal = ({ recipe, refetch, userId }) => {
                                     <form className="d-flex flex-column align-items-center">
                                         {editFormIngedientsState.map((ingredient, index) => (
                                             <div key={index} className="col-10 d-flex justify-content-between">
-                                                <input type="text" name="name" value={ingredient.name} onChange={(e) => handleIngredientChange(e, index)} />
-                                                <input type="text" name="quantity" value={ingredient.quantity} onChange={(e) => handleIngredientChange(e, index)} onInput={(e) => { e.target.value = e.target.value.replace(/[^0-9/. ]/g, ''); }} />
-                                                <input type="text" name="unit" value={ingredient.unit} onChange={(e) => handleIngredientChange(e, index)} />
+                                                <input type="text" name="name" placeholder="Ingredient Name" value={ingredient.name} onChange={(e) => handleIngredientChange(e, index)} />
+                                                <input type="text" name="quantity" placeholder="Quantity" value={ingredient.quantity} onChange={(e) => handleIngredientChange(e, index)} onInput={(e) => { e.target.value = e.target.value.replace(/[^0-9/. ]/g, ''); }} />
+                                                <input type="text" name="unit" placeholder="Units e.g. cups, tbsp" value={ingredient.unit} onChange={(e) => handleIngredientChange(e, index)} />
                                                 <button type='button' onClick={() => removeIngredient(index)}>Remove Ingredient</button>
                                             </div>
                                         ))}
