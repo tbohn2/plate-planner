@@ -67,10 +67,18 @@ const RecipeModal = ({ recipe, refetch, userId }) => {
     };
 
     const removeIngredient = (index) => {
-        // Creates shallow copy of editFormIngedientsState to avoid mutating state directly
-        const list = [...editFormIngedientsState];
-        list.splice(index, 1);
-        setEditFormIngredientsState(list);
+        if (editing) {
+            // Creates shallow copy of editFormIngedientsState to avoid mutating state directly
+            const list = [...editFormIngedientsState];
+            list.splice(index, 1);
+            setEditFormIngredientsState(list);
+        }
+        if (addingToList) {
+            // Creates shallow copy of addingFormIngedientsState to avoid mutating state directly
+            const list = [...addingFormIngedientsState];
+            list.splice(index, 1);
+            setAddingFormIngredientsState(list);
+        }
     };
 
     const addItemsToListHandler = async (event) => {
