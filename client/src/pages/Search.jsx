@@ -3,6 +3,7 @@ import { useQuery, useMutation } from "@apollo/client";
 import { QUERY_USER } from "../utils/queries";
 import { CREATE_RECIPE, SAVE_RECIPE_TO_USER } from "../utils/mutations";
 import Auth from "../utils/auth";
+import "../styles/search.css";
 
 const Search = () => {
 
@@ -14,6 +15,8 @@ const Search = () => {
     });
 
     const [recipes, setRecipes] = useState([]);
+    const [searchName, setSearchName] = useState('');
+    const [category, setCategory] = useState(null);
 
     const [createRecipe] = useMutation(CREATE_RECIPE);
     const [saveRecipeToUser] = useMutation(SAVE_RECIPE_TO_USER);
@@ -37,6 +40,24 @@ const Search = () => {
 
         } catch (error) {
             console.log(error);
+        }
+    };
+
+    const handleSearch = async () => {
+        try {
+            const response = await fetch(`http://localhost:3001/api/searchByName?name=${searchName}&category=${category}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            const data = await response.json();
+            if (data) {
+                setRecipes(data.meals);
+            }
+        } catch (error) {
+            console.error('Error fetching data:', error);
         }
     };
 
@@ -72,6 +93,35 @@ const Search = () => {
     return (
         <div>
             <h1>Search Page</h1>
+            <input
+                type="text"
+                placeholder="Search by name"
+                name="searchName"
+                onChange={(e) => setSearchName(e.target.value)}
+                required
+            />
+            <label htmlFor="category">Category (optional)</label>
+            <button name="category" type="button" className=" col-2 btn btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" required>
+                {category ? category : 'Category'}
+            </button>
+            <ul className="dropdown-menu">
+                <li><button className="dropdown-item" type="button" onClick={() => setCategory(null)}>None</button></li>
+                <li><button className="dropdown-item" type="button" onClick={() => setCategory('Beef')}>Beef</button></li>
+                <li><button className="dropdown-item" type="button" onClick={() => setCategory('Breakfast')}>Breakfast</button></li>
+                <li><button className="dropdown-item" type="button" onClick={() => setCategory('Chicken')}>Chicken</button></li>
+                <li><button className="dropdown-item" type="button" onClick={() => setCategory('Dessert')}>Dessert</button></li>
+                <li><button className="dropdown-item" type="button" onClick={() => setCategory('Goat')}>Goat</button></li>
+                <li><button className="dropdown-item" type="button" onClick={() => setCategory('Lamb')}>Lamb</button></li>
+                <li><button className="dropdown-item" type="button" onClick={() => setCategory('Miscellaneous')}>Miscellaneous</button></li>
+                <li><button className="dropdown-item" type="button" onClick={() => setCategory('Pasta')}>Pasta</button></li>
+                <li><button className="dropdown-item" type="button" onClick={() => setCategory('Pork')}>Pork</button></li>
+                <li><button className="dropdown-item" type="button" onClick={() => setCategory('Seafood')}>Seafood</button></li>
+                <li><button className="dropdown-item" type="button" onClick={() => setCategory('Side')}>Side</button></li>
+                <li><button className="dropdown-item" type="button" onClick={() => setCategory('Starter')}>Starter</button></li>
+                <li><button className="dropdown-item" type="button" onClick={() => setCategory('Vegan')}>Vegan</button></li>
+                <li><button className="dropdown-item" type="button" onClick={() => setCategory('Vegetarian')}>Vegetarian</button></li>
+            </ul>
+            <button onClick={handleSearch}>Search</button>
             <button onClick={fetchRandomRecipe}>Random Recipe</button>
             <div>
                 {recipes.map((recipe) => {
@@ -94,7 +144,7 @@ const Search = () => {
                         <div key={recipe.idMeal}>
                             <h1>{name}</h1>
                             <a href={URL}>{URL}</a>
-                            <img src={img} alt={name} />
+                            <img className="searchImg" src={img} alt={name} />
                             <h2>Ingredients</h2>
                             <ul>
                                 {ingredients.map((ingredient) => {
