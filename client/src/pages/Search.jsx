@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { useMutation } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
+import { QUERY_USER } from "../utils/queries";
 import { CREATE_RECIPE, SAVE_RECIPE_TO_USER } from "../utils/mutations";
 import Auth from "../utils/auth";
 
@@ -8,10 +9,25 @@ const Search = () => {
     const user = Auth.getProfile();
     const id = user.data._id;
 
+    const { refetch } = useQuery(QUERY_USER, {
+        variables: { id: id },
+    });
+
     const [recipes, setRecipes] = useState([]);
 
     const [createRecipe] = useMutation(CREATE_RECIPE);
     const [saveRecipeToUser] = useMutation(SAVE_RECIPE_TO_USER);
+
+    const refetchData = async () => {
+        try {
+            const refetchedData = await refetch();
+            if (refetchedData) {
+                console.log('Refetched data!');
+            }
+        } catch (err) {
+            console.error(err);
+        }
+    }
 
     const fetchRandomRecipe = async () => {
         try {
@@ -23,7 +39,6 @@ const Search = () => {
             console.log(error);
         }
     };
-
 
     const handleSaveRecipe = async (e, name, ingredients, instructions, URL, img) => {
         e.preventDefault();
@@ -46,6 +61,7 @@ const Search = () => {
                 },
             });
             if (saveRecipeToUser) {
+                refetchData();
                 console.log('Recipe saved!');
             }
         } catch (err) {
