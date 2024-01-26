@@ -83,7 +83,6 @@ const Search = () => {
             });
             if (saveRecipeToUser) {
                 refetchData();
-                console.log('Recipe saved!');
             }
         } catch (err) {
             console.error(err);
@@ -123,7 +122,7 @@ const Search = () => {
             </ul>
             <button onClick={handleSearch}>Search</button>
             <button onClick={fetchRandomRecipe}>Random Recipe</button>
-            <div>
+            <div className="d-flex flex-wrap">
                 {recipes.map((recipe) => {
                     const ingredientKeys = Object.keys(recipe).filter(key => key.startsWith('strIngredient')).map(key => recipe[key]);
                     const measureKeys = Object.keys(recipe).filter(key => key.startsWith('strMeasure')).map(key => recipe[key]);
@@ -134,16 +133,15 @@ const Search = () => {
 
                     let ingredients = [];
                     for (let i = 0; i < ingredientKeys.length; i++) {
-                        if (ingredientKeys[i] !== '') {
+                        if (ingredientKeys[i] !== '' && ingredientKeys[i] !== "" && ingredientKeys[i] !== null && ingredientKeys[i] !== undefined) {
                             const newIngredient = { name: ingredientKeys[i], amount: measureKeys[i] };
                             ingredients.push(newIngredient);
                         }
                     }
 
                     return (
-                        <div key={recipe.idMeal}>
-                            <h1>{name}</h1>
-                            <a href={URL}>{URL}</a>
+                        <div key={recipe.idMeal} className="col-6 border border-dark">
+                            <a href={URL} className="fs-1 text-decoration-none link-dark">{name}</a>
                             <img className="searchImg" src={img} alt={name} />
                             <h2>Ingredients</h2>
                             <ul>
@@ -153,6 +151,7 @@ const Search = () => {
                                     );
                                 })}
                             </ul>
+                            <h2>Instructions</h2>
                             <p>{instructions}</p>
                             <button onClick={(e) => handleSaveRecipe(e, name, ingredients, instructions, URL, img)}>Save Recipe</button>
                         </div>
