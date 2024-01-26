@@ -8,8 +8,7 @@ router.get('/api/random', async (req, res) => {
 });
 
 router.get('/api/searchByName', async (req, res) => {
-    const name = req.body.name;
-    const category = req.body.category;
+    const { name, category } = req.query;
     const data = await fetchMealByName(name, category);
     res.status(200).json(data);
 });
