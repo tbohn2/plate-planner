@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink, } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
-import { Home, Login, UserRecipes, Search } from './pages';
+import { Home, List, Login, UserRecipes, Search } from './pages';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import './styles/root.css'
@@ -34,6 +34,7 @@ function App() {
           <div>
             <Routes>
               <Route exact path='/' element={<Home />} />
+              <Route exact path='/list' element={<List />} />
               <Route exact path='/login' element={<Login />} />
               <Route exact path='/myRecipes' element={<UserRecipes />} />
               <Route exact path='/search' element={<Search />} />
