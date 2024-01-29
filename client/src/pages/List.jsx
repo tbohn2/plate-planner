@@ -100,6 +100,21 @@ const List = () => {
         }
     }
 
+    const removeAllItems = async (event) => {
+        event.preventDefault();
+        try {
+            const { data } = await updateUserList({
+                variables: { userId: id, shoppingList: [] },
+            });
+            if (data) {
+                refetchHandler();
+                toggleEdit(event)
+            }
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
     return (
         <div className="col-12 d-flex flex-column align-items-center">
             <h1>My Shopping List</h1>
@@ -134,6 +149,7 @@ const List = () => {
             ) : (
                 <div>
                     <button type="button" className="btn btn-primary" onClick={toggleEdit}>Edit List</button>
+                    <button type="button" className="btn btn-danger" onClick={removeAllItems}>Remove All Items</button>
                 </div>
             )}
         </div>
