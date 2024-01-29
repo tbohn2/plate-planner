@@ -109,11 +109,13 @@ const UserRecipes = () => {
 
     return (
         <div className='d-flex'>
-            <div className='col-8'>
+            <div className='col-8 d-flex flex-column align-items-center'>
                 <h1>My Recipes</h1>
-                {customRecipes.map((recipe) => (
-                    <RecipeCard recipe={recipe} refetch={refetchHandler} userId={id} />
-                ))}
+                <div className='d-flex flex-wrap col-12 justify-content-center'>
+                    {customRecipes.map((recipe) => (
+                        <RecipeCard recipe={recipe} refetch={refetchHandler} userId={id} />
+                    ))}
+                </div>
 
                 <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#NewRecipeModal">
                     Create New Recipe
@@ -124,9 +126,11 @@ const UserRecipes = () => {
                 </div>
 
                 <h1>Saved Recipes</h1>
-                {savedRecipes.map((recipe) => (
-                    <RecipeCard recipe={recipe} refetch={refetchHandler} userId={id} />
-                ))}
+                <div className='d-flex flex-wrap col-12 justify-content-center'>
+                    {savedRecipes.map((recipe) => (
+                        <RecipeCard recipe={recipe} refetch={refetchHandler} userId={id} />
+                    ))}
+                </div>
             </div>
 
             <div className='col-4 border'>
