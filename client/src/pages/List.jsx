@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_USER } from '../utils/queries';
 import { UPDATE_USER_LIST } from '../utils/mutations';
+import '../styles/list.css';
 import Auth from '../utils/auth';
 
 const List = () => {
@@ -100,31 +101,30 @@ const List = () => {
     }
 
     return (
-        <div>
+        <div className="col-12 d-flex flex-column align-items-center">
             <h1>My Shopping List</h1>
-            <div className='d-flex'>
-                <h2 className='col-8'>Ingredients</h2>
+            <div className='d-flex justify-content-end col-6'>
+                <h2 className='col-7'>Item</h2>
                 <h2 className='col-4'>Quantity</h2>
             </div>
-            <div className='d-flex'>
-                <ul className='list-unstyled col-8'>
-                    {editing ? (
-                        shoppingListEditState.map((ingredient, index) =>
-                            <div key={index} className="col-12 d-flex justify-content-between">
-                                <input type="text" name="name" value={ingredient.name} onChange={(e) => handleItemChange(e, index)} />
-                                <input type="number" name="quantity" value={ingredient.quantity} onChange={(e) => handleItemChange(e, index)} />
-                                <button type='button' onClick={() => removeItem(index)}>X</button>
-                            </div>
-                        )
-                    ) : (
-                        shoppingList.map((ingredient, index) =>
-                            <div key={index} className="col-12 d-flex justify-content-between">
-                                <p name="name">{ingredient.name} </p>
-                                <p name="name">{ingredient.quantity} </p>
-                            </div>
-                        )
-                    )}
-                </ul>
+            <div className='d-flex flex-column col-6'>
+                {editing ? (
+                    shoppingListEditState.map((ingredient, index) =>
+                        <div key={index} className="col-12 d-flex">
+                            <input type="text" className="col-8" name="name" value={ingredient.name} onChange={(e) => handleItemChange(e, index)} />
+                            <input type="number" className="col-3" name="quantity" value={ingredient.quantity} onChange={(e) => handleItemChange(e, index)} />
+                            <button type='button' className="btn btn-danger" onClick={() => removeItem(index)}>X</button>
+                        </div>
+                    )
+                ) : (
+                    shoppingList.map((ingredient, index) =>
+                        <div key={index} className="col-12 d-flex justify-content-end">
+                            <input type="checkbox" className="form-check-input m-1 myCheckBox" />
+                            <p name="name" className="col-7 fs-4">{ingredient.name} </p>
+                            <p name="name" className="col-4 fs-4">{ingredient.quantity} </p>
+                        </div>
+                    )
+                )}
             </div>
             {editing ? (
                 <div>
