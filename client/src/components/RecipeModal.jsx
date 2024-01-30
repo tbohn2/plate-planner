@@ -192,8 +192,8 @@ const RecipeModal = ({ recipe, refetch, userId }) => {
                             ))}
                         </div>
                         <div className="modal-footer">
-                            <button type="button" className="btn btn-success" onClick={toggleAddingToList}>Add to List</button>
-                            <button type="button" className="btn btn-primary" onClick={toggleEdit}>Edit Recipe</button>
+                            <button type="button" className="btn btn-green" onClick={toggleAddingToList}>Add to List</button>
+                            <button type="button" className="btn btn-blue" onClick={toggleEdit}>Edit Recipe</button>
                             <button type="button" className="btn btn-danger" data-bs-dismiss="modal" onClick={removeRecipe}>Delete Recipe</button>
                             <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         </div>

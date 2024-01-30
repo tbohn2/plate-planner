@@ -5,6 +5,7 @@ import { UPDATE_USER_LIST } from '../utils/mutations';
 import Auth from '../utils/auth';
 import NewRecipeForm from '../components/NewRecipeForm';
 import RecipeCard from '../components/RecipeCard';
+import '../styles/root.css';
 
 const UserRecipes = () => {
     if (!Auth.loggedIn()) {
@@ -117,7 +118,7 @@ const UserRecipes = () => {
                     ))}
                 </div>
 
-                <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#NewRecipeModal">
+                <button type="button" className="btn btn-blue" data-bs-toggle="modal" data-bs-target="#NewRecipeModal">
                     Create New Recipe
                 </button>
 
@@ -161,12 +162,12 @@ const UserRecipes = () => {
                 </div>
                 {editing ? (
                     <div>
-                        <button type="button" className="btn btn-primary" onClick={updateShoppingListHandler}>Save changes</button>
-                        <button type="button" className="btn btn-secondary" onClick={toggleEdit}>Cancel</button>
+                        <button type="button" className="btn btn-blue" onClick={updateShoppingListHandler}>Save changes</button>
+                        <button type="button" className="btn btn-secondary mx-1" onClick={toggleEdit}>Cancel</button>
                     </div>
                 ) : (
                     <div>
-                        <button type="button" className="btn btn-primary" onClick={toggleEdit}>Edit List</button>
+                        <button type="button" className="btn btn-blue" onClick={toggleEdit}>Edit List</button>
                     </div>
                 )}
             </div>

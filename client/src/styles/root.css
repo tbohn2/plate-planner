@@ -1,8 +1,39 @@
 :root {
+    --light-yellow: #e5e49e;
     --orange: #c85103;
+    --warm-orange: #FAB460;
+    --green: #82C885;
+    --brown: #8E735B;
+    --blue: #1F497D;
 }
 
 .myBody {
     font-family: 'Nunito Sans', sans-serif;
     min-height: 100vh;
+}
+
+.bg-light-yellow {
+    background-color: var(--light-yellow);
+}
+
+.btn-blue {
+    border: var(--blue) 1px solid !important;
+    background-color: var(--blue) !important;
+    color: white !important;
+}
+
+.btn-blue:hover {
+    background-color: var(--green) !important;
+    color: var(--blue) !important;
+}
+
+.btn-green {
+    border: var(--green) 1px solid !important;
+    background-color: var(--green) !important;
+    color: var(--blue) !important;
+}
+
+.btn-green:hover {
+    background-color: var(--warm-orange) !important;
+    color: var(--blue) !important;
 }

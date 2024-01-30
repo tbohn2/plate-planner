@@ -29,7 +29,7 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <Router>
-        <div className='myBody bg-secondary'>
+        <div className='myBody bg-light-yellow'>
           <Header />
           <div>
             <Routes>
