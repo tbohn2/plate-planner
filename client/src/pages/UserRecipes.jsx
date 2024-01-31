@@ -110,7 +110,7 @@ const UserRecipes = () => {
 
     return (
         <div className='d-flex'>
-            <div className='col-8 d-flex flex-column align-items-center'>
+            <div className='col-9 d-flex flex-column align-items-center border-end border-dark myBody'>
                 <h1>My Recipes</h1>
                 <div className='d-flex flex-wrap col-12 justify-content-center'>
                     {customRecipes.map((recipe) => (
@@ -134,39 +134,37 @@ const UserRecipes = () => {
                 </div>
             </div>
 
-            <div className='col-4 border'>
+            <div className='col-3 border ms-2'>
                 <h1>My Shopping List</h1>
-                <div className='d-flex'>
-                    <h2 className='col-8'>Ingredients</h2>
+                <div className='d-flex col-10'>
+                    <h2 className='col-7'>Item</h2>
                     <h2 className='col-4'>Quantity</h2>
                 </div>
-                <div className='d-flex'>
-                    <ul className='list-unstyled col-8'>
-                        {editing ? (
-                            shoppingListEditState.map((ingredient, index) =>
-                                <div key={index} className="col-12 d-flex justify-content-between">
-                                    <input type="text" name="name" value={ingredient.name} onChange={(e) => handleItemChange(e, index)} />
-                                    <input type="number" name="quantity" value={ingredient.quantity} onChange={(e) => handleItemChange(e, index)} />
-                                    <button type='button' onClick={() => removeItem(index)}>X</button>
-                                </div>
-                            )
-                        ) : (
-                            shoppingList.map((ingredient, index) =>
-                                <div key={index} className="col-12 d-flex justify-content-between">
-                                    <p name="name">{ingredient.name} </p>
-                                    <p name="name">{ingredient.quantity} </p>
-                                </div>
-                            )
-                        )}
-                    </ul>
+                <div className='d-flex flex-column col-10'>
+                    {editing ? (
+                        shoppingListEditState.map((ingredient, index) =>
+                            <div key={index} className="col-12 d-flex border border-dark">
+                                <input type="text" className="col-7 fs-5" name="name" value={ingredient.name} onChange={(e) => handleItemChange(e, index)} />
+                                <input type="number" className="col-4 fs-5" name="quantity" value={ingredient.quantity} onChange={(e) => handleItemChange(e, index)} />
+                                <button type='button' className="btn btn-danger" onClick={() => removeItem(index)}>X</button>
+                            </div>
+                        )
+                    ) : (
+                        shoppingList.map((ingredient, index) =>
+                            <div key={index} className="col-12 d-flex border border-dark">
+                                <p name="name" className="col-7 fs-5 m-1 border-end border-dark">{ingredient.name} </p>
+                                <p name="name" className="col-4 fs-5 m-1">{ingredient.quantity} </p>
+                            </div>
+                        )
+                    )}
                 </div>
                 {editing ? (
-                    <div>
-                        <button type="button" className="btn btn-blue" onClick={updateShoppingListHandler}>Save changes</button>
+                    <div className='mt-2'>
+                        <button type="button" className="btn btn-success" onClick={updateShoppingListHandler}>Save changes</button>
                         <button type="button" className="btn btn-secondary mx-1" onClick={toggleEdit}>Cancel</button>
                     </div>
                 ) : (
-                    <div>
+                    <div className='mt-2'>
                         <button type="button" className="btn btn-blue" onClick={toggleEdit}>Edit List</button>
                     </div>
                 )}

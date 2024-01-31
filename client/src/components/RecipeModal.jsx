@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useQuery, useMutation } from '@apollo/client';
 import { ADD_ITEMS_TO_LIST, UPDATE_RECIPE, DELETE_RECIPE } from '../utils/mutations';
+import '../styles/root.css';
 
 const RecipeModal = ({ recipe, refetch, userId }) => {
 
@@ -133,10 +134,10 @@ const RecipeModal = ({ recipe, refetch, userId }) => {
     };
 
     return (
-        <div className="modal-dialog modal-lg">
+        <div className="modal-dialog modal-lg bg-light-yellow">
             <div className="modal-content">
                 <div className="modal-header">
-                    <h1 className="modal-title fs-5" id="exampleModalLabel">{name}</h1>
+                    <h1 className="modal-title fs-5">{name}</h1>
                     <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={() => { setEditing(false); setAddingToList(false) }}></button>
                 </div>
                 {editing || addingToList ? (

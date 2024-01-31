@@ -1,5 +1,5 @@
 :root {
-    --light-yellow: #e5e49e;
+    --light-yellow: #ddddc5;
     --orange: #c85103;
     --warm-orange: #FAB460;
     --green: #82C885;
@@ -8,22 +8,22 @@
 }
 
 .myBody {
-    font-family: 'Nunito Sans', sans-serif;
+    font-family: 'Roboto', sans-serif;
     min-height: 100vh;
 }
 
 .bg-light-yellow {
-    background-color: var(--light-yellow);
+    background-color: var(--light-yellow) !important;
 }
 
 .btn-blue {
-    border: var(--blue) 1px solid !important;
+    border: var(--blue) 2px solid !important;
     background-color: var(--blue) !important;
     color: white !important;
 }
 
 .btn-blue:hover {
-    background-color: var(--green) !important;
+    background-color: var(--light-yellow) !important;
     color: var(--blue) !important;
 }
 
