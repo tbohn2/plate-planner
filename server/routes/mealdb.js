@@ -25,7 +25,7 @@ const fetchMealByName = async (name, category) => {
         try {
             const url = `${apiUrl}search.php?s=${name}&filter.php?c=${category}`;
             const response = await axios.get(url);
-            const data = await response.json();
+            const data = await response.data;
             if (response.status !== 200) {
                 console.log(response);
             }
