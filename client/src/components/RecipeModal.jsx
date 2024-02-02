@@ -240,7 +240,7 @@ const RecipeModal = ({ recipe, refetch, userId }) => {
                             </div>
                             {instructions || img ? (
                                 <div className=" col-6 d-flex flex-column align-items-center">
-                                    {img ? (<img className="searchImg m-2" src={img} alt={name} />) : (null)}
+                                    {img ? (<img className="searchImg m-2 col-12" src={img} alt={name} />) : (null)}
                                     {instructions ? (
                                         <div className="mx-2">
                                             <h2 className="col-12 text-center text-decoration-underline">Instructions</h2>
