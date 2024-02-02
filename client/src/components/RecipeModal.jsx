@@ -101,10 +101,14 @@ const RecipeModal = ({ recipe, refetch, userId }) => {
     };
 
     const addItemsToListHandler = async (event) => {
+        const itemsToAdd = addingFormIngedientsState.map(ingredient => {
+            return { name: ingredient.name, quantity: ingredient.quantity }
+        });
+
         event.preventDefault();
         try {
             const { data } = await addItemsToList({
-                variables: { userId: userId, items: addingFormIngedientsState },
+                variables: { userId: userId, items: itemsToAdd },
             });
             if (data) {
                 toggleAddingToList(event);
