@@ -146,15 +146,21 @@ const RecipeModal = ({ recipe, refetch, userId }) => {
                             <div>
                                 <div className="modal-body d-flex flex-column align-items-center">
                                     <form className="d-flex flex-column align-items-center">
+                                        <h2 className="col-12 text-center border-bottom border-dark">Edit Recipe</h2>
+                                        <div className="col-10 d-flex">
+                                            <h3 className="col-4 text-center text-decoration-underline">Ingredients</h3>
+                                            <h3 className="col-2 text-center text-decoration-underline">Qty.</h3>
+                                            <h3 className="col-3 text-center text-decoration-underline">Unit</h3>
+                                        </div>
                                         {editFormIngedientsState.map((ingredient, index) => (
-                                            <div key={index} className="col-10 d-flex justify-content-between">
-                                                <input type="text" name="name" placeholder="Ingredient Name" value={ingredient.name} onChange={(e) => handleIngredientChange(e, index)} />
-                                                <input type="text" name="quantity" placeholder="Quantity" value={ingredient.quantity} onChange={(e) => handleIngredientChange(e, index)} onInput={(e) => { e.target.value = e.target.value.replace(/[^0-9/. ]/g, ''); }} />
-                                                <input type="text" name="unit" placeholder="Units e.g. cups, tbsp" value={ingredient.unit} onChange={(e) => handleIngredientChange(e, index)} />
-                                                <button type='button' onClick={() => removeIngredient(index)}>Remove Ingredient</button>
+                                            <div key={index} className="col-10 d-flex justify-content-between my-1">
+                                                <input type="text" className="col-4" name="name" placeholder="Ingredient Name" value={ingredient.name} onChange={(e) => handleIngredientChange(e, index)} />
+                                                <input type="text" className="col-2" name="quantity" placeholder="Quantity" value={ingredient.quantity} onChange={(e) => handleIngredientChange(e, index)} onInput={(e) => { e.target.value = e.target.value.replace(/[^0-9/. ]/g, ''); }} />
+                                                <input type="text" className="col-3" name="unit" placeholder="Units e.g. cups, tbsp" value={ingredient.unit} onChange={(e) => handleIngredientChange(e, index)} />
+                                                <button type='button' className="col-3 btn btn-danger mx-1" onClick={() => removeIngredient(index)}>Remove</button>
                                             </div>
                                         ))}
-                                        <button type='button' onClick={increaseIngredientNumber}>Add Another Ingredient</button>
+                                        <button type='button' className="btn btn-success my-1" onClick={increaseIngredientNumber}>+ Ingredient</button>
                                     </form>
                                 </div>
                                 <div className="modal-footer">
@@ -165,12 +171,19 @@ const RecipeModal = ({ recipe, refetch, userId }) => {
                         ) : (
                             <div>
                                 <div className="modal-body d-flex flex-column align-items-center">
-                                    <form className="d-flex flex-column align-items-center">
+                                    <form className="d-flex col-12 flex-column align-items-center">
+                                        <h2 className="col-12 text-center border-bottom border-dark">Add Ingredients to Grocery List</h2>
+                                        <div className="col-9 d-flex">
+                                            <h3 className="col-6 text-center text-decoration-underline">Ingredients</h3>
+                                            <h3 className="col-2 text-center text-decoration-underline">Qty.</h3>
+                                        </div>
+                                        <div>
+                                        </div>
                                         {addingFormIngedientsState.map((ingredient, index) => (
-                                            <div key={index} className="col-10 d-flex justify-content-between">
-                                                <input type="text" name="name" value={ingredient.name} onChange={(e) => handleIngredientChange(e, index)} />
-                                                <input type="number" name="quantity" value={ingredient.quantity} onChange={(e) => handleIngredientChange(e, index)} />
-                                                <button type='button' onClick={() => removeIngredient(index)}>Remove Ingredient</button>
+                                            <div key={index} className="col-9 d-flex my-1">
+                                                <input type="text" className="col-6" name="name" value={ingredient.name} onChange={(e) => handleIngredientChange(e, index)} />
+                                                <input type="number" className="col-2" name="quantity" value={ingredient.quantity} onChange={(e) => handleIngredientChange(e, index)} />
+                                                <button type='button' className="btn btn-danger mx-1 col-4" onClick={() => removeIngredient(index)}>Already Have It</button>
                                             </div>
                                         ))}
                                     </form>
