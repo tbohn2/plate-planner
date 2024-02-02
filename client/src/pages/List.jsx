@@ -78,6 +78,10 @@ const List = () => {
         });
     };
 
+    const addItemToList = () => {
+        setShoppingListEditState(prevItems => [...prevItems, { name: '', quantity: '' }]);
+    };
+
     const removeItem = (index) => {
         // Creates shallow copy of shoppingListEditState to avoid mutating state directly
         const list = [...shoppingListEditState];
@@ -124,13 +128,16 @@ const List = () => {
             </div>
             <div className='d-flex flex-column col-6'>
                 {editing ? (
-                    shoppingListEditState.map((ingredient, index) =>
-                        <div key={index} className="col-12 d-flex">
-                            <input type="text" className="col-8" name="name" value={ingredient.name} onChange={(e) => handleItemChange(e, index)} />
-                            <input type="number" className="col-3" name="quantity" value={ingredient.quantity} onChange={(e) => handleItemChange(e, index)} />
-                            <button type='button' className="btn btn-danger" onClick={() => removeItem(index)}>X</button>
-                        </div>
-                    )
+                    <div>
+                        {shoppingListEditState.map((ingredient, index) =>
+                            <div key={index} className="col-12 d-flex">
+                                <input type="text" className="col-8" name="name" value={ingredient.name} onChange={(e) => handleItemChange(e, index)} />
+                                <input type="number" className="col-3" name="quantity" value={ingredient.quantity} onChange={(e) => handleItemChange(e, index)} />
+                                <button type='button' className="btn btn-danger" onClick={() => removeItem(index)}>X</button>
+                            </div>
+                        )}
+                        <button type='button' className="btn btn-primary my-1" onClick={addItemToList}>+ Ingredient</button>
+                    </div>
                 ) : (
                     shoppingList.map((ingredient, index) =>
                         <div key={index} className="col-12 d-flex justify-content-end">
