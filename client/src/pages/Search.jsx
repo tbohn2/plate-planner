@@ -90,38 +90,40 @@ const Search = () => {
     }
 
     return (
-        <div>
-            <h1>Search Page</h1>
-            <input
-                type="text"
-                placeholder="Search by name"
-                name="searchName"
-                onChange={(e) => setSearchName(e.target.value)}
-                required
-            />
-            <label htmlFor="category">Category (optional)</label>
-            <button name="category" type="button" className=" col-2 btn btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" required>
-                {category ? category : 'Category'}
-            </button>
-            <ul className="dropdown-menu">
-                <li><button className="dropdown-item" type="button" onClick={() => setCategory(null)}>None</button></li>
-                <li><button className="dropdown-item" type="button" onClick={() => setCategory('Beef')}>Beef</button></li>
-                <li><button className="dropdown-item" type="button" onClick={() => setCategory('Breakfast')}>Breakfast</button></li>
-                <li><button className="dropdown-item" type="button" onClick={() => setCategory('Chicken')}>Chicken</button></li>
-                <li><button className="dropdown-item" type="button" onClick={() => setCategory('Dessert')}>Dessert</button></li>
-                <li><button className="dropdown-item" type="button" onClick={() => setCategory('Goat')}>Goat</button></li>
-                <li><button className="dropdown-item" type="button" onClick={() => setCategory('Lamb')}>Lamb</button></li>
-                <li><button className="dropdown-item" type="button" onClick={() => setCategory('Miscellaneous')}>Miscellaneous</button></li>
-                <li><button className="dropdown-item" type="button" onClick={() => setCategory('Pasta')}>Pasta</button></li>
-                <li><button className="dropdown-item" type="button" onClick={() => setCategory('Pork')}>Pork</button></li>
-                <li><button className="dropdown-item" type="button" onClick={() => setCategory('Seafood')}>Seafood</button></li>
-                <li><button className="dropdown-item" type="button" onClick={() => setCategory('Side')}>Side</button></li>
-                <li><button className="dropdown-item" type="button" onClick={() => setCategory('Starter')}>Starter</button></li>
-                <li><button className="dropdown-item" type="button" onClick={() => setCategory('Vegan')}>Vegan</button></li>
-                <li><button className="dropdown-item" type="button" onClick={() => setCategory('Vegetarian')}>Vegetarian</button></li>
-            </ul>
-            <button onClick={handleSearch}>Search</button>
-            <button onClick={fetchRandomRecipe}>Random Recipe</button>
+        <div className="d-flex flex-column justify-content-center align-items-center">
+            <h1 className="col-12 text-center">Recipe Search</h1>
+            <div className="col-12 d-flex justify-content-center align-items-center my-2">
+                <input
+                    type="text"
+                    placeholder="Search by name"
+                    name="searchName"
+                    className="input-group-text col-4 mx-1"
+                    onChange={(e) => setSearchName(e.target.value)}
+                    required
+                />
+                <button name="category" type="button" className="mx-1 col-2 btn btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" required>
+                    {category ? category : 'Category (optional)'}
+                </button>
+                <ul className="dropdown-menu">
+                    <li><button className="dropdown-item" type="button" onClick={() => setCategory(null)}>None</button></li>
+                    <li><button className="dropdown-item" type="button" onClick={() => setCategory('Beef')}>Beef</button></li>
+                    <li><button className="dropdown-item" type="button" onClick={() => setCategory('Breakfast')}>Breakfast</button></li>
+                    <li><button className="dropdown-item" type="button" onClick={() => setCategory('Chicken')}>Chicken</button></li>
+                    <li><button className="dropdown-item" type="button" onClick={() => setCategory('Dessert')}>Dessert</button></li>
+                    <li><button className="dropdown-item" type="button" onClick={() => setCategory('Goat')}>Goat</button></li>
+                    <li><button className="dropdown-item" type="button" onClick={() => setCategory('Lamb')}>Lamb</button></li>
+                    <li><button className="dropdown-item" type="button" onClick={() => setCategory('Miscellaneous')}>Miscellaneous</button></li>
+                    <li><button className="dropdown-item" type="button" onClick={() => setCategory('Pasta')}>Pasta</button></li>
+                    <li><button className="dropdown-item" type="button" onClick={() => setCategory('Pork')}>Pork</button></li>
+                    <li><button className="dropdown-item" type="button" onClick={() => setCategory('Seafood')}>Seafood</button></li>
+                    <li><button className="dropdown-item" type="button" onClick={() => setCategory('Side')}>Side</button></li>
+                    <li><button className="dropdown-item" type="button" onClick={() => setCategory('Starter')}>Starter</button></li>
+                    <li><button className="dropdown-item" type="button" onClick={() => setCategory('Vegan')}>Vegan</button></li>
+                    <li><button className="dropdown-item" type="button" onClick={() => setCategory('Vegetarian')}>Vegetarian</button></li>
+                </ul>
+                <button className="btn btn-primary col-3 fw-bold mx-1" onClick={handleSearch}>Search</button>
+                <button className="btn btn-success col-2 fw-bold mx-1" onClick={fetchRandomRecipe}>Random Recipe</button>
+            </div>
             <div className="d-flex flex-wrap">
                 {recipes.map((recipe) => {
                     const ingredientKeys = Object.keys(recipe).filter(key => key.startsWith('strIngredient')).map(key => recipe[key]);
