@@ -142,20 +142,26 @@ const Search = () => {
                     }
 
                     return (
-                        <div key={recipe.idMeal} className="col-6 border border-dark">
-                            <a href={URL} className="fs-1 text-decoration-none link-dark">{name}</a>
-                            <img className="searchImg" src={img} alt={name} />
-                            <h2>Ingredients</h2>
-                            <ul>
-                                {ingredients.map((ingredient) => {
-                                    return (
-                                        <li key={ingredient.name + ingredient.amount}>{ingredient.name} - {ingredient.amount}</li>
-                                    );
-                                })}
-                            </ul>
-                            <h2>Instructions</h2>
-                            <p>{instructions}</p>
-                            <button onClick={(e) => handleSaveRecipe(e, name, ingredients, instructions, URL, img)}>Save Recipe</button>
+                        <div key={recipe.idMeal} className="col-6 d-flex flex-column align-items-center justify-content-between border border-dark">
+                            <a href={URL} className="col-12 text-center fs-1 text-decoration-none link-dark">{name}</a>
+                            <div className="col-12 d-flex flex-wrap">
+                                <div className="col-5 d-flex flex-column align-items-center">
+                                    <h2 className="col-12 text-center">Ingredients</h2>
+                                    <ul>
+                                        {ingredients.map((ingredient) => {
+                                            return (
+                                                <li key={ingredient.name + ingredient.amount}>{ingredient.name} - {ingredient.amount}</li>
+                                            );
+                                        })}
+                                    </ul>
+                                </div>
+                                <img className="searchImg col-6" src={img} alt={name} />
+                            </div>
+                            <div className="d-flex flex-column align-items-center m-3">
+                                <h2 className="col-12 text-center">Instructions</h2>
+                                <p>{instructions}</p>
+                            </div>
+                            <button className="btn btn-success col-12" onClick={(e) => handleSaveRecipe(e, name, ingredients, instructions, URL, img)}>Save Recipe Above</button>
                         </div>
                     );
                 })}
