@@ -228,7 +228,7 @@ const RecipeModal = ({ recipe, refetch, userId }) => {
                             <h1 className="modal-title">{name}</h1>
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={() => { setEditing(false); setAddingToList(false) }}></button>
                         </div>
-                        <div className="modal-body d-flex col-12 justify-content-center">
+                        <div className="modal-body d-flex flex-wrap col-12 justify-content-center">
                             <div className="col-6 d-flex flex-column align-items-center">
                                 <h2 className="col-12 text-center text-decoration-underline">Ingredients</h2>
                                 {ingredients.map((ingredient) => (
@@ -238,9 +238,10 @@ const RecipeModal = ({ recipe, refetch, userId }) => {
                                     </div>
                                 ))}
                             </div>
+                            {img ? (<img className="img max-img-height col-5" src={img} alt={name} />) : (null)}
+
                             {instructions || img ? (
-                                <div className=" col-6 d-flex flex-column align-items-center">
-                                    {img ? (<img className="searchImg m-2 col-12" src={img} alt={name} />) : (null)}
+                                <div className=" col-12 d-flex flex-column align-items-center">
                                     {instructions ? (
                                         <div className="mx-2">
                                             <h2 className="col-12 text-center text-decoration-underline">Instructions</h2>

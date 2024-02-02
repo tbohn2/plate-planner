@@ -60,3 +60,11 @@
     background-color: var(--light-yellow) !important;
     color: grey !important;
 }
+
+.img {
+    object-fit: cover;
+}
+
+.max-img-height {
+    max-height: 300px;
+}
