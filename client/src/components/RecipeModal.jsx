@@ -179,7 +179,7 @@ const RecipeModal = ({ recipe, refetch, userId }) => {
                                                 <button type='button' className="col-3 btn btn-danger mx-1" onClick={() => removeIngredient(index)}>Remove</button>
                                             </div>
                                         ))}
-                                        <button type='button' className="btn btn-success my-1" onClick={increaseIngredientNumber}>+ Ingredient</button>
+                                        <button type='button' className="btn btn-primary my-1" onClick={increaseIngredientNumber}>+ Ingredient</button>
                                         <div className="col-12">
                                             <h3 className="col-12 text-center text-decoration-underline">Instructions</h3>
                                             <textarea className="col-12 form-control my-text-area" name="instructions" value={editFormInstructionsState} onChange={handleInstructionsChange} />
@@ -187,7 +187,7 @@ const RecipeModal = ({ recipe, refetch, userId }) => {
                                     </form>
                                 </div>
                                 <div className="modal-footer">
-                                    <button type="button" className="btn btn-primary" onClick={updateRecipeHandler}>Save Updated Recipe</button>
+                                    <button type="button" className="btn btn-success" onClick={updateRecipeHandler}>Save Updated Recipe</button>
                                     <button type="button" className="btn btn-secondary" onClick={toggleEdit}>Cancel</button>
                                 </div>
                             </div>
