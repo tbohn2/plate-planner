@@ -20,6 +20,7 @@ const RecipeModal = ({ recipe, refetch, userId }) => {
 
     const [editing, setEditing] = useState(false);
     const [addingToList, setAddingToList] = useState(false);
+    const [deleting, setDeleting] = useState(false);
     const [editFormNameState, setEditFormNameState] = useState(name);
     const [editFormInstructionsState, setEditFormInstructionsState] = useState(instructions);
     const [editFormIngedientsState, setEditFormIngredientsState] = useState(typelessIngredients);
@@ -41,6 +42,11 @@ const RecipeModal = ({ recipe, refetch, userId }) => {
         e.preventDefault();
         setAddingFormIngredientsState(defaultItemsList);
         setAddingToList(!addingToList);
+    };
+
+    const toggleDelete = (e) => {
+        e.preventDefault();
+        setDeleting(!deleting);
     };
 
     const handleNameChange = (event) => {
@@ -244,12 +250,20 @@ const RecipeModal = ({ recipe, refetch, userId }) => {
                                 </div>
                             ) : (null)}
                         </div>
-                        <div className="modal-footer">
-                            <button type="button" className="btn btn-success" onClick={toggleAddingToList}>Add to List</button>
-                            <button type="button" className="btn btn-primary" onClick={toggleEdit}>Edit Recipe</button>
-                            <button type="button" className="btn btn-danger" data-bs-dismiss="modal" onClick={removeRecipe}>Delete Recipe</button>
-                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        </div>
+                        {deleting ? (
+                            <div className="modal-footer">
+                                <p>Are you sure you want to delete recipe?</p>
+                                <button type="button" className="btn btn-danger" data-bs-dismiss="modal" onClick={removeRecipe}>Confirm Delete</button>
+                                <button type="button" className="btn btn-secondary" onClick={toggleDelete}>Cancel</button>
+                            </div>
+                        ) : (
+                            <div className="modal-footer">
+                                <button type="button" className="btn btn-success" onClick={toggleAddingToList}>Add to List</button>
+                                <button type="button" className="btn btn-primary" onClick={toggleEdit}>Edit Recipe</button>
+                                <button type="button" className="btn btn-danger" onClick={toggleDelete}>Delete Recipe</button>
+                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        )}
                     </div>
                 )}
 
