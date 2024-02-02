@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/header.css'
 import logo1 from '../assets/logo1.png'
+import Auth from '../utils/auth';
 
 const Header = () => {
-
+    const [loggedIn] = useState(Auth.loggedIn());
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
     useEffect(() => {
@@ -33,7 +34,11 @@ const Header = () => {
                             <Link className='text-decoration-none navBtn' to='/myRecipes'>My Recipes</Link>
                             <Link className='text-decoration-none navBtn' to='/list'>My List</Link>
                             <Link className='text-decoration-none navBtn' to='/search'>Browse Recipes</Link>
-                            <Link className='text-decoration-none loginBtn' to='/login'>Login</Link>
+                            {loggedIn ? (
+                                <Link className='text-decoration-none loginBtn' onClick={Auth.logout}>Logout</Link>
+                            ) : (
+                                <Link className='text-decoration-none loginBtn' to='/login'>Login</Link>
+                            )}
                         </nav>
                     </header>
                 )
