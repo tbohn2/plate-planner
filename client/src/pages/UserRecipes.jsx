@@ -118,7 +118,7 @@ const UserRecipes = () => {
                     ))}
                 </div>
 
-                <button type="button" className="btn btn-blue" data-bs-toggle="modal" data-bs-target="#NewRecipeModal">
+                <button type="button" className="btn btn-blue my-3" data-bs-toggle="modal" data-bs-target="#NewRecipeModal">
                     Create New Recipe
                 </button>
 
