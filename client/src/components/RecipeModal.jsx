@@ -134,10 +134,10 @@ const RecipeModal = ({ recipe, refetch, userId }) => {
     };
 
     return (
-        <div className="modal-dialog modal-lg bg-light-yellow">
-            <div className="modal-content">
+        <div className="modal-dialog modal-lg ">
+            <div className="modal-content bg-light-yellow">
                 <div className="modal-header">
-                    <h1 className="modal-title fs-5">{name}</h1>
+                    <h1 className="modal-title">{name}</h1>
                     <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={() => { setEditing(false); setAddingToList(false) }}></button>
                 </div>
                 {editing || addingToList ? (
@@ -184,13 +184,25 @@ const RecipeModal = ({ recipe, refetch, userId }) => {
                     </div>
                 ) : (
                     <div>
-                        <div className="modal-body d-flex flex-column align-items-center">
-                            {ingredients.map((ingredient) => (
-                                <div key={ingredient._id} className="col-6 d-flex justify-content-between">
-                                    <p>{ingredient.name}</p>
-                                    <p>{ingredient.amount}</p>
+                        <div className="modal-body d-flex justify-content-center col-12">
+                            <div className="col-5">
+                                <h2 className="col-12 text-center text-decoration-underline">Ingredients</h2>
+                                {ingredients.map((ingredient) => (
+                                    <div key={ingredient._id} className="d-flex justify-content-between border-dark border">
+                                        <p className="m-1">{ingredient.name}</p>
+                                        <p className="m-1">{ingredient.amount}</p>
+                                    </div>
+                                ))}
+                            </div>
+                            {recipe.instructions || recipe.img ? (
+                                <div className="d-flex flex-column align-items-center">
+                                    {recipe.img ? (<img className="searchImg m-2" src={recipe.img} alt={recipe.name} />) : (null)}
+                                    {recipe.instructions ? (<div className="m-2">
+                                        <h2 className="col-12 text-center text-decoration-underline">Instructions</h2>
+                                        <p>{recipe.instructions}</p>
+                                    </div>) : (null)}
                                 </div>
-                            ))}
+                            ) : (null)}
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-green" onClick={toggleAddingToList}>Add to List</button>
