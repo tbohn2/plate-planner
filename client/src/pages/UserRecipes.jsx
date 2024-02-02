@@ -16,6 +16,7 @@ const UserRecipes = () => {
     const id = user.data._id;
 
     const [editing, setEditing] = useState(false);
+    const [removing, setRemoving] = useState(false);
     const [shoppingList, setShoppingList] = useState([]);
     const [shoppingListEditState, setShoppingListEditState] = useState([]);
     const [customRecipes, setCustomRecipes] = useState([]);
@@ -34,8 +35,15 @@ const UserRecipes = () => {
             return { name: item.name, quantity: item.quantity };
         });
 
-        setShoppingList(shoppingList);
-        setShoppingListEditState(typelessShoppingList);
+        // This prevents my list from updating
+        if (shoppingList.length !== 0) {
+            setShoppingList(shoppingList);
+            setShoppingListEditState(typelessShoppingList);
+        }
+        else {
+            setShoppingList([{ name: 'No items in list', quantity: 0 }]);
+            setShoppingListEditState([{ name: 'No items in list', quantity: 0 }]);
+        }
     }
 
     const { loading, error, data, refetch } = useQuery(QUERY_USER, {
@@ -74,6 +82,11 @@ const UserRecipes = () => {
         setEditing(!editing);
     };
 
+    const toggleRemove = (e) => {
+        e.preventDefault();
+        setRemoving(!removing);
+    };
+
     const handleItemChange = (event, index) => {
         const { name, value } = event.target;
         setShoppingListEditState(prevItems => {
@@ -102,6 +115,21 @@ const UserRecipes = () => {
             if (data) {
                 refetchHandler();
                 toggleEdit(event)
+            }
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
+    const removeAllItems = async (event) => {
+        event.preventDefault();
+        try {
+            const { data } = await updateUserList({
+                variables: { userId: id, shoppingList: [] },
+            });
+            if (data) {
+                refetchHandler();
+                toggleRemove(event)
             }
         } catch (err) {
             console.error(err);
@@ -160,12 +188,24 @@ const UserRecipes = () => {
                 </div>
                 {editing ? (
                     <div className='mt-2'>
-                        <button type="button" className="btn btn-success" onClick={updateShoppingListHandler}>Save changes</button>
-                        <button type="button" className="btn btn-secondary mx-1" onClick={toggleEdit}>Cancel</button>
+                        <div>
+                            <button type="button" className="btn btn-success" onClick={updateShoppingListHandler}>Save changes</button>
+                            <button type="button" className="btn btn-secondary mx-1" onClick={toggleEdit}>Cancel</button>
+                        </div>
                     </div>
                 ) : (
                     <div className='mt-2'>
-                        <button type="button" className="btn btn-primary" onClick={toggleEdit}>Edit List</button>
+                        {removing ? (
+                            <div>
+                                <button type="button" className="btn btn-danger  mx-1" onClick={removeAllItems}>Clear All Items?</button>
+                                <button type="button" className="btn btn-secondary" onClick={toggleRemove}>Cancel</button>
+                            </div>
+                        ) : (
+                            <div>
+                                <button type="button" className="btn btn-primary" onClick={toggleEdit}>Edit List</button>
+                                <button type="button" className="btn btn-danger mx-1" onClick={toggleRemove}>Clear List</button>
+                            </div>
+                        )}
                     </div>
                 )}
             </div>
