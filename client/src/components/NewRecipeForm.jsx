@@ -39,9 +39,15 @@ const NewRecipeForm = ({ id, refetch }) => {
 
     const removeIngredient = (index) => {
         // Creates shallow copy of editFormIngedientsState to avoid mutating state directly
-        const list = [...ingredients];
+        const list = [...ingredientsState];
         list.splice(index, 1);
         setIngredientsState(list);
+    };
+
+    const clearForm = () => {
+        setnewRecipeNameState('');
+        setIngredientsState([{ name: '', quantity: '', unit: '' }]);
+        setinstructionsState('');
     };
 
     const handleNewRecipe = async (e) => {
@@ -91,7 +97,7 @@ const NewRecipeForm = ({ id, refetch }) => {
                             name="recipeName"
                             placeholder="Recipe Name"
                             className="col-6 fs-4 my-1"
-                            value={newRecipeNameState.recipeName}
+                            value={newRecipeNameState}
                             onChange={handleRecipeChange}
                         />
                         <div className="col-12 d-flex flex-column justify-content-center align-items-center my-1">
@@ -134,6 +140,7 @@ const NewRecipeForm = ({ id, refetch }) => {
                     </form>
                     <div className="modal-footer">
                         <button type="button" className="btn btn-success" data-bs-dismiss="modal" onClick={handleNewRecipe}>Save Recipe</button>
+                        <button type="button" className="btn btn-primary" onClick={clearForm}>Clear All</button>
                         <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     </div>
                 </div>
