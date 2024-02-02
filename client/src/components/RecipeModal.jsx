@@ -90,7 +90,7 @@ const RecipeModal = ({ recipe, refetch, userId }) => {
         }
     };
 
-    const handlerInstructionsChange = (event) => {
+    const handleInstructionsChange = (event) => {
         setEditFormInstructionsState(event.target.value);
     };
 
@@ -176,7 +176,7 @@ const RecipeModal = ({ recipe, refetch, userId }) => {
                                         <button type='button' className="btn btn-success my-1" onClick={increaseIngredientNumber}>+ Ingredient</button>
                                         <div className="col-12">
                                             <h3 className="col-12 text-center text-decoration-underline">Instructions</h3>
-                                            <textarea className="col-12 form-control my-text-area" name="instructions" value={editFormInstructionsState} onChange={handlerInstructionsChange} />
+                                            <textarea className="col-12 form-control my-text-area" name="instructions" value={editFormInstructionsState} onChange={handleInstructionsChange} />
                                         </div>
                                     </form>
                                 </div>
