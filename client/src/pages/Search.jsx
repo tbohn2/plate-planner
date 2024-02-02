@@ -155,7 +155,7 @@ const Search = () => {
                                         })}
                                     </ul>
                                 </div>
-                                <img className="searchImg col-6" src={img} alt={name} />
+                                <img className="img col-6" src={img} alt={name} />
                             </div>
                             <div className="d-flex flex-column align-items-center m-3">
                                 <h2 className="col-12 text-center">Instructions</h2>
