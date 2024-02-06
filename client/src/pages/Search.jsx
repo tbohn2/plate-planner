@@ -6,6 +6,9 @@ import Auth from "../utils/auth";
 import "../styles/search.css";
 
 const Search = () => {
+    if (!Auth.loggedIn()) {
+        window.location.assign('/login');
+    }
 
     const user = Auth.getProfile();
     const id = user.data._id;
