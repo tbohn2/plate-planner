@@ -90,7 +90,7 @@ const Search = () => {
     }
 
     return (
-        <div className="d-flex flex-column justify-content-center align-items-center">
+        <div className="fade-in d-flex flex-column justify-content-center align-items-center">
             <h1 className="col-12 text-center">Recipe Search</h1>
             <div className="col-12 d-flex justify-content-center align-items-center my-2">
                 <input

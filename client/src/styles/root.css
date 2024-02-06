@@ -8,6 +8,20 @@
     --red: #eb2525;
 }
 
+@keyframes fade-in {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.fade-in {
+    animation: fade-in 0.75s ease-in-out;
+}
+
 .myBody {
     font-family: 'Roboto', sans-serif;
     min-height: 100vh;

@@ -141,7 +141,7 @@ const UserRecipes = () => {
     }
 
     return (
-        <div className='d-flex'>
+        <div className='d-flex fade-in'>
             <div className='col-9 d-flex flex-column align-items-center border-end border-dark myBody'>
                 <h1>My Recipes</h1>
                 <div className='d-flex flex-wrap col-12 justify-content-center'>

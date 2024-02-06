@@ -120,7 +120,7 @@ const List = () => {
     }
 
     return (
-        <div className="col-12 d-flex flex-column align-items-center">
+        <div className="fade-in col-12 d-flex flex-column align-items-center">
             <h1>My Shopping List</h1>
             <div className='d-flex justify-content-end col-5'>
                 <h2 className='col-7'>Item</h2>

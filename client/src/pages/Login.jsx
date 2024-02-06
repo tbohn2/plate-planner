@@ -55,7 +55,7 @@ const Login = () => {
     };
 
     return (
-        <div className=''>
+        <div className='fade-in'>
             {signingUp ? (
                 <div className=''>
                     <h2 className=''>Create Account</h2>
