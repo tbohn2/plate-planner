@@ -122,11 +122,11 @@ const List = () => {
     return (
         <div className="col-12 d-flex flex-column align-items-center">
             <h1>My Shopping List</h1>
-            <div className='d-flex justify-content-end col-6'>
+            <div className='d-flex justify-content-end col-5'>
                 <h2 className='col-7'>Item</h2>
                 <h2 className='col-4'>Quantity</h2>
             </div>
-            <div className='d-flex flex-column col-6'>
+            <div className='d-flex flex-column col-5'>
                 {editing ? (
                     <div>
                         {shoppingListEditState.map((ingredient, index) =>
@@ -151,12 +151,12 @@ const List = () => {
             {editing ? (
                 <div>
                     <button type="button" className="btn btn-primary" onClick={updateShoppingListHandler}>Save changes</button>
-                    <button type="button" className="btn btn-secondary" onClick={toggleEdit}>Cancel</button>
+                    <button type="button" className="btn btn-secondary mx-1" onClick={toggleEdit}>Cancel</button>
                 </div>
             ) : (
                 <div>
                     <button type="button" className="btn btn-primary" onClick={toggleEdit}>Edit List</button>
-                    <button type="button" className="btn btn-danger" onClick={removeAllItems}>Remove All Items</button>
+                    <button type="button" className="btn btn-danger mx-1" onClick={removeAllItems}>Remove All Items</button>
                 </div>
             )}
         </div>
