@@ -55,69 +55,70 @@ const Login = () => {
     };
 
     return (
-        <div className='fade-in'>
+        <div className='fade-in d-flex justify-content-center my-5'>
             {signingUp ? (
-                <div className=''>
-                    <h2 className=''>Create Account</h2>
-                    <form onSubmit={addNewUser} className=''>
+                <div className='card d-flex flex-column p-3 col-3'>
+                    <h2 className='text-center'>Create Account</h2>
+                    <form onSubmit={addNewUser} className='d-flex flex-column'>
+                        <label htmlFor="name">Name</label>
                         <input
-                            className=''
+                            className='my-1'
                             placeholder='First Name'
                             name='name'
+                            id='name'
                             onChange={updateForm}
                             required
                         />
+                        <label htmlFor="email">Email</label>
                         <input
-                            className=''
+                            className='my-1'
                             placeholder='Email'
                             name='email'
                             onChange={updateForm}
                             required
                         />
+                        <label htmlFor="password">Password</label>
                         <input
-                            className=''
+                            className='my-1'
                             type='password'
                             placeholder='Password'
                             name='password'
+                            id='password'
                             onChange={updateForm}
                             required
                         />
-                        <div className=''>
-                            <button className='' type='submit'>
-                                Create Account
-                            </button>
-                        </div>
+                        <button className='my-1 btn btn-success col-12' type='submit'>Create Account</button>
                     </form>
-                    <button className='' onClick={toggleSignup}>
+                    <button className='my-1 btn btn-primary col-12' onClick={toggleSignup}>
                         Already have an account?
                     </button>
                 </div>
             ) : (
-                <div className=''>
-                    <h2 className=''>Login</h2>
-                    <form onSubmit={loginUser} className=''>
+                <div className='d-flex flex-column card p-3 col-3'>
+                    <h2 className='text-center'>Login</h2>
+                    <form onSubmit={loginUser} className='d-flex flex-column'>
+                        <label htmlFor="email">Email</label>
                         <input
-                            className=''
+                            className='my-1'
                             placeholder='Email'
                             name='email'
+                            id='email'
                             onChange={updateForm}
                             required
                         />
+                        <label htmlFor="password">Password</label>
                         <input
-                            className=''
+                            className='my-1'
                             type='password'
                             placeholder='Password'
                             name='password'
+                            id='password'
                             onChange={updateForm}
                             required
                         />
-                        <div className=''>
-                            <button className='' type='submit'>
-                                Log In
-                            </button>
-                        </div>
+                        <button className='my-1 btn btn-success col-12' type='submit'>Log In</button>
                     </form>
-                    <button className='' onClick={toggleSignup}>
+                    <button className='my-1 btn btn-primary col-12' onClick={toggleSignup}>
                         Click here to create an account
                     </button>
                 </div>
