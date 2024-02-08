@@ -17,6 +17,7 @@ const Search = () => {
         variables: { id: id },
     });
 
+    const [fetching, setFetching] = useState(false);
     const [recipes, setRecipes] = useState([]);
     const [searchName, setSearchName] = useState('');
     const [category, setCategory] = useState(null);
@@ -36,17 +37,25 @@ const Search = () => {
     }
 
     const fetchRandomRecipe = async () => {
+        setRecipes([]);
+        setFetching(true);
         try {
             const res = await fetch('http://localhost:3001/api/random')
             const data = await res.json();
-            setRecipes(data.meals);
+            if (data) {
+                setRecipes(data.meals);
+                setFetching(false);
+            }
 
         } catch (error) {
             console.log(error);
+            setFetching(false);
         }
     };
 
     const handleSearch = async () => {
+        setRecipes([]);
+        setFetching(true);
         try {
             const response = await fetch(`http://localhost:3001/api/searchByName?name=${searchName}&category=${category}`, {
                 method: 'GET',
@@ -58,9 +67,11 @@ const Search = () => {
             const data = await response.json();
             if (data) {
                 setRecipes(data.meals);
+                setFetching(false);
             }
         } catch (error) {
             console.error('Error fetching data:', error);
+            setFetching(false);
         }
     };
 
@@ -127,6 +138,13 @@ const Search = () => {
                 <button className="btn btn-primary col-3 fw-bold mx-1" onClick={handleSearch}>Search</button>
                 <button className="btn btn-success col-2 fw-bold mx-1" onClick={fetchRandomRecipe}>Random Recipe</button>
             </div>
+            {fetching ? (
+                <div className="d-flex justify-content-center align-items-center">
+                    <div className="spinner-border" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            ) : null}
             <div className="d-flex flex-wrap">
                 {recipes.map((recipe) => {
                     const ingredientKeys = Object.keys(recipe).filter(key => key.startsWith('strIngredient')).map(key => recipe[key]);
