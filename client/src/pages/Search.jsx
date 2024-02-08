@@ -18,6 +18,7 @@ const Search = () => {
     });
 
     const [fetching, setFetching] = useState(false);
+    const [error, setError] = useState(null);
     const [recipes, setRecipes] = useState([]);
     const [searchName, setSearchName] = useState('');
     const [category, setCategory] = useState(null);
@@ -38,6 +39,9 @@ const Search = () => {
 
     const fetchRandomRecipe = async () => {
         setRecipes([]);
+        if (error) {
+            setError(null);
+        }
         setFetching(true);
         try {
             const res = await fetch('http://localhost:3001/api/random')
@@ -50,11 +54,15 @@ const Search = () => {
         } catch (error) {
             console.log(error);
             setFetching(false);
+            setError('Error Retrieving data; please try again later');
         }
     };
 
     const handleSearch = async () => {
         setRecipes([]);
+        if (error) {
+            setError(null);
+        }
         setFetching(true);
         try {
             const response = await fetch(`http://localhost:3001/api/searchByName?name=${searchName}&category=${category}`, {
@@ -72,12 +80,15 @@ const Search = () => {
         } catch (error) {
             console.error('Error fetching data:', error);
             setFetching(false);
+            setError('Error Retrieving data; please try again later');
         }
     };
 
     const handleSaveRecipe = async (e, index, name, ingredients, instructions, URL, img) => {
         e.preventDefault();
-
+        if (error) {
+            setError(null);
+        }
         try {
             const { data } = await createRecipe({
                 variables: {
@@ -106,6 +117,7 @@ const Search = () => {
             }
         } catch (err) {
             console.error(err);
+            setError('Error occurred while saving recipe');
         }
     }
 
@@ -149,6 +161,11 @@ const Search = () => {
                     <div className="spinner-border" role="status">
                         <span className="visually-hidden">Loading...</span>
                     </div>
+                </div>
+            ) : null}
+            {error ? (
+                <div className="alert alert-danger" role="alert">
+                    {error}
                 </div>
             ) : null}
             <div className="d-flex flex-wrap justify-content-evenly">
