@@ -75,8 +75,9 @@ const Search = () => {
         }
     };
 
-    const handleSaveRecipe = async (e, name, ingredients, instructions, URL, img) => {
+    const handleSaveRecipe = async (e, index, name, ingredients, instructions, URL, img) => {
         e.preventDefault();
+
         try {
             const { data } = await createRecipe({
                 variables: {
@@ -96,6 +97,11 @@ const Search = () => {
                 },
             });
             if (saveRecipeToUser) {
+                const recipesState = [...recipes];
+                let savedRecipe = recipesState[index];
+                savedRecipe.saved = true;
+                recipesState[index] = savedRecipe;
+                setRecipes(recipesState);
                 refetchData();
             }
         } catch (err) {
@@ -139,14 +145,14 @@ const Search = () => {
                 <button className="btn btn-success col-2 fw-bold mx-1" onClick={fetchRandomRecipe}>Random Recipe</button>
             </div>
             {fetching ? (
-                <div className="d-flex justify-content-center align-items-center">
+                <div className="d-flex justify-content-center align-items-center m-5">
                     <div className="spinner-border" role="status">
                         <span className="visually-hidden">Loading...</span>
                     </div>
                 </div>
             ) : null}
-            <div className="d-flex flex-wrap">
-                {recipes.map((recipe) => {
+            <div className="d-flex flex-wrap justify-content-evenly">
+                {recipes.map((recipe, index) => {
                     const ingredientKeys = Object.keys(recipe).filter(key => key.startsWith('strIngredient')).map(key => recipe[key]);
                     const measureKeys = Object.keys(recipe).filter(key => key.startsWith('strMeasure')).map(key => recipe[key]);
                     const name = recipe.strMeal;
@@ -163,7 +169,7 @@ const Search = () => {
                     }
 
                     return (
-                        <div key={recipe.idMeal} className="col-6 d-flex flex-column align-items-center justify-content-between border border-dark">
+                        <div key={recipe.idMeal} className="fade-in card my-3 col-5 d-flex flex-column align-items-center justify-content-between border border-dark">
                             <a href={URL} className="col-12 text-center fs-1 text-decoration-none link-dark">{name}</a>
                             <div className="col-12 d-flex flex-wrap">
                                 <div className="col-5 d-flex flex-column align-items-center">
@@ -182,7 +188,11 @@ const Search = () => {
                                 <h2 className="col-12 text-center">Instructions</h2>
                                 <p>{instructions}</p>
                             </div>
-                            <button className="btn btn-success col-12" onClick={(e) => handleSaveRecipe(e, name, ingredients, instructions, URL, img)}>Save Recipe Above</button>
+                            {recipe.saved ? (
+                                <button className="btn border border-success border-2 bg-light-yellow text-success col-12">Recipe Saved!</button>
+                            ) : (
+                                <button className="btn btn-success col-12" onClick={(e) => handleSaveRecipe(e, index, name, ingredients, instructions, URL, img)}>Save Recipe Above</button>
+                            )}
                         </div>
                     );
                 })}
