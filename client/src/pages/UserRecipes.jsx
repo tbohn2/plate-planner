@@ -174,14 +174,14 @@ const UserRecipes = () => {
                 </div>
                 <div className='d-flex flex-column col-10'>
                     {editing ? (
-                        <div>
+                        <div className='d-flex flex-wrap justify-content-center'>
                             {shoppingListEditState.map((ingredient, index) =>
-                                <div key={index} className="col-12 d-flex border border-dark">
+                                <div key={index} className="col-12 d-flex mb-1">
                                     <input type="text" className="col-7 fs-5" name="name" value={ingredient.name} onChange={(e) => handleItemChange(e, index)} />
                                     <input type="number" className="col-4 fs-5" name="quantity" value={ingredient.quantity} onChange={(e) => handleItemChange(e, index)} />
-                                    <button type='button' className="btn btn-danger" onClick={() => removeItem(index)}>X</button>
+                                    <button type='button' className="btn btn-sm btn-danger mx-1" onClick={() => removeItem(index)}>X</button>
                                 </div>)}
-                            <button type='button' className="btn btn-primary my-1" onClick={addItemToList}>+ Ingredient</button>
+                            <button type='button' className="btn btn-primary my-1 col-12" onClick={addItemToList}>+ Item</button>
                         </div>
                     ) : (
                         shoppingList.map((ingredient, index) =>
