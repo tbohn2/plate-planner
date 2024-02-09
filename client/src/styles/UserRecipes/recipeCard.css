@@ -5,6 +5,11 @@
     text-decoration: underline var(--orange) !important;
 }
 
+.recipeImg {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
 .modal {
     cursor: default !important;
 }
