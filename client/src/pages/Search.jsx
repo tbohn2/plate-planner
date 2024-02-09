@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useQuery } from "@apollo/client";
 import { QUERY_USER } from "../utils/queries";
 import Auth from "../utils/auth";
-import SearchCard from "../components/SearchCard";
+import SearchCard from "../components/Search/SearchCard";
 import "../styles/search.css";
 
 const Search = () => {

@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useMutation } from "@apollo/client";
-import { CREATE_RECIPE, SAVE_RECIPE_TO_USER } from "../utils/mutations";
-import Auth from "../utils/auth";
-import "../styles/root.css";
-import "../styles/search.css";
+import { CREATE_RECIPE, SAVE_RECIPE_TO_USER } from "../../utils/mutations";
+import Auth from "../../utils/auth";
+import "../../styles/root.css";
+import "../../styles/search.css";
 
 const SearchCard = ({ recipe, refetch, setFetching }) => {
     const user = Auth.getProfile();

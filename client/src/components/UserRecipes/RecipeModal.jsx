@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useQuery, useMutation } from '@apollo/client';
-import { ADD_ITEMS_TO_LIST, UPDATE_RECIPE, DELETE_RECIPE } from '../utils/mutations';
-import '../styles/root.css';
-import '../styles/recipeModal.css';
+import { ADD_ITEMS_TO_LIST, UPDATE_RECIPE, DELETE_RECIPE } from '../../utils/mutations';
+import '../../styles/root.css';
+import '../../styles/UserRecipes/recipeModal.css';
 
 const RecipeModal = ({ recipe, refetch, userId }) => {
 

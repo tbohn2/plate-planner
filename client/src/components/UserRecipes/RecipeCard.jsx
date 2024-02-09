@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import RecipeModal from '../components/RecipeModal';
-import '../styles/root.css';
-import '../styles/recipeCard.css';
+import RecipeModal from './RecipeModal';
+import '../../styles/root.css';
+import '../../styles/UserRecipes/recipeCard.css';
 
 const RecipeCard = ({ recipe, refetch, userId }) => {
 

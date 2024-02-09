@@ -3,8 +3,8 @@ import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_USER } from '../utils/queries';
 import { UPDATE_USER_LIST } from '../utils/mutations';
 import Auth from '../utils/auth';
-import NewRecipeForm from '../components/NewRecipeForm';
-import RecipeCard from '../components/RecipeCard';
+import NewRecipeForm from '../components/UserRecipes/NewRecipeForm';
+import RecipeCard from '../components/UserRecipes/RecipeCard';
 import '../styles/root.css';
 
 const UserRecipes = () => {

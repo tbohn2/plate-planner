@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useMutation } from '@apollo/client';
-import { CREATE_RECIPE, SAVE_RECIPE_TO_USER } from '../utils/mutations';
+import { CREATE_RECIPE, SAVE_RECIPE_TO_USER } from '../../utils/mutations';
 
 const NewRecipeForm = ({ id, refetch }) => {
 
