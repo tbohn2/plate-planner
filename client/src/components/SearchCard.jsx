@@ -10,7 +10,7 @@ const SearchCard = ({ recipe, refetch, setFetching }) => {
     const id = user.data._id;
 
     const [loaded, setLoaded] = useState(false);
-    const [error, setError] = useState(null);
+    const [error, setError] = useState(false);
     const [saved, setSaved] = useState(false);
 
     const [createRecipe] = useMutation(CREATE_RECIPE);
@@ -18,9 +18,6 @@ const SearchCard = ({ recipe, refetch, setFetching }) => {
 
     const handleSaveRecipe = async (e, name, ingredients, instructions, URL, img) => {
         e.preventDefault();
-        if (error) {
-            setError(null);
-        }
         try {
             const { data } = await createRecipe({
                 variables: {
@@ -45,7 +42,7 @@ const SearchCard = ({ recipe, refetch, setFetching }) => {
             }
         } catch (err) {
             console.error(err);
-            setError('Error occurred while saving recipe');
+            setError(true);
         }
     }
 
@@ -84,8 +81,15 @@ const SearchCard = ({ recipe, refetch, setFetching }) => {
                 <h2 className="col-12 text-center">Instructions</h2>
                 <p>{instructions}</p>
             </div>
-            {saved ? (
-                <button className="btn border border-success border-2 bg-light-yellow text-success col-12">Recipe Saved!</button>
+            {saved || error ? (
+                <div className="col-12">
+                    {saved ? (
+                        <button className="btn border border-success border-2 bg-light-yellow text-success fw-bold col-12">Recipe Saved!</button>
+                    ) : (
+                        <button className="btn border border-danger border-2 bg-light-yellow text-danger fw-bold col-12">Error Saving Recipe</button>
+                    )}
+                </div>
+
             ) : (
                 <button className="btn btn-success col-12" onClick={(e) => handleSaveRecipe(e, name, ingredients, instructions, URL, img)}>Save Recipe Above</button>
             )}
