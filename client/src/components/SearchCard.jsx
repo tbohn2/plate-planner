@@ -1,14 +1,15 @@
 import React, { useState } from "react";
-import { useQuery, useMutation } from "@apollo/client";
-import { QUERY_USER } from "../utils/queries";
+import { useMutation } from "@apollo/client";
 import { CREATE_RECIPE, SAVE_RECIPE_TO_USER } from "../utils/mutations";
 import Auth from "../utils/auth";
+import "../styles/root.css";
 import "../styles/search.css";
 
-const SearchCard = ({ recipe, refetch }) => {
+const SearchCard = ({ recipe, refetch, setFetching }) => {
     const user = Auth.getProfile();
     const id = user.data._id;
 
+    const [loaded, setLoaded] = useState(false);
     const [error, setError] = useState(null);
     const [saved, setSaved] = useState(false);
 
@@ -64,7 +65,7 @@ const SearchCard = ({ recipe, refetch }) => {
     }
 
     return (
-        <div key={recipe.idMeal} className="fade-in card my-3 col-5 d-flex flex-column align-items-center justify-content-between border border-dark">
+        <div key={recipe.idMeal} className={`card my-3 col-5 d-flex flex-column align-items-center justify-content-between border border-dark ${loaded ? 'fade-in' : 'visually-hidden'}`}>
             <a href={URL} className="col-12 text-center fs-1 text-decoration-none link-dark">{name}</a>
             <div className="col-12 d-flex flex-wrap">
                 <div className="col-5 d-flex flex-column align-items-center">
@@ -77,7 +78,7 @@ const SearchCard = ({ recipe, refetch }) => {
                         })}
                     </ul>
                 </div>
-                <img className="img col-6" src={img} alt={name} />
+                <img className="img col-6" src={img} alt={name} onLoad={() => { setLoaded(true); setFetching(false) }} />
             </div>
             <div className="d-flex flex-column align-items-center m-3">
                 <h2 className="col-12 text-center">Instructions</h2>
@@ -89,7 +90,6 @@ const SearchCard = ({ recipe, refetch }) => {
                 <button className="btn btn-success col-12" onClick={(e) => handleSaveRecipe(e, name, ingredients, instructions, URL, img)}>Save Recipe Above</button>
             )}
         </div>
-
     )
 };
 
