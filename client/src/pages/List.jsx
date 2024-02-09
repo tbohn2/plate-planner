@@ -14,6 +14,7 @@ const List = () => {
     const id = user.data._id;
 
     const [editing, setEditing] = useState(false);
+    const [err, setErr] = useState('');
     const [shoppingList, setShoppingList] = useState([]);
     const [shoppingListEditState, setShoppingListEditState] = useState([]);
 
@@ -97,9 +98,11 @@ const List = () => {
             });
             if (data) {
                 refetchHandler();
+                setErr('');
                 toggleEdit(event)
             }
         } catch (err) {
+            setErr('Error updating shopping list; please fill out all fields and try again.');
             console.error(err);
         }
     }
@@ -122,6 +125,7 @@ const List = () => {
     return (
         <div className="fade-in col-12 d-flex flex-column align-items-center">
             <h1>My Shopping List</h1>
+            {err && <div className="alert alert-danger">{err}</div>}
             <div className='d-flex justify-content-end col-4'>
                 <h2 className='col-8'>Item</h2>
                 <h2 className='col-3'>Quantity</h2>
