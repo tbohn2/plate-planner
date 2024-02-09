@@ -31,6 +31,10 @@
     background-color: var(--light-yellow) !important;
 }
 
+.bg-orange {
+    background-color: var(--orange) !important;
+}
+
 .btn-primary {
     border: var(--blue) 2px solid !important;
     background-color: var(--blue) !important;

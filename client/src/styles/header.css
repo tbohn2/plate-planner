@@ -1,6 +1,12 @@
 header {
-    height: 15vh;
+    max-height: 125px;
     font-size: 32px;
+}
+
+.header-logo {
+    object-fit: cover;
+    height: 125px;
+    margin-left: 100px;
 }
 
 .navBtn {
@@ -24,16 +30,72 @@ header {
     background-color: var(--orange);
     border-radius: 7px;
     text-align: center;
-    width: 115px;
 }
 
 .loginBtn:hover {
     color: white;
     background-color: var(--orange);
+    box-shadow: 0 0 10px var(--orange);
 }
 
 .loginBtn,
 .loginBtn:hover {
-    transition: color 0.2s ease-in-out;
-    transition: background-color 0.2s ease-in-out;
+    transition: box-shadow 0.2s ease-in-out;
+}
+
+.mobile-nav-btn {
+    height: 50px;
+    width: 50px;
+    border-radius: 7px;
+    margin: 10px;
+}
+
+.dropdown-item {
+    color: var(--orange) !important;
+}
+
+.dropdown-item:hover {
+    color: black !important;
+    background-color: var(--orange) !important;
+}
+
+@media screen and (max-width: 1200px) {
+    header {
+        font-size: 30px;
+    }
+
+    .header-logo {
+        margin-left: 30px;
+    }
+
+}
+
+@media screen and (max-width: 992px) {
+    header {
+        font-size: 24px;
+    }
+
+    .header-logo {
+        height: 75px;
+        margin-left: 5px;
+    }
+}
+
+@media screen and (max-width: 992px) {
+    header {
+        font-size: 24px;
+    }
+
+    .header-logo {
+        height: 125px;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .mobile-nav-btn {
+        height: 40px;
+        width: 40px;
+        border-radius: 7px;
+        margin: 5px;
+    }
 }
