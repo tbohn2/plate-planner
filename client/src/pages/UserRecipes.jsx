@@ -141,8 +141,8 @@ const UserRecipes = () => {
     }
 
     return (
-        <div className='d-flex fade-in'>
-            <div className='col-9 d-flex flex-column align-items-center border-end border-dark myBody'>
+        <div className='myRecipes d-flex fade-in'>
+            <div className='overflow-hidden col-lg-9 col-8 d-flex flex-column align-items-center border-end border-dark myBody'>
                 <h1>My Recipes</h1>
                 <div className='d-flex flex-wrap col-12 justify-content-center'>
                     {customRecipes.map((recipe) => (
@@ -166,13 +166,13 @@ const UserRecipes = () => {
                 </div>
             </div>
 
-            <div className='col-3 border ms-2'>
-                <h1>My Shopping List</h1>
-                <div className='d-flex col-10'>
+            <div className='col-lg-3 col-4 border ms-2'>
+                <h1 className='shopping-list-title text-center col-10'>Shopping List</h1>
+                <div className='d-flex col-xl-10 col-11'>
                     <h2 className='col-7'>Item</h2>
                     <h2 className='col-4'>Quantity</h2>
                 </div>
-                <div className='d-flex flex-column col-10'>
+                <div className='d-flex flex-column col-xl-10 col-11'>
                     {editing ? (
                         <div className='d-flex flex-wrap justify-content-center'>
                             {shoppingListEditState.map((ingredient, index) =>
