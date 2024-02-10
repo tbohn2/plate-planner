@@ -45,16 +45,16 @@ const Header = () => {
                 )
                 :
                 (
-                    <header className='d-flex justify-content-between border-bottom border-dark'>
+                    <header className='d-flex justify-content-between border-bottom border-dark me-1'>
                         <img src={logo1} alt='logo1' className='header-logo' />
-                        <nav className='d-flex align-items-center justify-content-evenly col-xxl-6 col-xl-7 col-lg-8 col-9'>
-                            <Link className='text-decoration-none navBtn px-1' to='/myRecipes'>My Recipes</Link>
-                            <Link className='text-decoration-none navBtn px-1' to='/list'>My List</Link>
-                            <Link className='text-decoration-none navBtn px-1' to='/search'>Browse Recipes</Link>
+                        <nav className='d-flex align-items-center justify-content-evenly col-xxl-6 col-xl-7 col-lg-8 col-7'>
+                            <Link className='text-decoration-none navBtn px-1 text-center' to='/myRecipes'>My Recipes</Link>
+                            <Link className='text-decoration-none navBtn px-1 text-center' to='/list'>My List</Link>
+                            <Link className='text-decoration-none navBtn px-1 text-center' to='/search'>Browse Recipes</Link>
                             {loggedIn ? (
                                 <Link className='text-decoration-none loginBtn px-1' onClick={Auth.logout}>Logout</Link>
                             ) : (
-                                <Link className='text-decoration-none loginBtn' to='/login'>Login</Link>
+                                <Link className='text-decoration-none loginBtn px-1' to='/login'>Login</Link>
                             )}
                         </nav>
                     </header>
