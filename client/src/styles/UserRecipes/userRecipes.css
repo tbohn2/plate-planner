@@ -1,0 +1,10 @@
+.mobile-list-btn-container {
+    position: fixed !important;
+    top: 50% !important;
+    right: 7px !important;
+    transform: translateY(-50%) !important;
+}
+
+.mobile-list-btn {
+    width: 20px !important;
+}
