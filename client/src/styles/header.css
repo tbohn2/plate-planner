@@ -1,17 +1,18 @@
 header {
-    max-height: 125px;
+    max-height: 15vh;
     font-size: 32px;
 }
 
 .header-logo {
     object-fit: cover;
-    height: 125px;
+    height: 15vh;
     margin-left: 100px;
 }
 
 .navBtn {
     color: black;
     border-radius: 7px;
+    text-wrap: wrap;
 }
 
 .navBtn:hover {
@@ -76,18 +77,7 @@ header {
     }
 
     .header-logo {
-        height: 75px;
         margin-left: 5px;
-    }
-}
-
-@media screen and (max-width: 992px) {
-    header {
-        font-size: 24px;
-    }
-
-    .header-logo {
-        height: 125px;
     }
 }
 
