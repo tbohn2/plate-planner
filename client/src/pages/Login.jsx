@@ -57,7 +57,7 @@ const Login = () => {
     return (
         <div className='fade-in d-flex justify-content-center my-5'>
             {signingUp ? (
-                <div className='card d-flex flex-column p-3 col-3'>
+                <div className='card d-flex flex-column p-3 col-xl-3 col-lg-5 col-md-7 col-9'>
                     <h2 className='text-center'>Create Account</h2>
                     <form onSubmit={addNewUser} className='d-flex flex-column'>
                         <label htmlFor="name">Name</label>
@@ -94,7 +94,7 @@ const Login = () => {
                     </button>
                 </div>
             ) : (
-                <div className='d-flex flex-column card p-3 col-3'>
+                <div className='d-flex flex-column card p-3 col-xl-3 col-lg-5 col-md-7 col-9'>
                     <h2 className='text-center'>Login</h2>
                     <form onSubmit={loginUser} className='d-flex flex-column'>
                         <label htmlFor="email">Email</label>
