@@ -32,7 +32,6 @@ const Login = () => {
         event.preventDefault();
         try {
             const { email, password } = formState;
-            console.log(email, password);
             const { data } = await login({
                 variables: { email, password },
             });
