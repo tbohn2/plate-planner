@@ -107,3 +107,9 @@
         font-size: 20px !important;
     }
 }
+
+@media screen and (max-width: 768px) {
+    h3 {
+        font-size: 18px !important;
+    }
+}

@@ -1,3 +1,10 @@
 .my-text-area {
     height: 300px;
 }
+
+@media screen and (max-width: 992px) {
+    .modal-lg {
+        max-width: 90% !important;
+    }
+
+}

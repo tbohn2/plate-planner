@@ -1,10 +1,25 @@
-import React, { useState } from "react";
-import { useQuery, useMutation } from '@apollo/client';
+import React, { useState, useEffect } from "react";
+import { useMutation } from '@apollo/client';
 import { ADD_ITEMS_TO_LIST, UPDATE_RECIPE, DELETE_RECIPE } from '../../utils/mutations';
 import '../../styles/root.css';
 import '../../styles/UserRecipes/recipeModal.css';
 
+// Make mobile look good
 const RecipeModal = ({ recipe, refetch, userId }) => {
+
+    const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+    useEffect(() => {
+        function handleResize() {
+            setIsMobile(window.innerWidth <= 768);
+        }
+
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
 
     const { _id, name, ingredients, instructions, URL, img } = recipe;
 
@@ -157,7 +172,7 @@ const RecipeModal = ({ recipe, refetch, userId }) => {
     };
 
     return (
-        <div className="modal-dialog modal-lg ">
+        <div className="modal-dialog modal-lg">
             <div className="modal-content bg-light-yellow">
                 {editing || addingToList ? (
                     <div>
@@ -170,17 +185,18 @@ const RecipeModal = ({ recipe, refetch, userId }) => {
                                 <div className="modal-body d-flex flex-column align-items-center">
                                     <form className="d-flex flex-column align-items-center">
                                         <h2 className="col-12 text-center">Edit Recipe:</h2>
-                                        <div className="col-10 d-flex">
+                                        <div className="col-12 d-flex justify-content-center">
                                             <h3 className="col-4 text-center text-decoration-underline">Ingredients</h3>
                                             <h3 className="col-2 text-center text-decoration-underline">Qty.</h3>
                                             <h3 className="col-3 text-center text-decoration-underline">Unit</h3>
+                                            <div className="col-1"></div>
                                         </div>
                                         {editFormIngedientsState.map((ingredient, index) => (
-                                            <div key={index} className="col-10 d-flex justify-content-between my-1">
+                                            <div key={index} className="col-12 d-flex justify-content-center my-1">
                                                 <input type="text" className="col-4" name="name" placeholder="Ingredient Name" value={ingredient.name} onChange={(e) => handleIngredientChange(e, index)} />
                                                 <input type="text" className="col-2" name="quantity" placeholder="Quantity" value={ingredient.quantity} onChange={(e) => handleIngredientChange(e, index)} onInput={(e) => { e.target.value = e.target.value.replace(/[^0-9/. ]/g, ''); }} />
                                                 <input type="text" className="col-3" name="unit" placeholder="Units e.g. cups, tbsp" value={ingredient.unit} onChange={(e) => handleIngredientChange(e, index)} />
-                                                <button type='button' className="col-3 btn btn-danger mx-1" onClick={() => removeIngredient(index)}>Remove</button>
+                                                <button type='button' className="col-1 btn btn-sm btn-danger mx-1" onClick={() => removeIngredient(index)}>X</button>
                                             </div>
                                         ))}
                                         <button type='button' className="btn btn-primary my-1" onClick={increaseIngredientNumber}>+ Ingredient</button>
@@ -235,17 +251,18 @@ const RecipeModal = ({ recipe, refetch, userId }) => {
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={() => { setEditing(false); setAddingToList(false) }}></button>
                         </div>
                         <div className="modal-body d-flex flex-wrap col-12 justify-content-center">
-                            <div className="col-6 d-flex flex-column align-items-center">
-                                <h2 className="col-12 text-center text-decoration-underline">Ingredients</h2>
-                                {ingredients.map((ingredient) => (
-                                    <div key={ingredient._id} className="col-9 d-flex justify-content-between border-dark border">
-                                        <p className="m-1">{ingredient.name}</p>
-                                        <p className="m-1">{ingredient.amount}</p>
-                                    </div>
-                                ))}
+                            <div className={isMobile ? 'col-12 d-flex flex-column align-items-center' : 'col-12 d-flex flex-row-reverse justify-content-center'}>
+                                {img ? (<img className={isMobile ? "img max-img-height col-10 m-1" : "img max-img-height col-5 m-1"} src={img} alt={name} />) : (null)}
+                                <div className={isMobile ? "col-10 m-1" : "col-6 m-1"} >
+                                    <h2 className="col-12 text-center text-decoration-underline">Ingredients</h2>
+                                    {ingredients.map((ingredient) => (
+                                        <div key={ingredient._id} className="col-12 d-flex justify-content-between border-dark border">
+                                            <p className="m-1">{ingredient.name}</p>
+                                            <p className="m-1">{ingredient.amount}</p>
+                                        </div>
+                                    ))}
+                                </div>
                             </div>
-                            {img ? (<img className="img max-img-height col-5" src={img} alt={name} />) : (null)}
-
                             {instructions || img ? (
                                 <div className=" col-12 d-flex flex-column align-items-center">
                                     {instructions ? (
@@ -275,7 +292,7 @@ const RecipeModal = ({ recipe, refetch, userId }) => {
                 )}
 
             </div>
-        </div>
+        </div >
     )
 }
 
