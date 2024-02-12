@@ -10,6 +10,7 @@ const Login = () => {
         password: '',
     });
 
+    const [error, setError] = useState('');
     const [signingUp, setSigningUp] = useState(false);
 
     const toggleSignup = () => {
@@ -37,6 +38,7 @@ const Login = () => {
             });
             Auth.login(data.login.token);
         } catch (err) {
+            setError('Failed to log in; Please try again.');
             console.error(err);
         }
     };
@@ -50,12 +52,14 @@ const Login = () => {
             });
             Auth.login(data.addUser.token);
         } catch (err) {
+            setError('Failed to create account; Please try again.');
             console.error(err);
         }
     };
 
     return (
-        <div className='fade-in d-flex justify-content-center my-5'>
+        <div className='fade-in d-flex flex-column align-items-center my-5'>
+            {error && <div className='alert alert-danger'>{error}</div>}
             {signingUp ? (
                 <div className='card d-flex flex-column p-3 col-xl-3 col-lg-5 col-md-7 col-9'>
                     <h2 className='text-center'>Create Account</h2>
