@@ -17,6 +17,8 @@ const UserRecipes = () => {
     const id = user.data._id;
 
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+    const [loadingState, setLoadingState] = useState(false);
+    const [errorState, setErrorState] = useState(null);
     const [editing, setEditing] = useState(false);
     const [removing, setRemoving] = useState(false);
     const [shoppingList, setShoppingList] = useState([]);
@@ -65,12 +67,15 @@ const UserRecipes = () => {
 
     useEffect(() => {
         if (loading) {
-            console.log('Loading...');
+            setLoadingState(true);
         }
         if (error) {
-            console.log(error);
+            setErrorState("Error loading data");
+            console.error(error);
         }
         if (!loading && !error && data && shoppingListEditState.length === 0) {
+            setErrorState(null);
+            setLoadingState(false);
             setStates(data);
         }
     }, [loading, error, data, shoppingListEditState]);
@@ -156,6 +161,18 @@ const UserRecipes = () => {
 
     return (
         <div>
+            {loadingState &&
+                <div>
+                    <h1 className='col-12 text-center fst-italic'>Welcome!</h1>
+                    <h2 className='col-12 text-center fst-italic'>Loading Data</h2>
+                    <div className="d-flex justify-content-center align-items-center m-5">
+                        <div className="spinner-border" role="status">
+                            <span className="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+            }
+            {errorState && <div className="alert alert-danger" role="alert">{errorState}</div>}
             {isMobile ? (
                 <div className='myRecipes d-flex justify-content-center fade-in'>
                     <div className='col-12 d-flex flex-column align-items-center myBody'>
