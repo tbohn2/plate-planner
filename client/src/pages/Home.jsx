@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Link } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import '../styles/home.css'
 import auth from "../utils/auth";
 
 const Home = () => {
-    if (!auth.loggedIn()) {
-        window.location.assign('/login');
-    }
+
+    return <Navigate to="/login" />;
+
+
 
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 

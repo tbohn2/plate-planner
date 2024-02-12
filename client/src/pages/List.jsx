@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Navigate } from "react-router-dom";
 import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_USER } from '../utils/queries';
 import { UPDATE_USER_LIST } from '../utils/mutations';
@@ -7,7 +8,7 @@ import Auth from '../utils/auth';
 
 const List = () => {
     if (!Auth.loggedIn()) {
-        window.location.assign('/login');
+        return <Navigate to="/login" />;
     }
 
     const user = Auth.getProfile();

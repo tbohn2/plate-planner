@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Navigate } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { ADD_USER, LOGIN_USER } from '../utils/mutations';
 import Auth from '../utils/auth';
@@ -35,7 +36,10 @@ const Login = () => {
             const { data } = await login({
                 variables: { email, password },
             });
-            Auth.login(data.login.token);
+            if (data) {
+                Auth.login(data.login.token);
+                return <Navigate to='/myRecipes' />;
+            }
         } catch (err) {
             setError('Failed to log in; Please try again.');
             console.error(err);
