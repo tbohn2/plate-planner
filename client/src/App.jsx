@@ -28,7 +28,7 @@ const client = new ApolloClient({
 function App() {
   return (
     <ApolloProvider client={client}>
-      <Router>
+      <Router basename='/plate-planner'>
         <div className='myBody bg-light-yellow'>
           <Header />
           <div>
