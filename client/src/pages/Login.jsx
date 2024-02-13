@@ -3,7 +3,6 @@ import { Navigate } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { ADD_USER, LOGIN_USER } from '../utils/mutations';
 import Auth from '../utils/auth';
-import { load } from 'mime';
 
 const Login = () => {
     const [formState, setFormState] = useState({
