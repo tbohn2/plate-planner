@@ -19,8 +19,15 @@ const server = new ApolloServer({
 
 app.use(function (req, res, next) {
   // res.header("Access-Control-Allow-Origin", "http://localhost:3000"); // For development
-  res.header("Access-Control-Allow-Origin", "https://tbohn2.github.io"); // For production
+  // res.header("Access-Control-Allow-Origin", "https://tbohn2.github.io"); // For production
+  res.header("Access-Control-Allow-Origin", '*');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE');
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
+
   next();
 });
 
