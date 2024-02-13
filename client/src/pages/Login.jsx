@@ -3,6 +3,7 @@ import { Navigate } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { ADD_USER, LOGIN_USER } from '../utils/mutations';
 import Auth from '../utils/auth';
+import { load } from 'mime';
 
 const Login = () => {
     const [formState, setFormState] = useState({
@@ -11,6 +12,7 @@ const Login = () => {
         password: '',
     });
 
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [signingUp, setSigningUp] = useState(false);
 
@@ -30,6 +32,7 @@ const Login = () => {
     const [login] = useMutation(LOGIN_USER);
 
     const loginUser = async (event) => {
+        setLoading(true);
         event.preventDefault();
         try {
             const { email, password } = formState;
@@ -38,9 +41,11 @@ const Login = () => {
             });
             if (data) {
                 Auth.login(data.login.token);
+                setLoading(false);
                 return <Navigate to='/myRecipes' />;
             }
         } catch (err) {
+            setLoading(false);
             setError('Failed to log in; Please try again.');
             console.error(err);
         }
@@ -48,13 +53,17 @@ const Login = () => {
 
     const addNewUser = async (event) => {
         event.preventDefault();
+        setLoading(true);
         try {
             const { name, email, password } = formState;
             const { data } = await addUser({
                 variables: { name, email, password },
             });
+            setLoading(false);
             Auth.login(data.addUser.token);
         } catch (err) {
+            setLoading(false);
+
             setError('Failed to create account; Please try again.');
             console.error(err);
         }
@@ -62,6 +71,7 @@ const Login = () => {
 
     return (
         <div className='fade-in d-flex flex-column align-items-center my-5'>
+            {loading && <div className='spinner-border' role='status'></div>}
             {error && <div className='alert alert-danger'>{error}</div>}
             {signingUp ? (
                 <div className='card d-flex flex-column p-3 col-xl-3 col-lg-5 col-md-7 col-9'>
