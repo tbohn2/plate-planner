@@ -7,7 +7,8 @@ import Footer from './components/Footer';
 import './styles/root.css'
 
 const httpLink = createHttpLink({
-  uri: 'http://localhost:3001/graphql',
+  // uri: 'http://localhost:3001/graphql', for development
+  uri: 'https://hidden-atoll-84159-73053ccb91cd.herokuapp.com/',
 });
 
 const authLink = setContext((_, { headers }) => {
