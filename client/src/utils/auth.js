@@ -26,12 +26,14 @@ class AuthService {
 
     login(idToken) {
         localStorage.setItem('id_token', idToken);
-        window.location.assign('/plate-planner/myRecipes');
+        // window.location.assign('/plate-planner/myRecipes'); // for development
+        window.location.assign('https://tbohn2.github.io/plate-planner/myRecipes');
     }
 
     logout() {
         localStorage.removeItem('id_token');
-        window.location.assign('/');
+        // window.location.assign('/'); // for development
+        window.location.assign('https://tbohn2.github.io/plate-planner'); // for development
     }
 }
 
