@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Navigate } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_USER } from '../utils/queries';
 import { UPDATE_USER_LIST } from '../utils/mutations';
@@ -10,10 +9,6 @@ import '../styles/root.css';
 import '../styles/UserRecipes/userRecipes.css';
 
 const UserRecipes = () => {
-    if (!Auth.loggedIn()) {
-        return <Navigate to="/login" />;
-    }
-
     const user = Auth.getProfile();
     const id = user.data._id;
 

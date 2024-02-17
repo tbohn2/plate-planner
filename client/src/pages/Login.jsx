@@ -4,7 +4,7 @@ import { useMutation } from '@apollo/client';
 import { ADD_USER, LOGIN_USER } from '../utils/mutations';
 import Auth from '../utils/auth';
 
-const Login = () => {
+const Login = ({ loggedIn, handleLogin }) => {
     const [formState, setFormState] = useState({
         name: '',
         email: '',
@@ -41,7 +41,7 @@ const Login = () => {
             if (data) {
                 Auth.login(data.login.token);
                 setLoading(false);
-                return <Navigate to='/myRecipes' />;
+                handleLogin();
             }
         } catch (err) {
             setLoading(false);
@@ -58,11 +58,13 @@ const Login = () => {
             const { data } = await addUser({
                 variables: { name, email, password },
             });
-            setLoading(false);
-            Auth.login(data.addUser.token);
+            if (data) {
+                setLoading(false);
+                Auth.login(data.addUser.token);
+                handleLogin();
+            }
         } catch (err) {
             setLoading(false);
-
             setError('Failed to create account; Please try again.');
             console.error(err);
         }
@@ -70,6 +72,7 @@ const Login = () => {
 
     return (
         <div className='fade-in d-flex flex-column align-items-center my-5'>
+            {loggedIn && <Navigate to='/myRecipes' />}
             {loading && <div className='spinner-border' role='status'></div>}
             {error && <div className='alert alert-danger'>{error}</div>}
             {signingUp ? (

@@ -1,9 +1,11 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink, } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { Home, List, Login, UserRecipes, Search } from './pages';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import Auth from './utils/auth';
 import './styles/root.css'
 
 const httpLink = createHttpLink({
@@ -27,18 +29,29 @@ const client = new ApolloClient({
 });
 
 function App() {
+  const [loggedIn, setLoggedIn] = useState(Auth.loggedIn());
+
+  const handleLogin = () => {
+    setLoggedIn(true);
+  }
+
+  const handleLogout = () => {
+    Auth.logout();
+    setLoggedIn(false);
+  };
+
   return (
     <ApolloProvider client={client}>
       <Router basename='/plate-planner'>
         <div className='myBody bg-light-yellow'>
-          <Header />
+          <Header loggedIn={loggedIn} handleLogout={handleLogout} />
           <div>
             <Routes>
               <Route exact path='/' element={<Home />} />
-              <Route exact path='/list' element={<List />} />
-              <Route exact path='/login' element={<Login />} />
-              <Route exact path='/myRecipes' element={<UserRecipes />} />
-              <Route exact path='/search' element={<Search />} />
+              <Route exact path='/list' element={loggedIn ? <List /> : <Navigate to="/login" replace />} />
+              <Route exact path='/login' element={<Login loggedIn={loggedIn} handleLogin={handleLogin} />} />
+              <Route exact path='/myRecipes' element={loggedIn ? <UserRecipes /> : <Navigate to="/login" replace />} />
+              <Route exact path='/search' element={loggedIn ? <Search /> : <Navigate to="/login" replace />} />
             </Routes>
           </div>
           <div>

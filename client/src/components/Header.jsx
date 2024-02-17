@@ -2,10 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/header.css'
 import logo1 from '../assets/logo1.png'
-import Auth from '../utils/auth';
 
-const Header = () => {
-    const [loggedIn] = useState(Auth.loggedIn());
+const Header = ({ loggedIn, handleLogout }) => {
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
     useEffect(() => {
@@ -35,7 +33,7 @@ const Header = () => {
                                 <li><Link className='text-decoration-none fs-3 dropdown-item border-top border-dark' to='/list'>My List</Link></li>
                                 <li><Link className='text-decoration-none fs-3 dropdown-item border-top border-dark' to='/search'>Browse Recipes</Link></li>
                                 {loggedIn ? (
-                                    <li><Link className='text-decoration-none fs-3 dropdown-item border-top border-dark' onClick={Auth.logout}>Logout</Link></li>
+                                    <li><Link className='text-decoration-none fs-3 dropdown-item border-top border-dark' onClick={handleLogout}>Logout</Link></li>
                                 ) : (
                                     <li><Link className='text-decoration-none fs-3 dropdown-item border-top border-dark' to='/login'>Login</Link></li>
                                 )}
@@ -52,7 +50,7 @@ const Header = () => {
                             <Link className='text-decoration-none navBtn px-1 text-center' to='/list'>My List</Link>
                             <Link className='text-decoration-none navBtn px-1 text-center' to='/search'>Browse Recipes</Link>
                             {loggedIn ? (
-                                <Link className='text-decoration-none loginBtn px-1' onClick={Auth.logout}>Logout</Link>
+                                <Link className='text-decoration-none loginBtn px-1' onClick={handleLogout}>Logout</Link>
                             ) : (
                                 <Link className='text-decoration-none loginBtn px-1' to='/login'>Login</Link>
                             )}

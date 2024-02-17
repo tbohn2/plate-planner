@@ -7,10 +7,6 @@ import '../styles/list.css';
 import Auth from '../utils/auth';
 
 const List = () => {
-    if (!Auth.loggedIn()) {
-        return <Navigate to="/login" />;
-    }
-
     const user = Auth.getProfile();
     const id = user.data._id;
 
