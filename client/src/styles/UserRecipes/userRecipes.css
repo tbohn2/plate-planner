@@ -1,5 +1,35 @@
-.mobile-list-btn-container {
+.list-container {
+    border: 1px solid var(--blue);
+    border-radius: 15px;
+    right: 7px !important;
+    overflow-y: hidden !important;
+    height: 75% !important;
+}
+
+.list-container-absolute {
+    position: absolute;
+    top: 20%;
+    width: 7000px;
+}
+
+.list-container-fixed {
     position: fixed !important;
+    top: 4% !important;
+}
+
+.shopping-list {
+    overflow-y: auto !important;
+    position: relative !important;
+    height: 70% !important;
+}
+
+.list-btns {
+    position: absolute !important;
+    top: 90% !important;
+}
+
+.mobile-list-btn-container {
+    position: absolute !important;
     top: 50% !important;
     right: 7px !important;
     transform: translateY(-50%) !important;

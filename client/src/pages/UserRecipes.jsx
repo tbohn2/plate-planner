@@ -12,6 +12,7 @@ const UserRecipes = () => {
     const user = Auth.getProfile();
     const id = user.data._id;
 
+    const [fixedList, setFixedList] = useState(false);
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
     const [loadingState, setLoadingState] = useState(false);
     const [errorState, setErrorState] = useState(null);
@@ -75,6 +76,23 @@ const UserRecipes = () => {
             setStates(data);
         }
     }, [loading, error, data, shoppingListEditState]);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            const scrollPosition = window.scrollY;
+            console.log(scrollPosition);
+            if (scrollPosition >= 146) {
+                setFixedList(true);
+            } else {
+                setFixedList(false);
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, []);
 
     const refetchHandler = async () => {
         try {
@@ -200,8 +218,8 @@ const UserRecipes = () => {
                         </button>
                     </div>
 
-                    <div class="offcanvas offcanvas-end bg-light-yellow" tabindex="-1" id="listOffCanvas" aria-labelledby="listOffCanvasLabel">
-                        <div class="offcanvas-header border-bottom border-dark">
+                    <div className="offcanvas offcanvas-end bg-light-yellow" tabindex="-1" id="listOffCanvas" aria-labelledby="listOffCanvasLabel">
+                        <div className="offcanvas-header border-bottom border-dark">
                             <h1 className='offcanvas-title fs-1'>Shopping List</h1>
                             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                         </div>
@@ -260,9 +278,9 @@ const UserRecipes = () => {
 
                 </div>
             ) : (
-                <div className='myRecipes d-flex fade-in'>
-                    <div className='overflow-hidden col-lg-9 col-8 d-flex flex-column align-items-center border-end border-dark myBody'>
-                        <h1>My Recipes</h1>
+                <div className='myRecipes d-flex fade-in mt-3'>
+                    <div className='col-lg-9 col-8 d-flex flex-column align-items-center myBody'>
+                        <h1 className='border-bottom-blue'>My Recipes</h1>
                         <div className='d-flex flex-wrap col-12 justify-content-center'>
                             {customRecipes.map((recipe) => (
                                 <RecipeCard recipe={recipe} refetch={refetchHandler} userId={id} />
@@ -277,7 +295,6 @@ const UserRecipes = () => {
                             <NewRecipeForm id={id} refetch={refetchHandler} />
                         </div>
 
-                        <h1>Saved Recipes</h1>
                         <div className='d-flex flex-wrap col-12 justify-content-center'>
                             {savedRecipes.map((recipe) => (
                                 <RecipeCard recipe={recipe} refetch={refetchHandler} userId={id} />
@@ -285,41 +302,43 @@ const UserRecipes = () => {
                         </div>
                     </div>
 
-                    <div className='col-lg-3 col-4 border ms-2'>
-                        <h1 className='shopping-list-title text-center col-10'>Shopping List</h1>
-                        <div className='d-flex col-xl-10 col-11'>
-                            <h2 className='col-7'>Item</h2>
-                            <h2 className='col-4'>Quantity</h2>
+                    <div className={`col-lg-3 col-4 list-container d-flex flex-column align-items-center py-1 px-3' ${fixedList ? 'list-container-fixed' : 'list-container-absolute'}`}>
+                        <h1 className='border-bottom-blue text-center col-12'>Shopping List</h1>
+                        <div className='d-flex justify-content-end col-xl-10 col-12'>
+                            <h2 className={editing ? 'col-9' : 'col-10'}>Item</h2>
+                            <h2 className='col-2'>Qty.</h2>
                         </div>
-                        <div className='d-flex flex-column col-xl-10 col-11'>
+                        <div className='d-flex flex-column align-items-center col-xl-10 col-12 shopping-list'>
                             {editing ? (
-                                <div className='d-flex flex-wrap justify-content-center'>
+                                <div className='d-flex flex-wrap'>
                                     {shoppingListEditState.map((ingredient, index) =>
-                                        <div key={index} className="col-12 d-flex mb-1">
-                                            <input type="text" className="col-7 fs-5" name="name" value={ingredient.name} onChange={(e) => handleItemChange(e, index)} />
-                                            <input type="number" className="col-4 fs-5" name="quantity" value={ingredient.quantity} onChange={(e) => handleItemChange(e, index)} />
-                                            <button type='button' className="btn btn-sm btn-danger mx-1" onClick={() => removeItem(index)}>X</button>
+                                        <div key={index} className="col-12 d-flex justify-content-end mb-1">
+                                            <button type='button' className="btn btn-sm btn-danger col-1" onClick={() => removeItem(index)}>X</button>
+                                            <input type="text" className="col-9 fs-5" name="name" value={ingredient.name} onChange={(e) => handleItemChange(e, index)} />
+                                            <input type="number" className="col-2 fs-5" name="quantity" value={ingredient.quantity} onChange={(e) => handleItemChange(e, index)} />
                                         </div>)}
                                     <button type='button' className="btn btn-primary my-1 col-12" onClick={addItemToList}>+ Item</button>
                                 </div>
                             ) : (
-                                shoppingList.map((ingredient, index) =>
-                                    <div key={index} className="col-12 d-flex border border-dark">
-                                        <p name="name" className="col-7 fs-5 m-1 border-end border-dark">{ingredient.name} </p>
-                                        <p name="name" className="col-4 fs-5 m-1">{ingredient.quantity} </p>
-                                    </div>
-                                )
-                            )}
+                                <div className=' col-12'>
+                                    {shoppingList.map((ingredient, index) =>
+                                        <div key={index} className="col-12 d-flex border border-dark">
+                                            <p name="name" className="col-10 fs-5 px-1 my-1 border-end border-dark">{ingredient.name} </p>
+                                            <p name="name" className="col-2 fs-5 px-1 my-1">{ingredient.quantity} </p>
+                                        </div>)}
+                                </div>
+                            )
+                            }
                         </div>
                         {editing ? (
-                            <div className='mt-2'>
+                            <div className='mt-2 list-btns'>
                                 <div>
                                     <button type="button" className="btn btn-success" onClick={updateShoppingListHandler}>Save changes</button>
                                     <button type="button" className="btn btn-secondary mx-1" onClick={toggleEdit}>Cancel</button>
                                 </div>
                             </div>
                         ) : (
-                            <div className='mt-2'>
+                            <div className='mt-2 list-btns'>
                                 {removing ? (
                                     <div>
                                         <button type="button" className="btn btn-danger  mx-1" onClick={removeAllItems}>Clear All Items?</button>
