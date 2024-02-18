@@ -1,6 +1,9 @@
 header {
-    max-height: 15vh;
+    /* max-height: 15vh; */
+    font-family: "Nunito", sans-serif;
+    font-weight: bold;
     font-size: 32px;
+    border-bottom: 3px solid var(--blue);
 }
 
 .header-logo {
@@ -10,20 +13,23 @@ header {
 }
 
 .navBtn {
-    color: black;
+    color: var(--white);
     border-radius: 7px;
     text-wrap: wrap;
+    background-color: var(--blue);
 }
 
 .navBtn:hover {
     color: white;
     background-color: var(--orange);
+    box-shadow: 0 0 10px var(--orange);
 }
 
 .navBtn,
 .navBtn:hover {
     transition: color 0.2s ease-in-out;
     transition: background-color 0.2s ease-in-out;
+    transition: box-shadow 0.2s ease-in-out;
 }
 
 .loginBtn {
