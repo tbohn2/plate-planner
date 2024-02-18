@@ -1,11 +1,11 @@
 :root {
-    --light-yellow: #ddddc5;
     --orange: #c85103;
     --warm-orange: #FAB460;
     --green: #229928;
     --brown: #8E735B;
-    --blue: #1F497D;
+    --blue: #05347e;
     --red: #eb2525;
+    --white: #f6f6f6;
 }
 
 @keyframes fade-in {
@@ -23,16 +23,20 @@
 }
 
 .myBody {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Lato', sans-serif;
     min-height: 100vh;
 }
 
 .bg-light-yellow {
-    background-color: var(--light-yellow) !important;
+    background-color: var(--white) !important;
 }
 
 .bg-orange {
     background-color: var(--orange) !important;
+}
+
+.border-bottom-blue {
+    border-bottom: var(--blue) 3px solid;
 }
 
 .btn-primary {
@@ -42,7 +46,7 @@
 }
 
 .btn-primary:hover {
-    background-color: var(--light-yellow) !important;
+    background-color: var(--white) !important;
     color: var(--blue) !important;
 }
 
@@ -53,7 +57,7 @@
 }
 
 .btn-success:hover {
-    background-color: var(--light-yellow) !important;
+    background-color: var(--white) !important;
     color: var(--green) !important;
 }
 
@@ -64,7 +68,7 @@
 }
 
 .btn-danger:hover {
-    background-color: var(--light-yellow) !important;
+    background-color: var(--white) !important;
     color: var(--red) !important;
 }
 
@@ -75,7 +79,7 @@
 }
 
 .btn-secondary:hover {
-    background-color: var(--light-yellow) !important;
+    background-color: var(--white) !important;
     color: grey !important;
 }
 
