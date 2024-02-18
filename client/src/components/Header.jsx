@@ -22,7 +22,7 @@ const Header = ({ loggedIn, handleLogout }) => {
         <div>
             {isMobile ?
                 (
-                    <header className='d-flex justify-content-center border-bottom border-dark'>
+                    <header className='d-flex justify-content-center'>
                         <img src={logo1} alt='logo1' className='header-logo' />
                         <div className="btn-group position-absolute top-0 end-0">
                             <button type="button" className="bg-orange mobile-nav-btn z-0 noTextDec fs-1 border border-light text-light d-flex justify-content-center align-items-center" data-bs-toggle="dropdown" aria-expanded="false">
@@ -43,7 +43,7 @@ const Header = ({ loggedIn, handleLogout }) => {
                 )
                 :
                 (
-                    <header className='d-flex justify-content-between border-bottom border-dark me-1'>
+                    <header className='d-flex justify-content-between me-1 py-1'>
                         <img src={logo1} alt='logo1' className='header-logo' />
                         <nav className='d-flex align-items-center justify-content-evenly col-xxl-6 col-xl-7 col-lg-8 col-7'>
                             <Link className='text-decoration-none navBtn px-1 text-center' to='/myRecipes'>My Recipes</Link>
