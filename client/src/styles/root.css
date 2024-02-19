@@ -27,6 +27,25 @@
     min-height: 100vh;
 }
 
+.body-bg {
+    width: 100vw;
+    height: 84vh;
+    background-color: var(--blue);
+    overflow: hidden;
+    position: relative;
+}
+
+.body-bg::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 0;
+    width: 0;
+    border-right: 100vw solid transparent;
+    border-top: 84vh solid var(--white);
+}
+
 .bubblegum {
     font-family: "Bubblegum Sans", sans-serif;
 }

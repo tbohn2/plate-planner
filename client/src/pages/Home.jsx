@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Navigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import '../styles/root.css'
 import '../styles/home.css'
-import auth from "../utils/auth";
 import circleImg from '../assets/circleHomePage.png'
 import homeImg1 from '../assets/home1.png'
 import homeImg2 from '../assets/home2.png'
@@ -33,17 +32,17 @@ const Home = () => {
     };
 
     return (
-        <div className=''>
+        <div className='fade-in'>
             {isMobile ? (
                 <div></div>
             ) : (
                 <div className="bg-blue pb-3">
-                    <div className="home-body-bg">
+                    <div className="body-bg">
                         <img src={circleImg} alt='circleImg' className='circleImg' />
                         <div className="about text-dark d-flex flex-column align-items-center fs-1 p-1">
                             <p className="bubblegum">Simplify your life by storing your favorite recipes and shopping list in the same place! This app allows you to create your
                                 shopping list at the click of a button! Join now for free to see it in action!</p>
-                            <button className="btn btn-success fs-4 col-8">Sign Up!</button>
+                            <Link to='/login' onClick={scrollToTop} className="btn btn-success fs-4 col-8">Sign Up!</Link>
                         </div>
                     </div>
                     <div className="howItWorks bg-blue d-flex flex-column align-items-center">
@@ -60,7 +59,7 @@ const Home = () => {
                             ))}
                         </div>
                         <h2 className="text-light bubblegum text-center my-3">Sign up for free today!</h2>
-                        <button className="btn btn-success fs-3 col-3 text-center">Create Account</button>
+                        <Link to='/login' onClick={scrollToTop} className="btn btn-success fs-3 col-3 text-center">Create Account</Link>
                     </div>
                 </div>
             )}

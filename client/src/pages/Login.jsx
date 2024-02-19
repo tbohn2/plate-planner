@@ -3,6 +3,7 @@ import { Navigate } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { ADD_USER, LOGIN_USER } from '../utils/mutations';
 import Auth from '../utils/auth';
+import '../styles/root.css';
 
 const Login = ({ loggedIn, handleLogin }) => {
     const [formState, setFormState] = useState({
@@ -71,12 +72,12 @@ const Login = ({ loggedIn, handleLogin }) => {
     };
 
     return (
-        <div className='fade-in d-flex flex-column align-items-center my-5'>
+        <div className='fade-in d-flex flex-column align-items-center py-5 body-bg'>
             {loggedIn && <Navigate to='/myRecipes' />}
             {loading && <div className='spinner-border' role='status'></div>}
             {error && <div className='alert alert-danger'>{error}</div>}
             {signingUp ? (
-                <div className='card d-flex flex-column p-3 col-xl-3 col-lg-5 col-md-7 col-9'>
+                <div className='card d-flex flex-column p-3 col-xl-5 col-lg-5 col-md-7 col-9'>
                     <h2 className='text-center'>Create Account</h2>
                     <form onSubmit={addNewUser} className='d-flex flex-column'>
                         <label htmlFor="name">Name</label>
