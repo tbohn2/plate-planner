@@ -1,22 +1,40 @@
 .home-body-bg {
-    width: 0;
-    height: 0;
-    border-right: 100vw solid transparent;
-    border-top: 85vh solid var(--white);
+    width: 100vw;
+    height: 84vh;
+    background-color: var(--blue);
     overflow: hidden;
+    position: relative;
+}
+
+.home-body-bg::before {
+    content: '';
     position: absolute;
-    z-index: 0;
+    top: 0;
+    left: 0;
+    height: 0;
+    width: 0;
+    border-right: 100vw solid transparent;
+    border-top: 84vh solid var(--white);
 }
 
 .circleImg {
-    width: 500px;
-    height: 500px;
+    width: 65vh;
+    height: 65vh;
     position: absolute;
-    top: 25%;
-    right: 20%;
+    top: 10%;
+    right: 15%;
 }
 
 .about {
-    height: 100vh;
+    height: 65vh;
+    width: 65vh;
+    z-index: 1;
+    position: absolute;
+    top: 15%;
+    left: 15%;
+    border-radius: 7px;
+}
 
+.howItWorks h1 {
+    font-size: 3.5rem;
 }
