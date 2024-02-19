@@ -175,6 +175,7 @@ const UserRecipes = () => {
 
     return (
         <div>
+            <div className='body-bg'></div>
             {loadingState &&
                 <div>
                     <h1 className='col-12 text-center fst-italic'>Welcome!</h1>
@@ -218,7 +219,7 @@ const UserRecipes = () => {
                         </button>
                     </div>
 
-                    <div className="offcanvas offcanvas-end bg-light-yellow" tabindex="-1" id="listOffCanvas" aria-labelledby="listOffCanvasLabel">
+                    <div className="offcanvas offcanvas-end bg-white" tabindex="-1" id="listOffCanvas" aria-labelledby="listOffCanvasLabel">
                         <div className="offcanvas-header border-bottom border-dark">
                             <h1 className='offcanvas-title fs-1'>Shopping List</h1>
                             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -302,7 +303,7 @@ const UserRecipes = () => {
                         </div>
                     </div>
 
-                    <div className={`col-lg-3 col-4 list-container d-flex flex-column align-items-center py-1 px-3' ${fixedList ? 'list-container-fixed' : 'list-container-absolute'}`}>
+                    <div className={`col-lg-3 col-4 bg-w list-container d-flex flex-column align-items-center py-1 px-3' ${fixedList ? 'list-container-fixed' : 'list-container-absolute'}`}>
                         <h1 className='border-bottom-blue text-center col-12'>Shopping List</h1>
                         <div className='d-flex justify-content-end col-xl-10 col-12'>
                             <h2 className={editing ? 'col-9' : 'col-10'}>Item</h2>

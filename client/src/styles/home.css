@@ -1,8 +1,27 @@
+.home-body-bg {
+    width: 100vw;
+    height: 84vh;
+    background-color: var(--blue);
+    overflow: hidden;
+    position: relative;
+}
+
+.home-body-bg::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 0;
+    width: 0;
+    border-right: 100vw solid transparent;
+    border-top: 84vh solid var(--white);
+}
+
 .circleImg {
     width: 65vh;
     height: 65vh;
     position: absolute;
-    top: 10%;
+    top: 20%;
     right: 15%;
 }
 
@@ -11,7 +30,7 @@
     width: 65vh;
     z-index: 1;
     position: absolute;
-    top: 15%;
+    top: 20%;
     left: 15%;
     border-radius: 7px;
 }

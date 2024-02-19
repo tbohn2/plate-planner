@@ -27,12 +27,21 @@
     min-height: 100vh;
 }
 
+.app-bg {
+    background-color: var(--white);
+    height: 100vh;
+    width: 100vw;
+    z-index: -2;
+    position: fixed;
+}
+
 .body-bg {
     width: 100vw;
     height: 84vh;
     background-color: var(--blue);
     overflow: hidden;
-    position: relative;
+    position: fixed;
+    z-index: -1;
 }
 
 .body-bg::before {
@@ -44,13 +53,14 @@
     width: 0;
     border-right: 100vw solid transparent;
     border-top: 84vh solid var(--white);
+    z-index: -1;
 }
 
 .bubblegum {
     font-family: "Bubblegum Sans", sans-serif;
 }
 
-.bg-light-yellow {
+.bg-w {
     background-color: var(--white) !important;
 }
 
@@ -60,6 +70,10 @@
 
 .bg-blue {
     background-color: var(--blue) !important;
+}
+
+.bg-green {
+    background-color: var(--green) !important;
 }
 
 .border-white {

@@ -43,7 +43,8 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <Router basename='/plate-planner'>
-        <div className='myBody bg-light-yellow'>
+        <div className='myBody'>
+          <div className='app-bg'></div>
           <Header loggedIn={loggedIn} handleLogout={handleLogout} />
           <div className='overflow-x-hidden'>
             <Routes>

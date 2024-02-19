@@ -20,7 +20,7 @@ const Header = ({ loggedIn, handleLogout }) => {
     }, []);
 
     return (
-        <div>
+        <div className='fade-in my-header'>
             {isMobile ?
                 (
                     <header className='d-flex justify-content-center'>
@@ -29,7 +29,7 @@ const Header = ({ loggedIn, handleLogout }) => {
                             <button type="button" className="mobile-nav-btn z-0 noTextDec fs-1 border border-light text-light d-flex justify-content-center align-items-center" data-bs-toggle="dropdown" aria-expanded="false">
                                 ☰
                             </button>
-                            <ul className="dropdown-menu bg-light-yellow">
+                            <ul className="dropdown-menu bg-w">
                                 <li><Link className='text-decoration-none fs-3 dropdown-item' to='/myRecipes'>My Recipes</Link></li>
                                 <li><Link className='text-decoration-none fs-3 dropdown-item border-top border-primary' to='/list'>My List</Link></li>
                                 <li><Link className='text-decoration-none fs-3 dropdown-item border-top border-primary' to='/search'>Browse Recipes</Link></li>

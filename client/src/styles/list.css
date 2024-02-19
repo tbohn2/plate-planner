@@ -1,4 +1,5 @@
 .myCheckBox {
     width: 25px !important;
     height: 25px !important;
+    border: 1px solid var(--blue) !important;
 }

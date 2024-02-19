@@ -37,7 +37,8 @@ const Home = () => {
                 <div></div>
             ) : (
                 <div className="bg-blue pb-3">
-                    <div className="body-bg">
+                    <div className="home-body-bg"></div>
+                    <div>
                         <img src={circleImg} alt='circleImg' className='circleImg' />
                         <div className="about text-dark d-flex flex-column align-items-center fs-1 p-1">
                             <p className="bubblegum">Simplify your life by storing your favorite recipes and shopping list in the same place! This app allows you to create your

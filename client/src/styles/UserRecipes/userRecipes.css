@@ -4,6 +4,7 @@
     right: 7px !important;
     overflow-y: hidden !important;
     height: 75% !important;
+    /* background-color: var(--white); */
 }
 
 .list-container-absolute {

@@ -4,6 +4,7 @@ import { useMutation } from '@apollo/client';
 import { ADD_USER, LOGIN_USER } from '../utils/mutations';
 import Auth from '../utils/auth';
 import '../styles/root.css';
+import '../styles/login.css';
 
 const Login = ({ loggedIn, handleLogin }) => {
     const [formState, setFormState] = useState({
@@ -72,7 +73,8 @@ const Login = ({ loggedIn, handleLogin }) => {
     };
 
     return (
-        <div className='fade-in d-flex flex-column align-items-center py-5 body-bg'>
+        <div className='fade-in loginPage'>
+            <div className='body-bg'></div>
             {loggedIn && <Navigate to='/myRecipes' />}
             {loading && <div className='spinner-border' role='status'></div>}
             {error && <div className='alert alert-danger'>{error}</div>}
@@ -114,7 +116,7 @@ const Login = ({ loggedIn, handleLogin }) => {
                     </button>
                 </div>
             ) : (
-                <div className='d-flex flex-column card p-3 col-xl-3 col-lg-5 col-md-7 col-9'>
+                <div className='d-flex flex-column card p-3 col-xl-4 col-lg-5 col-md-7 col-9'>
                     <h2 className='text-center'>Login</h2>
                     <form onSubmit={loginUser} className='d-flex flex-column'>
                         <label htmlFor="email">Email</label>
@@ -136,9 +138,9 @@ const Login = ({ loggedIn, handleLogin }) => {
                             onChange={updateForm}
                             required
                         />
-                        <button className='my-1 btn btn-success col-12' type='submit'>Log In</button>
+                        <button className='mt-3 fs-5 btn btn-success col-12' type='submit'>Log In</button>
                     </form>
-                    <button className='my-1 btn btn-primary col-12' onClick={toggleSignup}>
+                    <button className='mt-3 fs-5 btn btn-primary col-12' onClick={toggleSignup}>
                         Click here to create an account
                     </button>
                 </div>
