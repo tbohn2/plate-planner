@@ -1,6 +1,6 @@
 :root {
     --orange: #c85103;
-    --warm-orange: #FAB460;
+    --yellow: #f7d51d;
     --green: #229928;
     --brown: #8E735B;
     --blue: #05347e;
@@ -27,6 +27,10 @@
     min-height: 100vh;
 }
 
+.bubblegum {
+    font-family: "Bubblegum Sans", sans-serif;
+}
+
 .bg-light-yellow {
     background-color: var(--white) !important;
 }
@@ -37,6 +41,14 @@
 
 .bg-blue {
     background-color: var(--blue) !important;
+}
+
+.border-white {
+    border: var(--white) 3px solid;
+}
+
+.border-top-blue {
+    border-top: var(--blue) 3px solid;
 }
 
 .border-bottom-blue {
