@@ -11,6 +11,7 @@ const SearchCard = ({ recipe, refetch, setFetching }) => {
 
     const [loaded, setLoaded] = useState(false);
     const [error, setError] = useState(false);
+    const [saving, setSaving] = useState(false);
     const [saved, setSaved] = useState(false);
 
     const [createRecipe] = useMutation(CREATE_RECIPE);
@@ -18,6 +19,7 @@ const SearchCard = ({ recipe, refetch, setFetching }) => {
 
     const handleSaveRecipe = async (e, name, ingredients, instructions, URL, img) => {
         e.preventDefault();
+        setSaving(true);
         try {
             const { data } = await createRecipe({
                 variables: {
@@ -37,11 +39,13 @@ const SearchCard = ({ recipe, refetch, setFetching }) => {
                 },
             });
             if (saveRecipeToUser) {
+                setSaving(false);
                 setSaved(true);
                 refetch();
             }
         } catch (err) {
             console.error(err);
+            setSaving(false);
             setError(true);
         }
     }
@@ -89,9 +93,10 @@ const SearchCard = ({ recipe, refetch, setFetching }) => {
                         <button className="btn border border-danger border-2 bg-light-yellow text-danger fw-bold col-12">Error Saving Recipe</button>
                     )}
                 </div>
-
             ) : (
-                <button className="btn btn-success col-12" onClick={(e) => handleSaveRecipe(e, name, ingredients, instructions, URL, img)}>Save Recipe Above</button>
+                <button className="btn btn-success col-12" onClick={(e) => handleSaveRecipe(e, name, ingredients, instructions, URL, img)}>
+                    {saving ? <div className="spinner-border" role="status"></div> : 'Save Recipe Above'}
+                </button>
             )}
         </div>
     )
