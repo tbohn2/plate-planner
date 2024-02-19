@@ -3,7 +3,7 @@ header {
     font-family: "Nunito", sans-serif;
     font-weight: bold;
     font-size: 32px;
-    border-bottom: 3px solid var(--blue);
+    /* border-bottom: 3px solid var(--blue); */
 }
 
 .header-logo {

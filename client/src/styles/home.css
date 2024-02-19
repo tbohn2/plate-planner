@@ -1,0 +1,22 @@
+.home-body-bg {
+    width: 0;
+    height: 0;
+    border-right: 100vw solid transparent;
+    border-top: 85vh solid var(--white);
+    overflow: hidden;
+    position: absolute;
+    z-index: 0;
+}
+
+.circleImg {
+    width: 500px;
+    height: 500px;
+    position: absolute;
+    top: 25%;
+    right: 20%;
+}
+
+.about {
+    height: 100vh;
+
+}

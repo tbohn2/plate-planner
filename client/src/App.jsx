@@ -45,7 +45,7 @@ function App() {
       <Router basename='/plate-planner'>
         <div className='myBody bg-light-yellow'>
           <Header loggedIn={loggedIn} handleLogout={handleLogout} />
-          <div>
+          <div className='overflow-x-hidden'>
             <Routes>
               <Route exact path='/' element={<Home />} />
               <Route exact path='/list' element={loggedIn ? <List /> : <Navigate to="/login" replace />} />

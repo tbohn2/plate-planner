@@ -35,6 +35,10 @@
     background-color: var(--orange) !important;
 }
 
+.bg-blue {
+    background-color: var(--blue) !important;
+}
+
 .border-bottom-blue {
     border-bottom: var(--blue) 3px solid;
 }
