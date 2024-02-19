@@ -18,6 +18,7 @@ const Login = ({ loggedIn, handleLogin }) => {
     const [signingUp, setSigningUp] = useState(false);
 
     const toggleSignup = () => {
+        setError('');
         setSigningUp(!signingUp);
     };
 
@@ -73,13 +74,13 @@ const Login = ({ loggedIn, handleLogin }) => {
     };
 
     return (
-        <div className='fade-in loginPage'>
+        <div className='fade-in loginPage d-flex justify-content-center'>
             <div className='body-bg'></div>
             {loggedIn && <Navigate to='/myRecipes' />}
-            {loading && <div className='spinner-border' role='status'></div>}
-            {error && <div className='alert alert-danger'>{error}</div>}
+            {error && <div className='alert alert-danger my-5'>{error}</div>}
             {signingUp ? (
                 <div className='card d-flex flex-column p-3 col-xl-5 col-lg-5 col-md-7 col-9'>
+                    {loading && <div className='spinner-border col-3' role='status'></div>}
                     <h2 className='text-center'>Create Account</h2>
                     <form onSubmit={addNewUser} className='d-flex flex-column'>
                         <label htmlFor="name">Name</label>
@@ -109,7 +110,9 @@ const Login = ({ loggedIn, handleLogin }) => {
                             onChange={updateForm}
                             required
                         />
-                        <button className='my-1 btn btn-success col-12' type='submit'>Create Account</button>
+                        <button className='my-1 btn btn-success col-12' type='submit'>
+                            {loading ? <div className='spinner-border col-3' role='status'></div> : 'Log In'}
+                        </button>
                     </form>
                     <button className='my-1 btn btn-primary col-12' onClick={toggleSignup}>
                         Already have an account?
@@ -138,7 +141,9 @@ const Login = ({ loggedIn, handleLogin }) => {
                             onChange={updateForm}
                             required
                         />
-                        <button className='mt-3 fs-5 btn btn-success col-12' type='submit'>Log In</button>
+                        <button className='mt-3 fs-5 btn btn-success col-12' type='submit'>
+                            {loading ? <div className='spinner-border col-3' role='status'></div> : 'Log In'}
+                        </button>
                     </form>
                     <button className='mt-3 fs-5 btn btn-primary col-12' onClick={toggleSignup}>
                         Click here to create an account
