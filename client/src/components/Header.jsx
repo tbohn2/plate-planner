@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import '../styles/root.css'
 import '../styles/header.css'
 import logo1 from '../assets/logo1.png'
 
@@ -25,17 +26,17 @@ const Header = ({ loggedIn, handleLogout }) => {
                     <header className='d-flex justify-content-center'>
                         <img src={logo1} alt='logo1' className='header-logo' />
                         <div className="btn-group position-absolute top-0 end-0">
-                            <button type="button" className="bg-orange mobile-nav-btn z-0 noTextDec fs-1 border border-light text-light d-flex justify-content-center align-items-center" data-bs-toggle="dropdown" aria-expanded="false">
+                            <button type="button" className="mobile-nav-btn z-0 noTextDec fs-1 border border-light text-light d-flex justify-content-center align-items-center" data-bs-toggle="dropdown" aria-expanded="false">
                                 ☰
                             </button>
                             <ul className="dropdown-menu bg-light-yellow">
                                 <li><Link className='text-decoration-none fs-3 dropdown-item' to='/myRecipes'>My Recipes</Link></li>
-                                <li><Link className='text-decoration-none fs-3 dropdown-item border-top border-dark' to='/list'>My List</Link></li>
-                                <li><Link className='text-decoration-none fs-3 dropdown-item border-top border-dark' to='/search'>Browse Recipes</Link></li>
+                                <li><Link className='text-decoration-none fs-3 dropdown-item border-top border-primary' to='/list'>My List</Link></li>
+                                <li><Link className='text-decoration-none fs-3 dropdown-item border-top border-primary' to='/search'>Browse Recipes</Link></li>
                                 {loggedIn ? (
-                                    <li><Link className='text-decoration-none fs-3 dropdown-item border-top border-dark' onClick={handleLogout}>Logout</Link></li>
+                                    <li><Link className='text-decoration-none fs-3 dropdown-item border-top border-primary' onClick={handleLogout}>Logout</Link></li>
                                 ) : (
-                                    <li><Link className='text-decoration-none fs-3 dropdown-item border-top border-dark' to='/login'>Login</Link></li>
+                                    <li><Link className='text-decoration-none fs-3 dropdown-item border-top border-primary' to='/login'>Login</Link></li>
                                 )}
                             </ul>
                         </div>
