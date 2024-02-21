@@ -4,6 +4,7 @@
     --green: #229928;
     --brown: #8E735B;
     --blue: #05347e;
+    --navy: #070974;
     --red: #eb2525;
     --white: #f6f6f6;
 }
@@ -25,6 +26,7 @@
 .myBody {
     font-family: 'Lato', sans-serif;
     min-height: 100vh;
+    color: var(--navy);
 }
 
 .app-bg {
