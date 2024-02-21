@@ -2,8 +2,11 @@
     max-height: 16vh;
     font-family: "Nunito", sans-serif;
     font-weight: bold;
-    font-size: 32px;
     z-index: 1;
+}
+
+.my-header nav a {
+    font-size: 32px;
 }
 
 .header-logo {
@@ -68,7 +71,7 @@
 }
 
 @media screen and (max-width: 1200px) {
-    header {
+    .my-header nav a {
         font-size: 27px;
     }
 
@@ -79,7 +82,7 @@
 }
 
 @media screen and (max-width: 992px) {
-    header {
+    .my-header nav a {
         font-size: 22px;
     }
 
