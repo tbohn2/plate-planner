@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Navigate } from "react-router-dom";
 import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_USER } from '../utils/queries';
 import { UPDATE_USER_LIST } from '../utils/mutations';
@@ -129,9 +128,9 @@ const List = () => {
             });
             if (data) {
                 refetchHandler();
-                toggleEdit(event)
             }
         } catch (err) {
+            setErr('Error removing all items from shopping list.');
             console.error(err);
         }
     }
@@ -139,14 +138,10 @@ const List = () => {
     return (
         <div className="fade-in list-page col-12 d-flex flex-column align-items-center">
             <div className="body-bg"></div>
-            <div className={`bg-pink list-card col-5 d-flex flex-column align-items-center ${fixedList ? 'list-container-fixed' : 'list-container-absolute'}`}>
+            <div className={`bg-pink list-card my-3 col-xxl-5 col-xl-6 col-lg-7 col-md-8 col-sm-10 col-11 d-flex flex-column align-items-center justify-content-between ${fixedList ? 'list-container-fixed' : 'list-container-absolute'}`}>
                 <h1 className="text-blue text-center bubblegum border-bottom-blue col-8">My Shopping List</h1>
                 {err && <div className="alert alert-danger">{err}</div>}
-                <div className='d-flex justify-content-end col-10'>
-                    <h2 className='col-8 text-blue'>Item</h2>
-                    <h2 className='col-3 text-blue'>Quantity</h2>
-                </div>
-                <div className='d-flex flex-column col-10 text-blue main-shopping-list'>
+                <div className='d-flex flex-column col- col-11 text-blue main-shopping-list'>
                     {editing ? (
                         <div className="d-flex flex-wrap justify-content-center">
                             {shoppingListEditState.map((ingredient, index) =>
