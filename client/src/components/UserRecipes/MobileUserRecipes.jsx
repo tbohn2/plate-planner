@@ -37,28 +37,18 @@ const MobileUserRecipes = ({ id, myRecipes, editing, removing, shoppingListEditS
                     ))}
                 </div>
             </div>
-            <div className='mobile-list-btn-container' >
-                <button className="mobile-list-btn btn btn-success border border-light d-flex flex-column justify-content-center align-items-center text-break text-center fs-4" type="button" data-bs-toggle="offcanvas" data-bs-target="#listOffCanvas" aria-controls="listOffCanvas">
-                    <p className='m-0'>&larr;</p>
-                    <p className='m-0'>L</p>
-                    <p className='m-0'>i</p>
-                    <p className='m-0'>s</p>
-                    <p className='m-0'>t</p>
-                    <p className='m-0'>&larr;</p>
-                </button>
-            </div>
 
-            <div className="offcanvas offcanvas-end bg-white" tabIndex="-1" id="listOffCanvas" aria-labelledby="listOffCanvasLabel">
+            <button className="mobile-list-btn btn btn-success border border-light d-flex flex-column justify-content-center align-items-center text-center fs-4" type="button" data-bs-toggle="offcanvas" data-bs-target="#listOffCanvas" aria-controls="listOffCanvas">
+                <p className='m-0'>List</p>
+            </button>
+
+            <div className="offcanvas offcanvas-end bg-pink" tabIndex="-1" id="listOffCanvas" aria-labelledby="listOffCanvasLabel">
                 <div className="offcanvas-header">
-                    <h1 className='offcanvas-title bubblegum fs-1'>Shopping List</h1>
+                    <h1 className='offcanvas-title bubblegum fs-1 text-blue'>Shopping List</h1>
                     <button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                 </div>
-                <div className="offcanvas-body">
-                    <div className='col-12 border ms-2'>
-                        <div className='d-flex col-xl-10 col-11'>
-                            <h2 className='col-7'>Item</h2>
-                            <h2 className='col-4'>Quantity</h2>
-                        </div>
+                <div className="offcanvas-body text-blue">
+                    <div className='col-12 ms-2'>
                         <div className='d-flex flex-column col-xl-10 col-11'>
                             {editing ? (
                                 <div className='d-flex flex-wrap justify-content-center'>
@@ -77,7 +67,7 @@ const MobileUserRecipes = ({ id, myRecipes, editing, removing, shoppingListEditS
                                 </div>
                             ) : (
                                 shoppingList.map((ingredient, index) =>
-                                    <div key={index} className="col-12 d-flex border border-dark">
+                                    <div key={index} className="col-12 d-flex border border-dark bg-w">
                                         <p name="name" className="col-7 fs-5 m-1 border-end border-dark">{ingredient.name} </p>
                                         <p name="name" className="col-4 fs-5 m-1">{ingredient.quantity} </p>
                                     </div>

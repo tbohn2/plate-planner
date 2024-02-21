@@ -6,7 +6,6 @@
     right: 7px !important;
     overflow-y: hidden !important;
     height: 75% !important;
-    /* background-color: var(--white); */
 }
 
 
@@ -30,13 +29,10 @@
     top: 90% !important;
 }
 
-.mobile-list-btn-container {
-    position: fixed !important;
-    top: 50% !important;
-    right: 7px !important;
-    transform: translateY(-50%) !important;
-}
-
 .mobile-list-btn {
-    width: 15px !important;
+    position: fixed;
+    bottom: 1%;
+    right: 10px;
+    width: 75px;
+    background-color: var(--green);
 }
