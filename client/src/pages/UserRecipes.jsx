@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_USER } from '../utils/queries';
 import { UPDATE_USER_LIST } from '../utils/mutations';
 import Auth from '../utils/auth';
+import MobileUserRecipes from '../components/UserRecipes/MobileUserRecipes';
 import NewRecipeForm from '../components/UserRecipes/NewRecipeForm';
 import RecipeCard from '../components/UserRecipes/RecipeCard';
 import '../styles/root.css';
@@ -80,7 +81,6 @@ const UserRecipes = () => {
     useEffect(() => {
         const handleScroll = () => {
             const scrollPosition = window.scrollY;
-            console.log(scrollPosition);
             if (scrollPosition >= 146) {
                 setFixedList(true);
             } else {
@@ -142,6 +142,30 @@ const UserRecipes = () => {
         setShoppingListEditState(list);
     };
 
+    const draggedItem = useRef(null);
+
+    const handleDragStart = (event, item, index) => {
+        draggedItem.current = { item, index };
+    };
+
+    const handleDragOver = (event) => {
+        event.preventDefault();
+    };
+
+    const handleDrop = (event, targetIndex) => {
+        event.preventDefault();
+        const sourceIndex = draggedItem.current.index;
+        const draggedItemData = draggedItem.current.item;
+
+        const newList = [...shoppingListEditState];
+
+        newList.splice(sourceIndex, 1);
+
+        newList.splice(targetIndex, 0, draggedItemData);
+
+        setShoppingListEditState(newList);
+    };
+
     const updateShoppingListHandler = async (event) => {
         event.preventDefault();
         try {
@@ -189,99 +213,30 @@ const UserRecipes = () => {
             }
             {errorState && <div className="alert alert-danger" role="alert">{errorState}</div>}
             {isMobile ? (
-                <div className='myRecipes d-flex justify-content-center fade-in'>
-                    <div className='col-12 d-flex flex-column align-items-center myBody'>
-                        <h1 className='fs-1'>My Recipes</h1>
-                        <div className='d-flex flex-wrap col-12 justify-content-center'>
-                            {customRecipes.map((recipe) => (
-                                <RecipeCard recipe={recipe} refetch={refetchHandler} userId={id} />
-                            ))}
-                        </div>
-
-                        <button type="button" className="btn btn-primary my-3" data-bs-toggle="modal" data-bs-target="#NewRecipeModal">
-                            Create New Recipe
-                        </button>
-
-                        <div className="modal fade" id="NewRecipeModal" tabIndex="-1" aria-labelledby="NewRecipeModalLabel" aria-hidden="true">
-                            <NewRecipeForm id={id} refetch={refetchHandler} />
-                        </div>
-
-                        <h1 className='fs-1'>Saved Recipes</h1>
-                        <div className='d-flex flex-wrap col-12 justify-content-center'>
-                            {savedRecipes.map((recipe) => (
-                                <RecipeCard recipe={recipe} refetch={refetchHandler} userId={id} />
-                            ))}
-                        </div>
-                    </div>
-                    <div className='mobile-list-btn-container' >
-                        <button class="mobile-list-btn btn btn-primary text-break text-center fs-4 pe-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#listOffCanvas" aria-controls="listOffCanvas">
-                            &larr;List&larr;
-                        </button>
-                    </div>
-
-                    <div className="offcanvas offcanvas-end bg-white" tabindex="-1" id="listOffCanvas" aria-labelledby="listOffCanvasLabel">
-                        <div className="offcanvas-header border-bottom border-dark">
-                            <h1 className='offcanvas-title fs-1'>Shopping List</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                        </div>
-                        <div class="offcanvas-body">
-                            <div className='col-12 border ms-2'>
-                                <div className='d-flex col-xl-10 col-11'>
-                                    <h2 className='col-7'>Item</h2>
-                                    <h2 className='col-4'>Quantity</h2>
-                                </div>
-                                <div className='d-flex flex-column col-xl-10 col-11'>
-                                    {editing ? (
-                                        <div className='d-flex flex-wrap justify-content-center'>
-                                            {shoppingListEditState.map((ingredient, index) =>
-                                                <div key={index} className="col-12 d-flex mb-1">
-                                                    <input type="text" className="col-7 fs-5" name="name" value={ingredient.name} onChange={(e) => handleItemChange(e, index)} />
-                                                    <input type="number" className="col-4 fs-5" name="quantity" value={ingredient.quantity} onChange={(e) => handleItemChange(e, index)} />
-                                                    <button type='button' className="btn btn-sm btn-danger mx-1" onClick={() => removeItem(index)}>X</button>
-                                                </div>)}
-                                            <button type='button' className="btn btn-primary my-1 col-12" onClick={addItemToList}>+ Item</button>
-                                        </div>
-                                    ) : (
-                                        shoppingList.map((ingredient, index) =>
-                                            <div key={index} className="col-12 d-flex border border-dark">
-                                                <p name="name" className="col-7 fs-5 m-1 border-end border-dark">{ingredient.name} </p>
-                                                <p name="name" className="col-4 fs-5 m-1">{ingredient.quantity} </p>
-                                            </div>
-                                        )
-                                    )}
-                                </div>
-                                {editing ? (
-                                    <div className='mt-2'>
-                                        <div>
-                                            <button type="button" className="btn btn-success" onClick={updateShoppingListHandler}>Save changes</button>
-                                            <button type="button" className="btn btn-secondary mx-1" onClick={toggleEdit}>Cancel</button>
-                                        </div>
-                                    </div>
-                                ) : (
-                                    <div className='mt-2'>
-                                        {removing ? (
-                                            <div>
-                                                <button type="button" className="btn btn-danger  mx-1" onClick={removeAllItems}>Clear All Items?</button>
-                                                <button type="button" className="btn btn-secondary" onClick={toggleRemove}>Cancel</button>
-                                            </div>
-                                        ) : (
-                                            <div>
-                                                <button type="button" className="btn btn-primary" onClick={toggleEdit}>Edit List</button>
-                                                <button type="button" className="btn btn-danger mx-1" onClick={toggleRemove}>Clear List</button>
-                                            </div>
-                                        )}
-                                    </div>
-                                )}
-                            </div>
-                        </div>
-                    </div>
-
-
-                </div>
+                <MobileUserRecipes
+                    id={id}
+                    customRecipes={customRecipes}
+                    savedRecipes={savedRecipes}
+                    editing={editing}
+                    removing={removing}
+                    shoppingList={shoppingList}
+                    shoppingListEditState={shoppingListEditState}
+                    refetchHandler={refetchHandler}
+                    handleDragStart={handleDragStart}
+                    handleDragOver={handleDragOver}
+                    handleDrop={handleDrop}
+                    handleItemChange={handleItemChange}
+                    addItemToList={addItemToList}
+                    removeItem={removeItem}
+                    updateShoppingListHandler={updateShoppingListHandler}
+                    removeAllItems={removeAllItems}
+                    toggleEdit={toggleEdit}
+                    toggleRemove={toggleRemove}
+                />
             ) : (
                 <div className='myRecipes d-flex fade-in mt-3'>
                     <div className='col-lg-9 col-8 d-flex flex-column align-items-center myBody'>
-                        <h1 className='border-bottom-blue'>My Recipes</h1>
+                        <h1 className='border-bottom-blue bubblegum col-3 text-center'>My Recipes</h1>
                         <div className='d-flex flex-wrap col-12 justify-content-center'>
                             {customRecipes.map((recipe) => (
                                 <RecipeCard recipe={recipe} refetch={refetchHandler} userId={id} />
@@ -304,7 +259,7 @@ const UserRecipes = () => {
                     </div>
 
                     <div className={`col-lg-3 col-4 bg-w list-container d-flex flex-column align-items-center py-1 px-3' ${fixedList ? 'list-container-fixed' : 'list-container-absolute'}`}>
-                        <h1 className='border-bottom-blue text-center col-12'>Shopping List</h1>
+                        <h1 className='border-bottom-blue text-center col-12 bubblegum'>Shopping List</h1>
                         <div className='d-flex justify-content-end col-xl-10 col-12'>
                             <h2 className={editing ? 'col-9' : 'col-10'}>Item</h2>
                             <h2 className='col-2'>Qty.</h2>
@@ -313,7 +268,12 @@ const UserRecipes = () => {
                             {editing ? (
                                 <div className='d-flex flex-wrap'>
                                     {shoppingListEditState.map((ingredient, index) =>
-                                        <div key={index} className="col-12 d-flex justify-content-end mb-1">
+                                        <div key={index} className="col-12 d-flex justify-content-end mb-1"
+                                            draggable
+                                            onDragStart={(event) => handleDragStart(event, ingredient, index)}
+                                            onDragOver={(event) => handleDragOver(event)}
+                                            onDrop={(event) => handleDrop(event, index)}
+                                        >
                                             <button type='button' className="btn btn-sm btn-danger col-1" onClick={() => removeItem(index)}>X</button>
                                             <input type="text" className="col-9 fs-5" name="name" value={ingredient.name} onChange={(e) => handleItemChange(e, index)} />
                                             <input type="number" className="col-2 fs-5" name="quantity" value={ingredient.quantity} onChange={(e) => handleItemChange(e, index)} />
