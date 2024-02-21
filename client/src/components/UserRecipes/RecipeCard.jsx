@@ -10,7 +10,7 @@ const RecipeCard = ({ recipe, refetch, userId }) => {
     const img = recipe.img ? recipe.img : placholderImg;
 
     return (
-        <div className={`card recipeCard text-blue border-1 border-secondary-emphasis col-xl-3 col-lg-5 col-md-4 col-sm-5 col-8 mx-4 pb-1 my-2 ${recipe.img ? loaded ? 'fade-in' : 'visually-hidden' : 'fade-in'}`}>
+        <div className={`card recipeCard text-blue border-blue col-xl-3 col-lg-5 col-md-4 col-sm-5 col-8 mx-4 pb-1 my-2 ${recipe.img ? loaded ? 'fade-in' : 'visually-hidden' : 'fade-in'}`}>
             <div key={recipe._id} className='d-flex flex-column align-items-center justify-content-between' data-bs-toggle="modal" data-bs-target={`#RecipeModal-${recipe._id}`}>
                 <img className="img recipeImg col-12" onLoad={() => setLoaded(true)} src={img} alt={recipe.name} />
                 <h3 className="col-12 text-center my-2 fw-bold">{recipe.name}</h3>

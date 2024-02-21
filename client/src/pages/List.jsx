@@ -10,6 +10,7 @@ const List = () => {
     const user = Auth.getProfile();
     const id = user.data._id;
 
+    const [fixedList, setFixedList] = useState(false);
     const [editing, setEditing] = useState(false);
     const [err, setErr] = useState('');
     const [shoppingList, setShoppingList] = useState([]);
@@ -43,6 +44,22 @@ const List = () => {
             setStates(data);
         }
     }, [loading, error, data, shoppingListEditState]);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            const scrollPosition = window.scrollY;
+            if (scrollPosition >= 1046) {
+                setFixedList(true);
+            } else {
+                setFixedList(false);
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, []);
 
     const refetchHandler = async () => {
         try {
@@ -120,16 +137,16 @@ const List = () => {
     }
 
     return (
-        <div className="fade-in col-12 d-flex flex-column align-items-center">
+        <div className="fade-in list-page col-12 d-flex flex-column align-items-center">
             <div className="body-bg"></div>
-            <div className="bg-green col-5 card d-flex flex-column align-items-center">
-                <h1 className="text-light">My Shopping List</h1>
+            <div className={`bg-pink list-card col-5 d-flex flex-column align-items-center ${fixedList ? 'list-container-fixed' : 'list-container-absolute'}`}>
+                <h1 className="text-blue text-center bubblegum border-bottom-blue col-8">My Shopping List</h1>
                 {err && <div className="alert alert-danger">{err}</div>}
                 <div className='d-flex justify-content-end col-10'>
-                    <h2 className='col-8 text-light'>Item</h2>
-                    <h2 className='col-3 text-light'>Quantity</h2>
+                    <h2 className='col-8 text-blue'>Item</h2>
+                    <h2 className='col-3 text-blue'>Quantity</h2>
                 </div>
-                <div className='d-flex flex-column col-10 text-blue'>
+                <div className='d-flex flex-column col-10 text-blue main-shopping-list'>
                     {editing ? (
                         <div className="d-flex flex-wrap justify-content-center">
                             {shoppingListEditState.map((ingredient, index) =>
@@ -156,12 +173,12 @@ const List = () => {
                     )}
                 </div>
                 {editing ? (
-                    <div className="py-1">
+                    <div className="my-3">
                         <button type="button" className="btn btn-success" onClick={updateShoppingListHandler}>Save changes</button>
                         <button type="button" className="btn btn-secondary mx-1" onClick={toggleEdit}>Cancel</button>
                     </div>
                 ) : (
-                    <div className="py-1">
+                    <div className="my-3">
                         <button type="button" className="btn btn-primary" onClick={toggleEdit}>Edit List</button>
                         <button type="button" className="btn btn-danger mx-1" onClick={removeAllItems}>Remove All Items</button>
                     </div>

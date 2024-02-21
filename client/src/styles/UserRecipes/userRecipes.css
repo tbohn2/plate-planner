@@ -1,4 +1,6 @@
 .list-container {
+    position: absolute;
+    top: 20%;
     border: 1px solid var(--blue);
     border-radius: 15px;
     right: 7px !important;
@@ -7,11 +9,6 @@
     /* background-color: var(--white); */
 }
 
-.list-container-absolute {
-    position: absolute;
-    top: 20%;
-    width: 7000px;
-}
 
 .list-container-fixed {
     position: fixed !important;
@@ -22,6 +19,10 @@
     overflow-y: auto !important;
     position: relative !important;
     height: 70% !important;
+}
+
+.shopping-list::-webkit-scrollbar {
+    display: none;
 }
 
 .list-btns {

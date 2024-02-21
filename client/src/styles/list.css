@@ -1,3 +1,19 @@
+.list-card {
+    border: 1px solid var(--blue);
+    border-radius: 15px;
+    max-height: 100vh;
+}
+
+.main-shopping-list {
+    overflow-y: auto !important;
+    position: relative !important;
+    max-height: 80vh !important;
+}
+
+.main-shopping-list::-webkit-scrollbar {
+    display: none;
+}
+
 .myCheckBox {
     width: 25px !important;
     height: 25px !important;

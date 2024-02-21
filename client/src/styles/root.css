@@ -1,6 +1,6 @@
 :root {
     --orange: #c85103;
-    --yellow: #f7d51d;
+    --pink: #e49480;
     --green: #229928;
     --brown: #8E735B;
     --blue: #05347e;
@@ -82,10 +82,17 @@
     background-color: var(--green) !important;
 }
 
+.bg-pink {
+    background-color: var(--pink) !important;
+}
+
 .border-white {
     border: var(--white) 3px solid;
 }
 
+.border-blue {
+    border: var(--blue) 3px solid !important;
+}
 
 .border-top-blue {
     border-top: var(--blue) 3px solid;
