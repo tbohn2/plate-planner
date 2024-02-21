@@ -2,12 +2,14 @@
     box-shadow: 0 0 40px 0 var(--blue) !important;
     transition: 0.3s !important;
     cursor: pointer !important;
-    text-decoration: underline var(--green) !important;
+    text-decoration: underline var(--blue) !important;
 }
 
 .recipeImg {
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
+    height: 250px;
+    object-fit: cover;
 }
 
 .modal {
