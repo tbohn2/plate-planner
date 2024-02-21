@@ -129,7 +129,7 @@ const List = () => {
                     <h2 className='col-8 text-light'>Item</h2>
                     <h2 className='col-3 text-light'>Quantity</h2>
                 </div>
-                <div className='d-flex flex-column col-10'>
+                <div className='d-flex flex-column col-10 text-blue'>
                     {editing ? (
                         <div className="d-flex flex-wrap justify-content-center">
                             {shoppingListEditState.map((ingredient, index) =>

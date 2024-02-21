@@ -29,6 +29,10 @@
     color: var(--navy);
 }
 
+.text-blue {
+    color: var(--blue) !important;
+}
+
 .app-bg {
     background-color: var(--white);
     height: 100vh;

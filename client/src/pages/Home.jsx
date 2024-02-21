@@ -41,7 +41,7 @@ const Home = () => {
                     <div>
                         <img src={circleImg} alt='circleImg' className='circleImg' />
                         <div className="about text-dark d-flex flex-column align-items-center fs-1 p-1">
-                            <p className="bubblegum">Simplify your life by storing your favorite recipes and shopping list in the same place! This app allows you to create your
+                            <p className="bubblegum text-blue">Simplify your life by storing your favorite recipes and shopping list in the same place! This app allows you to create your
                                 shopping list at the click of a button! Join now for free to see it in action!</p>
                             <Link to='/login' onClick={scrollToTop} className="btn btn-success fs-4 col-8">Sign Up!</Link>
                         </div>

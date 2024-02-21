@@ -2,7 +2,7 @@
     box-shadow: 0 0 40px 0 var(--blue) !important;
     transition: 0.3s !important;
     cursor: pointer !important;
-    text-decoration: underline var(--orange) !important;
+    text-decoration: underline var(--green) !important;
 }
 
 .recipeImg {

@@ -86,11 +86,11 @@ const Search = () => {
                         type="text"
                         placeholder="Search by name"
                         name="searchName"
-                        className="input-group-text col-4 mx-1"
+                        className="input-group-text col-4 mx-1 text-blue"
                         onChange={(e) => setSearchName(e.target.value)}
                         required
                     />
-                    <button name="category" type="button" className="mx-1 col-2 btn btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" required>
+                    <button name="category" type="button" className="mx-1 col-2 btn btn-light dropdown-toggle text-blue" data-bs-toggle="dropdown" aria-expanded="false" required>
                         {category ? category : 'Category (optional)'}
                     </button>
                     <ul className="dropdown-menu">
