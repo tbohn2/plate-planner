@@ -4,20 +4,25 @@ import RecipeCard from './RecipeCard';
 import '../../styles/root.css';
 import '../../styles/UserRecipes/userRecipes.css';
 
-const MobileUserRecipes = ({ id, customRecipes, savedRecipes, editing, removing, shoppingListEditState,
-    shoppingList, refetchHandler, handleDragStart, handleDragOver, handleDrop, handleItemChange, addItemToList, removeItem,
+const MobileUserRecipes = ({ id, myRecipes, editing, removing, shoppingListEditState,
+    shoppingList, updateSearch, refetchHandler, handleDragStart, handleDragOver, handleDrop, handleItemChange, addItemToList, removeItem,
     updateShoppingListHandler, removeAllItems, toggleEdit, toggleRemove }) => {
 
     return (
         <div className='myRecipes d-flex justify-content-center fade-in'>
             <div className='col-12 d-flex flex-column align-items-center myBody'>
                 <h1 className='fs-1'>My Recipes</h1>
-                <div className='d-flex flex-wrap col-12 justify-content-center'>
-                    {customRecipes.map((recipe) => (
-                        <RecipeCard recipe={recipe} refetch={refetchHandler} userId={id} />
-                    ))}
-                </div>
+                <div className='col-8'>
+                    <input
+                        type="text"
+                        placeholder="Search by name"
+                        name="searchName"
+                        className="form-control mx-1 text-blue"
+                        onChange={(e) => updateSearch(e.target.value)}
+                        required
+                    />
 
+                </div>
                 <button type="button" className="btn btn-primary my-3" data-bs-toggle="modal" data-bs-target="#NewRecipeModal">
                     Create New Recipe
                 </button>
@@ -26,9 +31,8 @@ const MobileUserRecipes = ({ id, customRecipes, savedRecipes, editing, removing,
                     <NewRecipeForm id={id} refetch={refetchHandler} />
                 </div>
 
-                <h1 className='fs-1'>Saved Recipes</h1>
                 <div className='d-flex flex-wrap col-12 justify-content-center'>
-                    {savedRecipes.map((recipe) => (
+                    {myRecipes.map((recipe) => (
                         <RecipeCard recipe={recipe} refetch={refetchHandler} userId={id} />
                     ))}
                 </div>

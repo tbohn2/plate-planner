@@ -86,12 +86,18 @@
     border: var(--white) 3px solid;
 }
 
+
 .border-top-blue {
     border-top: var(--blue) 3px solid;
 }
 
 .border-bottom-blue {
     border-bottom: var(--blue) 3px solid;
+}
+
+input {
+    border: var(--blue) 2px solid !important;
+    border-radius: 5px !important;
 }
 
 .btn-primary {

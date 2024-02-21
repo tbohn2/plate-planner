@@ -21,15 +21,16 @@ const UserRecipes = () => {
     const [removing, setRemoving] = useState(false);
     const [shoppingList, setShoppingList] = useState([]);
     const [shoppingListEditState, setShoppingListEditState] = useState([]);
-    const [customRecipes, setCustomRecipes] = useState([]);
-    const [savedRecipes, setSavedRecipes] = useState([]);
+    const [myRecipes, setMyRecipes] = useState([]);
 
     const [updateUserList] = useMutation(UPDATE_USER_LIST);
 
     const setStates = async (data) => {
         const recipes = data.user.savedRecipes || [];
-        setCustomRecipes(recipes.filter((recipe) => recipe.custom));
-        setSavedRecipes(recipes.filter((recipe) => !recipe.custom));
+        const customRecipes = recipes.filter(recipe => recipe.custom === true);
+        const savedRecipes = recipes.filter(recipe => recipe.custom === false);
+        const sortedRecipes = customRecipes.concat(...savedRecipes);
+        setMyRecipes(sortedRecipes);
 
         const shoppingList = data.user.shoppingList || [];
 
@@ -117,6 +118,12 @@ const UserRecipes = () => {
     const toggleRemove = (e) => {
         e.preventDefault();
         setRemoving(!removing);
+    };
+
+    const updateSearch = (search) => {
+        const currentRecipes = data.user.savedRecipes || [];
+        const searchResults = currentRecipes.filter((recipe) => recipe.name.toLowerCase().includes(search.toLowerCase()))
+        setMyRecipes(searchResults);
     };
 
     const handleItemChange = (event, index) => {
@@ -215,12 +222,12 @@ const UserRecipes = () => {
             {isMobile ? (
                 <MobileUserRecipes
                     id={id}
-                    customRecipes={customRecipes}
-                    savedRecipes={savedRecipes}
+                    myRecipes={myRecipes}
                     editing={editing}
                     removing={removing}
                     shoppingList={shoppingList}
                     shoppingListEditState={shoppingListEditState}
+                    updateSearch={updateSearch}
                     refetchHandler={refetchHandler}
                     handleDragStart={handleDragStart}
                     handleDragOver={handleDragOver}
@@ -237,22 +244,26 @@ const UserRecipes = () => {
                 <div className='myRecipes d-flex fade-in mt-3'>
                     <div className='col-lg-9 col-8 d-flex flex-column align-items-center myBody'>
                         <h1 className='border-bottom-blue bubblegum col-3 text-center'>My Recipes</h1>
-                        <div className='d-flex flex-wrap col-12 justify-content-center'>
-                            {customRecipes.map((recipe) => (
-                                <RecipeCard recipe={recipe} refetch={refetchHandler} userId={id} />
-                            ))}
-                        </div>
+                        <div className='col-3'>
+                            <input
+                                type="text"
+                                placeholder="Search by name"
+                                name="searchName"
+                                className="form-control mx-1 text-blue"
+                                onChange={(e) => updateSearch(e.target.value)}
+                                required
+                            />
 
+                        </div>
                         <button type="button" className="btn btn-primary my-3" data-bs-toggle="modal" data-bs-target="#NewRecipeModal">
                             Create New Recipe
                         </button>
-
                         <div className="modal fade" id="NewRecipeModal" tabIndex="-1" aria-labelledby="NewRecipeModalLabel" aria-hidden="true">
                             <NewRecipeForm id={id} refetch={refetchHandler} />
                         </div>
 
                         <div className='d-flex flex-wrap col-12 justify-content-center'>
-                            {savedRecipes.map((recipe) => (
+                            {myRecipes.map((recipe) => (
                                 <RecipeCard recipe={recipe} refetch={refetchHandler} userId={id} />
                             ))}
                         </div>
