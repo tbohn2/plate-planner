@@ -119,7 +119,7 @@ const Login = ({ loggedIn, handleLogin }) => {
                     </button>
                 </div>
             ) : (
-                <div className='d-flex flex-column card p-3 col-xl-4 col-lg-5 col-md-7 col-9'>
+                <div className='d-flex flex-column card p-3 col-xl-4 col-lg-5 col-md-7 col-sm-9 col-10'>
                     <h2 className='text-center'>Login</h2>
                     <form onSubmit={loginUser} className='d-flex flex-column'>
                         <label htmlFor="email">Email</label>
