@@ -95,7 +95,7 @@ const SearchCard = ({ recipe, refetch, setFetching }) => {
                 </div>
             ) : (
                 <button className="btn btn-success col-12" onClick={(e) => handleSaveRecipe(e, name, ingredients, instructions, URL, img)}>
-                    {saving ? <div className="spinner-border" role="status"></div> : 'Save Recipe Above'}
+                    {saving ? <div className="spinner-border spinner-border-sm" role="status"></div> : 'Save Recipe Above'}
                 </button>
             )}
         </div>
