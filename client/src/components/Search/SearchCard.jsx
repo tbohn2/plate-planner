@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useMutation } from "@apollo/client";
 import { CREATE_RECIPE, SAVE_RECIPE_TO_USER } from "../../utils/mutations";
 import Auth from "../../utils/auth";
@@ -9,6 +9,7 @@ const SearchCard = ({ recipe, refetch, setFetching }) => {
     const user = Auth.getProfile();
     const id = user.data._id;
 
+    const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
     const [loaded, setLoaded] = useState(false);
     const [error, setError] = useState(false);
     const [saving, setSaving] = useState(false);
@@ -16,6 +17,18 @@ const SearchCard = ({ recipe, refetch, setFetching }) => {
 
     const [createRecipe] = useMutation(CREATE_RECIPE);
     const [saveRecipeToUser] = useMutation(SAVE_RECIPE_TO_USER);
+
+    useEffect(() => {
+        function handleResize() {
+            setIsMobile(window.innerWidth <= 768);
+        }
+
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
 
     const handleSaveRecipe = async (e, name, ingredients, instructions, URL, img) => {
         e.preventDefault();
@@ -66,10 +79,10 @@ const SearchCard = ({ recipe, refetch, setFetching }) => {
     }
 
     return (
-        <div key={recipe.idMeal} className={`card my-3 col-5 d-flex flex-column align-items-center justify-content-between border border-dark ${loaded ? 'fade-in' : 'visually-hidden'}`}>
+        <div key={recipe.idMeal} className={`card my-3 col-lg-5 col-md-9 col-10 d-flex flex-column align-items-center justify-content-between border border-dark ${loaded ? 'fade-in' : 'visually-hidden'}`}>
             <a href={URL} className="col-12 text-center fs-1 text-decoration-none link-dark">{name}</a>
-            <div className="col-12 d-flex flex-wrap">
-                <div className="col-5 d-flex flex-column align-items-center">
+            <div className={`col-12 d-flex flex-wrap ${isMobile ? 'flex-column flex-column-reverse align-items-center' : ''}`}>
+                <div className="col-md-5 col-10 d-flex flex-column align-items-center">
                     <h2 className="col-12 text-center">Ingredients</h2>
                     <ul>
                         {ingredients.map((ingredient) => {
@@ -79,9 +92,9 @@ const SearchCard = ({ recipe, refetch, setFetching }) => {
                         })}
                     </ul>
                 </div>
-                <img className="img col-6" src={img} alt={name} onLoad={() => { setLoaded(true); setFetching(false) }} />
+                <img className="img col-md-6 col-8" src={img} alt={name} onLoad={() => { setLoaded(true); setFetching(false) }} />
             </div>
-            <div className="d-flex flex-column align-items-center m-3">
+            <div className="d-flex flex-column align-items-center m-1">
                 <h2 className="col-12 text-center">Instructions</h2>
                 <p>{instructions}</p>
             </div>

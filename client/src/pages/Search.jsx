@@ -82,8 +82,8 @@ const Search = () => {
             <div className="z-1 d-flex flex-column justify-content-center align-items-center">
                 <h1 className="col-6 text-center bubblegum border-bottom-blue">Recipe Search</h1>
                 <div className="col-12 d-flex flex-wrap justify-content-center align-items-center">
-                    <div className="col-12 d-flex justify-content-center my-2">
-                        <div className="col-4 mx-2">
+                    <div className="col-12 d-flex flex-wrap justify-content-center align-items-center my-2">
+                        <div className="col-lg-4 col-md-5 col-10 mx-2 mb-2">
                             <input
                                 type="text"
                                 placeholder="Search by name"
@@ -93,7 +93,7 @@ const Search = () => {
                                 required
                             />
                         </div>
-                        <button name="category" type="button" className="mx-2 col-2 btn btn-light dropdown-toggle border-blue " data-bs-toggle="dropdown" aria-expanded="false">
+                        <button name="category" type="button" className="mx-2 mb-2 col-lg-2 col-md-3 col-6 btn btn-light dropdown-toggle border-blue " data-bs-toggle="dropdown" aria-expanded="false">
                             {category ? category : 'Category (optional)'}
                         </button>
                         <ul className="dropdown-menu">
@@ -114,8 +114,8 @@ const Search = () => {
                             <li><button className="dropdown-item" type="button" onClick={() => setCategory('Vegetarian')}>Vegetarian</button></li>
                         </ul>
                     </div>
-                    <button className="btn btn-primary col-2 fw-bold mx-1" onClick={handleSearch}>Search</button>
-                    <button className="btn btn-success col-2 fw-bold mx-1" onClick={fetchRandomRecipe}>Random Recipe</button>
+                    <button className="btn btn-primary col-lg-2 col-md-3 col-5 fw-bold mx-1" onClick={handleSearch}>Search</button>
+                    <button className="btn btn-success col-lg-2 col-md-3 col-5 fw-bold mx-1" onClick={fetchRandomRecipe}>Random Recipe</button>
                 </div>
                 {fetching ? (
                     <div className="d-flex justify-content-center align-items-center m-5">
