@@ -69,7 +69,7 @@
 
 @media screen and (max-width: 768px) {
     .intro-container {
-        top: 15%;
+        top: 13%;
         height: 700px;
     }
 
@@ -82,5 +82,9 @@
         height: 350px;
         width: 350px;
         font-size: 24px;
+    }
+
+    .howItWorks h1 {
+        font-size: 3rem;
     }
 }
