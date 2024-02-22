@@ -20,7 +20,7 @@ const Header = ({ loggedIn, handleLogout }) => {
     }, []);
 
     return (
-        <div className='fade-in'>
+        <div className='fade-in my-1'>
             {isMobile ?
                 (
                     <header className='d-flex justify-content-center my-header'>
