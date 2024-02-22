@@ -17,24 +17,70 @@
     border-top: 84vh solid var(--white);
 }
 
-.circleImg {
-    width: 65vh;
-    height: 65vh;
+.intro-container {
     position: absolute;
     top: 20%;
-    right: 15%;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    height: 550px;
+}
+
+.circleImg {
+    width: 550px;
+    height: 550px;
 }
 
 .about {
-    height: 65vh;
-    width: 65vh;
-    z-index: 1;
-    position: absolute;
-    top: 20%;
-    left: 15%;
+    height: 550px;
+    width: 550px;
     border-radius: 7px;
+    font-size: 40px;
 }
 
 .howItWorks h1 {
     font-size: 3.5rem;
+}
+
+@media screen and (max-width: 1200px) {
+    .circleImg {
+        width: 450px;
+        height: 450px;
+    }
+
+    .about {
+        height: 450px;
+        width: 450px;
+        font-size: 32px;
+    }
+}
+
+@media screen and (max-width: 992px) {
+    .circleImg {
+        width: 350px;
+        height: 350px;
+    }
+
+    .about {
+        height: 350px;
+        width: 350px;
+        font-size: 24px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .intro-container {
+        top: 15%;
+        height: 700px;
+    }
+
+    .circleImg {
+        width: 350px;
+        height: 350px;
+    }
+
+    .about {
+        height: 350px;
+        width: 350px;
+        font-size: 24px;
+    }
 }

@@ -34,17 +34,43 @@ const Home = () => {
     return (
         <div className='fade-in'>
             {isMobile ? (
-                <div></div>
-            ) : (
-                <div className="bg-blue pb-3">
+                <div>
                     <div className="home-body-bg"></div>
-                    <div>
-                        <img src={circleImg} alt='circleImg' className='circleImg' />
-                        <div className="about text-dark d-flex flex-column align-items-center fs-1 p-1">
+                    <div className="intro-container d-flex flex-column justify-content-between">
+                        <div className="about bg-w border-blue d-flex flex-column align-items-center p-1">
                             <p className="bubblegum text-blue">Simplify your life by storing your favorite recipes and shopping list in the same place! This app allows you to create your
                                 shopping list at the click of a button! Join now for free to see it in action!</p>
                             <Link to='/login' onClick={scrollToTop} className="btn btn-success fs-4 col-8">Sign Up!</Link>
                         </div>
+                        <img src={circleImg} alt='circleImg' className='circleImg' />
+                    </div>
+                    <div className="howItWorks bg-blue d-flex flex-column align-items-center">
+                        <h1 className="text-light bubblegum fw-bold col-12 text-center my-5">HOW IT WORKS</h1>
+                        <div className="d-flex flex-column align-items-center col-12">
+                            {cardInfo.map((card, index) => (
+                                <div key={index} className="card border-0 col-10 my-3">
+                                    <img src={card.image} className="card-img-top" alt="..." />
+                                    <div className="card-body bg-blue text-light">
+                                        <h3 className="card-title bubblegum">{card.title}</h3>
+                                        <p className="card-text fs-5">{card.text}</p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                        <h2 className="text-light bubblegum text-center my-3">Sign up for free today!</h2>
+                        <Link to='/login' onClick={scrollToTop} className="btn btn-success fs-3 col-6 my-3 text-center">Create Account</Link>
+                    </div>
+                </div>
+            ) : (
+                <div className="bg-blue pb-3">
+                    <div className="home-body-bg"></div>
+                    <div className="intro-container d-flex justify-content-evenly col-xxl-11 col-xl-12 col-lg-12">
+                        <div className="about text-blue bg-w border-blue d-flex flex-column align-items-center p-1">
+                            <p className="bubblegum text-blue">Simplify your life by storing your favorite recipes and shopping list in the same place! This app allows you to create your
+                                shopping list at the click of a button! Join now for free to see it in action!</p>
+                            <Link to='/login' onClick={scrollToTop} className="btn btn-success fs-4 col-8">Sign Up!</Link>
+                        </div>
+                        <img src={circleImg} alt='circleImg' className='circleImg' />
                     </div>
                     <div className="howItWorks bg-blue d-flex flex-column align-items-center">
                         <h1 className="text-light bubblegum fw-bold col-12 text-center my-5">HOW IT WORKS</h1>
@@ -60,7 +86,7 @@ const Home = () => {
                             ))}
                         </div>
                         <h2 className="text-light bubblegum text-center my-3">Sign up for free today!</h2>
-                        <Link to='/login' onClick={scrollToTop} className="btn btn-success fs-3 col-3 text-center">Create Account</Link>
+                        <Link to='/login' onClick={scrollToTop} className="btn btn-success fs-3 col-lg-3 col-md-4 text-center">Create Account</Link>
                     </div>
                 </div>
             )}
