@@ -24,8 +24,8 @@
 
 .navBtn:hover {
     color: white;
-    background-color: var(--pink);
-    box-shadow: 0 0 10px var(--pink);
+    background-color: var(--yellow);
+    box-shadow: 0 0 10px var(--yellow);
 }
 
 .navBtn,

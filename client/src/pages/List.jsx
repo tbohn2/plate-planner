@@ -138,8 +138,8 @@ const List = () => {
     return (
         <div className="fade-in list-page col-12 d-flex flex-column align-items-center">
             <div className="body-bg"></div>
-            <div className={`bg-pink list-card my-3 col-xxl-5 col-xl-6 col-lg-7 col-md-8 col-sm-10 col-11 d-flex flex-column align-items-center justify-content-between ${fixedList ? 'list-container-fixed' : 'list-container-absolute'}`}>
-                <h1 className="text-blue text-center bubblegum border-bottom-blue col-8">My Shopping List</h1>
+            <div className={`bg-yellow list-card my-3 col-xxl-5 col-xl-6 col-lg-7 col-md-8 col-sm-10 col-11 d-flex flex-column align-items-center justify-content-between ${fixedList ? 'list-container-fixed' : 'list-container-absolute'}`}>
+                <h1 className="mt-1 text-blue text-center bubblegum border-bottom-blue col-8">My Shopping List</h1>
                 {err && <div className="alert alert-danger">{err}</div>}
                 <div className='d-flex flex-column col- col-11 text-blue main-shopping-list'>
                     {editing ? (

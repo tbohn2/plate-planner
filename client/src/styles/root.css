@@ -1,6 +1,6 @@
 :root {
     --orange: #c85103;
-    --pink: #e49480;
+    --yellow: #f8eb31;
     --green: #229928;
     --brown: #8E735B;
     --blue: #05347e;
@@ -82,8 +82,8 @@
     background-color: var(--green) !important;
 }
 
-.bg-pink {
-    background-color: var(--pink) !important;
+.bg-yellow {
+    background-color: var(--yellow) !important;
 }
 
 .border-white {

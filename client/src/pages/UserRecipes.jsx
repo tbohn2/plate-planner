@@ -269,9 +269,9 @@ const UserRecipes = () => {
                         </div>
                     </div>
 
-                    <div className={`col-lg-3 col-4 bg-w list-container bg-pink border-blue d-flex flex-column align-items-center py-1 px-3' ${fixedList ? 'list-container-fixed' : 'list-container-absolute'}`}>
+                    <div className={`col-lg-3 col-4 bg-w list-container bg-yellow border-blue d-flex flex-column align-items-center py-1 px-3' ${fixedList ? 'list-container-fixed' : 'list-container-absolute'}`}>
                         <h1 className='border-bottom-blue text-center col-12 bubblegum'>Shopping List</h1>
-                        <div className='d-flex flex-column align-items-center col-xl-10 col-11 shopping-list bg-pink'>
+                        <div className='d-flex flex-column align-items-center col-xl-10 col-11 shopping-list bg-yellow'>
                             {editing ? (
                                 <div className='d-flex flex-wrap'>
                                     {shoppingListEditState.map((ingredient, index) =>
