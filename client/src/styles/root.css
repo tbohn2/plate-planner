@@ -1,6 +1,6 @@
 :root {
     --orange: #c85103;
-    --yellow: #f8eb31;
+    --yellow: #e0cc57;
     --green: #229928;
     --brown: #8E735B;
     --blue: #05347e;
@@ -25,7 +25,6 @@
 
 .myBody {
     font-family: 'Lato', sans-serif;
-    min-height: 100vh;
     color: var(--navy);
 }
 
@@ -105,6 +104,18 @@
 input {
     border: var(--blue) 2px solid !important;
     border-radius: 5px !important;
+}
+
+.btn-yellow {
+    border: var(--blue) 2px solid !important;
+    background-color: var(--yellow) !important;
+    color: var(--blue) !important;
+}
+
+.btn-yellow:hover {
+    border: var(--yellow) 2px solid !important;
+    background-color: var(--blue) !important;
+    color: var(--yellow) !important;
 }
 
 .btn-primary {
