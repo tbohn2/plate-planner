@@ -269,9 +269,9 @@ const UserRecipes = () => {
                         </div>
                     </div>
 
-                    <div className={`col-lg-3 col-4 bg-w list-container bg-yellow border-blue d-flex flex-column align-items-center py-1 px-3' ${fixedList ? 'list-container-fixed' : 'list-container-absolute'}`}>
+                    <div className={`col-lg-3 col-4 list-container bg-yellow border-blue d-flex flex-column align-items-center py-1 px-3' ${fixedList ? 'list-container-fixed' : 'list-container-absolute'}`}>
                         <h1 className='border-bottom-blue text-center col-12 bubblegum'>Shopping List</h1>
-                        <div className='d-flex flex-column align-items-center col-xl-10 col-11 shopping-list bg-yellow'>
+                        <div className='d-flex flex-column align-items-center col-xl-10 col-11 shopping-list bg-yellow border-blue'>
                             {editing ? (
                                 <div className='d-flex flex-wrap'>
                                     {shoppingListEditState.map((ingredient, index) =>
@@ -283,14 +283,14 @@ const UserRecipes = () => {
                                         >
                                             <button type='button' className="btn btn-sm btn-danger col-1" onClick={() => removeItem(index)}>X</button>
                                             <div className='col-10 d-flex justify-content-end'>
-                                                <input type="text" className="col-10 fs-5 bg-w text-blue" name="name" value={ingredient.name} onChange={(e) => handleItemChange(e, index)} />
-                                                <input type="number" className="col-2 fs-5 bg-w text-blue ms-1" name="quantity" value={ingredient.quantity} onChange={(e) => handleItemChange(e, index)} />
+                                                <input type="text" className="col-10 fs-5 text-blue" name="name" value={ingredient.name} onChange={(e) => handleItemChange(e, index)} />
+                                                <input type="number" className="col-2 fs-5 text-blue ms-1" name="quantity" value={ingredient.quantity} onChange={(e) => handleItemChange(e, index)} />
                                             </div>
                                         </div>)}
                                     <button type='button' className="btn btn-primary my-1 col-12" onClick={addItemToList}>+ Item</button>
                                 </div>
                             ) : (
-                                <div className='col-12  bg-w'>
+                                <div className='col-12 '>
                                     {shoppingList.map((ingredient, index) =>
                                         <div key={index} className="col-12 d-flex border border-dark text-blue">
                                             <p name="name" className="col-10 fs-5 px-1 my-1 border-end border-dark">{ingredient.name} </p>

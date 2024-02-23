@@ -138,10 +138,10 @@ const List = () => {
     return (
         <div className="fade-in list-page col-12 d-flex flex-column align-items-center">
             <div className="body-bg"></div>
-            <div className={`bg-yellow list-card my-3 col-xxl-5 col-xl-6 col-lg-7 col-md-8 col-sm-10 col-11 d-flex flex-column align-items-center justify-content-between ${fixedList ? 'list-container-fixed' : 'list-container-absolute'}`}>
+            <div className={`bg-yellow list-card col-xxl-5 col-xl-6 col-lg-7 col-md-8 col-sm-10 col-11 d-flex flex-column align-items-center justify-content-between ${fixedList ? 'list-container-fixed' : 'list-container-absolute'}`}>
                 <h1 className="mt-1 text-blue text-center bubblegum border-bottom-blue col-8">My Shopping List</h1>
                 {err && <div className="alert alert-danger">{err}</div>}
-                <div className='d-flex flex-column col- col-11 text-blue main-shopping-list'>
+                <div className='d-flex flex-column col-11 border-blue text-blue main-shopping-list'>
                     {editing ? (
                         <div className="d-flex flex-wrap justify-content-center">
                             {shoppingListEditState.map((ingredient, index) =>
@@ -157,7 +157,7 @@ const List = () => {
                         </div>
                     ) : (
                         shoppingList.map((ingredient, index) =>
-                            <div key={index} className="bg-w col-12 d-flex align-items-center border border-dark py-1">
+                            <div key={index} className="col-12 d-flex align-items-center border border-dark py-1">
                                 <div className="col-1 d-flex justify-content-center align-items-center">
                                     <input type="checkbox" className="form-check-input m-1 myCheckBox" />
                                 </div>

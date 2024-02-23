@@ -17,7 +17,7 @@
 .shopping-list {
     overflow-y: auto !important;
     position: relative !important;
-    height: 70% !important;
+    height: 80% !important;
 }
 
 .shopping-list::-webkit-scrollbar {
