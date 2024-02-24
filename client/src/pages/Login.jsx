@@ -74,12 +74,12 @@ const Login = ({ loggedIn, handleLogin }) => {
     };
 
     return (
-        <div className='fade-in loginPage d-flex justify-content-center'>
+        <div className='fade-in loginPage'>
             <div className='body-bg'></div>
             {loggedIn && <Navigate to='/myRecipes' />}
-            {error && <div className='alert alert-danger my-5'>{error}</div>}
+            {error && <div className='alert alert-danger loginErr col-xl-4 col-lg-5 col-md-7 col-sm-9 col-10'>{error}</div>}
             {signingUp ? (
-                <div className='card d-flex flex-column p-3 col-xl-5 col-lg-5 col-md-7 col-9'>
+                <div className='d-flex flex-column card p-3 col-xl-4 col-lg-5 col-md-7 col-sm-9 col-10'>
                     {loading && <div className='spinner-border spinner-border-sm col-3' role='status'></div>}
                     <h2 className='text-center'>Create Account</h2>
                     <form onSubmit={addNewUser} className='d-flex flex-column'>
