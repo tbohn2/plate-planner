@@ -77,7 +77,7 @@ const Login = ({ loggedIn, handleLogin }) => {
         <div className='fade-in loginPage'>
             <div className='body-bg'></div>
             {loggedIn && <Navigate to='/myRecipes' />}
-            {error && <div className='alert alert-danger loginErr col-xl-4 col-lg-5 col-md-7 col-sm-9 col-10'>{error}</div>}
+            {error && <div className='fade-in alert alert-danger loginErr col-xl-4 col-lg-5 col-md-7 col-sm-9 col-10'>{error}</div>}
             {signingUp ? (
                 <div className='d-flex flex-column card p-3 col-xl-4 col-lg-5 col-md-7 col-sm-9 col-10'>
                     {loading && <div className='spinner-border spinner-border-sm col-3' role='status'></div>}
