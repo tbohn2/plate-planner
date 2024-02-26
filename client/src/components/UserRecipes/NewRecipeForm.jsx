@@ -79,6 +79,7 @@ const NewRecipeForm = ({ id, refetch, setLoadingState, setErrorState }) => {
                 setIngredientsState([{ name: '', quantity: '', unit: '' }]);
                 refetch();
                 setLoadingState(false);
+                setErrorState('');
             }
         } catch (err) {
             setErrorState('Error creating recipe. Please try again.'

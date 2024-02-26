@@ -131,6 +131,7 @@ const RecipeModal = ({ recipe, refetch, userId, setLoadingState, setErrorState }
                 toggleAddingToList(event);
                 refetch();
                 setLoadingState(false);
+                setErrorState('');
             }
         } catch (err) {
             setErrorState('Error adding items to list');
@@ -157,6 +158,7 @@ const RecipeModal = ({ recipe, refetch, userId, setLoadingState, setErrorState }
                 toggleEdit(event);
                 refetch();
                 setUpdating(false);
+                setModalError('');
             }
         }
         catch (err) {
@@ -175,6 +177,7 @@ const RecipeModal = ({ recipe, refetch, userId, setLoadingState, setErrorState }
             });
             if (data) {
                 refetch();
+                setErrorState('');
                 setLoadingState(false);
             }
         } catch (err) {
