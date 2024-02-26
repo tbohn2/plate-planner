@@ -27,6 +27,7 @@ const UserRecipes = () => {
 
     const setStates = async (data) => {
         const recipes = data.user.savedRecipes || [];
+        // Places custom recipes at the top of the list
         const customRecipes = recipes.filter(recipe => recipe.custom === true);
         const savedRecipes = recipes.filter(recipe => recipe.custom === false);
         const sortedRecipes = customRecipes.concat(...savedRecipes);
@@ -73,7 +74,7 @@ const UserRecipes = () => {
             console.error(error);
         }
         if (!loading && !error && data && shoppingListEditState.length === 0) {
-            setErrorState(null);
+            setErrorState('');
             setLoadingState(false);
             setStates(data);
         }
@@ -234,6 +235,7 @@ const UserRecipes = () => {
                     removeAllItems={removeAllItems}
                     toggleEdit={toggleEdit}
                     toggleRemove={toggleRemove}
+                    setLoadingState={setLoadingState}
                     setErrorState={setErrorState}
                 />
             ) : (

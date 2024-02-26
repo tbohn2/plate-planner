@@ -6,7 +6,7 @@ import '../../styles/UserRecipes/userRecipes.css';
 
 const MobileUserRecipes = ({ id, myRecipes, editing, removing, shoppingListEditState,
     shoppingList, updateSearch, refetchHandler, handleDragStart, handleDragOver, handleDrop, handleItemChange, addItemToList, removeItem,
-    updateShoppingListHandler, removeAllItems, toggleEdit, toggleRemove }) => {
+    updateShoppingListHandler, removeAllItems, toggleEdit, toggleRemove, setErrorState, setLoadingState }) => {
 
     return (
         <div className='myRecipes d-flex justify-content-center fade-in'>
@@ -28,12 +28,12 @@ const MobileUserRecipes = ({ id, myRecipes, editing, removing, shoppingListEditS
                 </button>
 
                 <div className="modal fade" id="NewRecipeModal" tabIndex="-1" aria-labelledby="NewRecipeModalLabel" aria-hidden="true">
-                    <NewRecipeForm id={id} refetch={refetchHandler} />
+                    <NewRecipeForm id={id} refetch={refetchHandler} setLoadingState={setLoadingState} setErrorState={setErrorState} />
                 </div>
 
                 <div className='d-flex flex-wrap col-12 justify-content-center'>
                     {myRecipes.map((recipe) => (
-                        <RecipeCard recipe={recipe} refetch={refetchHandler} userId={id} />
+                        <RecipeCard recipe={recipe} refetch={refetchHandler} userId={id} setLoadingState={setLoadingState} setErrorState={setErrorState} />
                     ))}
                 </div>
             </div>
