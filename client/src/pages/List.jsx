@@ -11,6 +11,8 @@ const List = () => {
 
     const [fixedList, setFixedList] = useState(false);
     const [editing, setEditing] = useState(false);
+    const [loadingState, setLoadingState] = useState(false);
+    const [removing, setRemoving] = useState(false);
     const [err, setErr] = useState('');
     const [shoppingList, setShoppingList] = useState([]);
     const [shoppingListEditState, setShoppingListEditState] = useState([]);
@@ -24,8 +26,14 @@ const List = () => {
             return { name: item.name, quantity: item.quantity };
         });
 
-        setShoppingList(shoppingList);
-        setShoppingListEditState(typelessShoppingList);
+        if (shoppingList.length !== 0) {
+            setShoppingList(shoppingList);
+            setShoppingListEditState(typelessShoppingList);
+        }
+        else {
+            setShoppingList([{ name: 'No items in list', quantity: 0 }]);
+            setShoppingListEditState([{ name: 'No items in list', quantity: 0 }]);
+        }
     }
 
     const { loading, error, data, refetch } = useQuery(QUERY_USER, {
@@ -34,12 +42,15 @@ const List = () => {
 
     useEffect(() => {
         if (loading) {
-            console.log('Loading...');
+            setLoadingState(true);
         }
         if (error) {
+            setErr('Error loading shopping list.');
             console.log(error);
         }
         if (!loading && !error && data && shoppingListEditState.length === 0) {
+            setErr('');
+            setLoadingState(false);
             setStates(data);
         }
     }, [loading, error, data, shoppingListEditState]);
@@ -66,8 +77,11 @@ const List = () => {
             const updatedData = refetchedData.data;
             if (updatedData) {
                 setStates(updatedData);
+                setErr('');
+                setLoadingState(false);
             }
         } catch (err) {
+            setErr('Error refetching shopping list.');
             console.error(err);
         }
     }
@@ -78,6 +92,11 @@ const List = () => {
             setShoppingListEditState([]);
         }
         setEditing(!editing);
+    };
+
+    const toggleRemove = (e) => {
+        e.preventDefault();
+        setRemoving(!removing);
     };
 
     const handleItemChange = (event, index) => {
@@ -105,6 +124,7 @@ const List = () => {
 
     const updateShoppingListHandler = async (event) => {
         event.preventDefault();
+        setLoadingState(true);
         try {
             const { data } = await updateUserList({
                 variables: { userId: id, shoppingList: shoppingListEditState },
@@ -113,21 +133,25 @@ const List = () => {
                 refetchHandler();
                 setErr('');
                 toggleEdit(event)
+                setLoadingState(false);
             }
         } catch (err) {
-            setErr('Error updating shopping list; please fill out all fields and try again.');
+            setErr('Error updating shopping list; try again.');
             console.error(err);
         }
     }
 
     const removeAllItems = async (event) => {
         event.preventDefault();
+        setLoadingState(true);
         try {
             const { data } = await updateUserList({
                 variables: { userId: id, shoppingList: [] },
             });
             if (data) {
                 refetchHandler();
+                setErr('');
+                setRemoving(false);
             }
         } catch (err) {
             setErr('Error removing all items from shopping list.');
@@ -138,6 +162,12 @@ const List = () => {
     return (
         <div className="fade-in list-page col-12 d-flex flex-column align-items-center">
             <div className="body-bg"></div>
+            {loadingState &&
+                <div className="d-flex justify-content-center align-items-center my-1">
+                    <div className="spinner-border" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                    </div>
+                </div>}
             <div className={`bg-yellow list-card col-xxl-5 col-xl-6 col-lg-7 col-md-8 col-sm-10 col-11 d-flex flex-column align-items-center justify-content-between ${fixedList ? 'list-container-fixed' : 'list-container-absolute'}`}>
                 <h1 className="mt-1 text-blue text-center bubblegum border-bottom-blue col-8">My Shopping List</h1>
                 {err && <div className="alert alert-danger">{err}</div>}
@@ -146,10 +176,10 @@ const List = () => {
                         <div className="d-flex flex-wrap justify-content-center">
                             {shoppingListEditState.map((ingredient, index) =>
                                 <div key={index} className="col-12 d-flex mb-1">
-                                    <input type="text" className="col-9 fs-4" name="name" placeholder="Item Name" value={ingredient.name} onChange={(e) => handleItemChange(e, index)} />
+                                    <input type="text" className="col-8 fs-4" name="name" placeholder="Item Name" value={ingredient.name} onChange={(e) => handleItemChange(e, index)} />
                                     <input type="number" className="col-2 fs-4" name="quantity" placeholder="Qty." value={ingredient.quantity} onChange={(e) => handleItemChange(e, index)} />
                                     <div className="col-1 d-flex justify-content-center align-items-center">
-                                        <button type='button' className="btn btn-danger" onClick={() => removeItem(index)}>X</button>
+                                        <button type='button' className="btn btn-danger ms-3" onClick={() => removeItem(index)}>X</button>
                                     </div>
                                 </div>
                             )}
@@ -167,17 +197,28 @@ const List = () => {
                         )
                     )}
                 </div>
-                {editing ? (
+                {removing || editing ? (
                     <div className="my-3">
-                        <button type="button" className="btn btn-success" onClick={updateShoppingListHandler}>Save changes</button>
-                        <button type="button" className="btn btn-secondary mx-1" onClick={toggleEdit}>Cancel</button>
+                        {editing ? (
+                            <div>
+                                <button type="button" className="btn btn-success" onClick={updateShoppingListHandler}>Save changes</button>
+                                <button type="button" className="btn btn-secondary mx-1" onClick={toggleEdit}>Cancel</button>
+                            </div>
+                        ) : (
+                            <div>
+                                <button type="button" className="btn btn-danger  mx-1" onClick={removeAllItems}>Clear All Items?</button>
+                                <button type="button" className="btn btn-secondary" onClick={toggleRemove}>Cancel</button>
+                            </div>
+                        )}
                     </div>
                 ) : (
                     <div className="my-3">
                         <button type="button" className="btn btn-primary" onClick={toggleEdit}>Edit List</button>
-                        <button type="button" className="btn btn-danger mx-1" onClick={removeAllItems}>Remove All Items</button>
+                        <button type="button" className="btn btn-danger mx-1" onClick={toggleRemove}>Clear List</button>
                     </div>
                 )}
+
+
             </div>
         </div>
     );
