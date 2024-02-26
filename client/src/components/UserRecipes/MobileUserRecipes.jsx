@@ -33,7 +33,7 @@ const MobileUserRecipes = ({ id, myRecipes, editing, removing, shoppingListEditS
 
                 <div className='d-flex flex-wrap col-12 justify-content-center'>
                     {myRecipes.map((recipe) => (
-                        <RecipeCard recipe={recipe} refetch={refetchHandler} userId={id} setLoadingState={setLoadingState} setErrorState={setErrorState} />
+                        <RecipeCard key={recipe._id} recipe={recipe} refetch={refetchHandler} userId={id} setLoadingState={setLoadingState} setErrorState={setErrorState} />
                     ))}
                 </div>
             </div>
