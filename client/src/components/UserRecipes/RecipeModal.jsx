@@ -209,18 +209,17 @@ const RecipeModal = ({ recipe, refetch, userId, setLoadingState, setErrorState }
                                 <div className="modal-body d-flex flex-column align-items-center">
                                     <form className="d-flex flex-column align-items-center">
                                         <h2 className="col-12 text-center">Edit Recipe:</h2>
-                                        <div className="col-12 d-flex justify-content-center">
-                                            <h3 className="col-4 text-center text-decoration-underline">Ingredients</h3>
+                                        <div className="col-12 d-flex align-items-center">
+                                            <h3 className="col-4 text-center text-decoration-underline">{isMobile ? 'Ing.' : 'Ingredient'}</h3>
                                             <h3 className="col-2 text-center text-decoration-underline">Qty.</h3>
                                             <h3 className="col-3 text-center text-decoration-underline">Unit</h3>
-                                            <div className="col-1"></div>
                                         </div>
                                         {editFormIngedientsState.map((ingredient, index) => (
-                                            <div key={index} className="col-12 d-flex justify-content-center my-1">
+                                            <div key={index} className="col-12 d-flex my-1">
                                                 <input type="text" className="col-4" name="name" placeholder="Ingredient Name" value={ingredient.name} onChange={(e) => handleIngredientChange(e, index)} />
                                                 <input type="text" className="col-2" name="quantity" placeholder="Quantity" value={ingredient.quantity} onChange={(e) => handleIngredientChange(e, index)} onInput={(e) => { e.target.value = e.target.value.replace(/[^0-9/. ]/g, ''); }} />
                                                 <input type="text" className="col-3" name="unit" placeholder="Units e.g. cups, tbsp" value={ingredient.unit} onChange={(e) => handleIngredientChange(e, index)} />
-                                                <button type='button' className="col-1 btn btn-sm btn-danger mx-1" onClick={() => removeIngredient(index)}>X</button>
+                                                <button type='button' className="col-2 btn btn-sm btn-danger mx-1" onClick={() => removeIngredient(index)}>X</button>
                                             </div>
                                         ))}
                                         <button type='button' className="btn btn-primary my-1" onClick={increaseIngredientNumber}>+ Ingredient</button>
@@ -244,19 +243,19 @@ const RecipeModal = ({ recipe, refetch, userId, setLoadingState, setErrorState }
                                 <div className="modal-body d-flex flex-column align-items-center">
                                     <form className="d-flex col-12 flex-column align-items-center">
                                         <h2 className="col-12 text-center">Add Ingredients to Grocery List:</h2>
-                                        <div className="col-11 d-flex">
-                                            <h3 className="col-4 text-center text-decoration-underline">Ingredients</h3>
-                                            <h3 className="col-3 text-center text-decoration-underline">Needed</h3>
-                                            <h3 className="col-1 text-center text-decoration-underline">Qty.</h3>
+                                        <div className="col-12 d-flex">
+                                            <h3 className="col-4 text-center text-decoration-underline">{isMobile ? 'Ing.' : 'Ingredient'}</h3>
+                                            <h3 className="col-4 text-center text-decoration-underline">Needed</h3>
+                                            <h3 className="col-2 text-center text-decoration-underline">Qty.</h3>
                                         </div>
                                         <div>
                                         </div>
                                         {addingFormIngedientsState.map((ingredient, index) => (
-                                            <div key={index} className="col-11 d-flex align-items-center my-1">
+                                            <div key={index} className="col-12 d-flex align-items-center my-1">
                                                 <input type="text" className="col-4" name="name" value={ingredient.name} onChange={(e) => handleIngredientChange(e, index)} />
-                                                <p className="col-3 my-1 text-center">{ingredient.amount}</p>
-                                                <input type="number" className="col-1" name="quantity" value={ingredient.quantity} onChange={(e) => handleIngredientChange(e, index)} />
-                                                <button type='button' className="btn btn-danger mx-1 col-4" onClick={() => removeIngredient(index)}>Already Have It</button>
+                                                <p className="col-4 my-1 text-center">{ingredient.amount}</p>
+                                                <input type="number" className="col-2" name="quantity" value={ingredient.quantity} onChange={(e) => handleIngredientChange(e, index)} />
+                                                <button type='button' className="btn btn-danger mx-1 py-1 col-2 text-center" onClick={() => removeIngredient(index)}>X</button>
                                             </div>
                                         ))}
                                     </form>
@@ -305,11 +304,11 @@ const RecipeModal = ({ recipe, refetch, userId, setLoadingState, setErrorState }
                                 <button type="button" className="btn btn-secondary" onClick={toggleDelete}>Cancel</button>
                             </div>
                         ) : (
-                            <div className="modal-footer">
-                                <button type="button" className="btn btn-success" onClick={toggleAddingToList}>Add to List</button>
-                                <button type="button" className="btn btn-primary" onClick={toggleEdit}>Edit Recipe</button>
-                                <button type="button" className="btn btn-danger" onClick={toggleDelete}>Delete Recipe</button>
-                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <div className={`modal-footer ${isMobile && 'd-flex flex-wrap justify-content-evenly'}`}>
+                                <button type="button" className={`btn btn-success ${isMobile && 'col-5'}`} onClick={toggleAddingToList}>Add to List</button>
+                                <button type="button" className={`btn btn-primary ${isMobile && 'col-5'}`} onClick={toggleEdit}>Edit Recipe</button>
+                                <button type="button" className={`btn btn-danger ${isMobile && 'col-5'}`} onClick={toggleDelete}>Delete Recipe</button>
+                                <button type="button" className={`btn btn-secondary ${isMobile && 'col-5'}`} data-bs-dismiss="modal">Close</button>
                             </div>
                         )}
                     </div>
