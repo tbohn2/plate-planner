@@ -4,8 +4,7 @@ import { ADD_ITEMS_TO_LIST, UPDATE_RECIPE, DELETE_RECIPE } from '../../utils/mut
 import '../../styles/root.css';
 import '../../styles/UserRecipes/recipeModal.css';
 
-// Make mobile look good
-const RecipeModal = ({ recipe, refetch, userId }) => {
+const RecipeModal = ({ recipe, refetch, userId, setLoadingState, setErrorState }) => {
 
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
@@ -35,7 +34,9 @@ const RecipeModal = ({ recipe, refetch, userId }) => {
 
     const [editing, setEditing] = useState(false);
     const [addingToList, setAddingToList] = useState(false);
+    const [updating, setUpdating] = useState(false);
     const [deleting, setDeleting] = useState(false);
+    const [modalError, setModalError] = useState('');
     const [editFormNameState, setEditFormNameState] = useState(name);
     const [editFormInstructionsState, setEditFormInstructionsState] = useState(instructions);
     const [editFormIngedientsState, setEditFormIngredientsState] = useState(typelessIngredients);
@@ -116,11 +117,12 @@ const RecipeModal = ({ recipe, refetch, userId }) => {
     };
 
     const addItemsToListHandler = async (event) => {
+        event.preventDefault();
+        setLoadingState(true);
         const itemsToAdd = addingFormIngedientsState.map(ingredient => {
             return { name: ingredient.name, quantity: ingredient.quantity }
         });
 
-        event.preventDefault();
         try {
             const { data } = await addItemsToList({
                 variables: { userId: userId, items: itemsToAdd },
@@ -128,18 +130,20 @@ const RecipeModal = ({ recipe, refetch, userId }) => {
             if (data) {
                 toggleAddingToList(event);
                 refetch();
+                setLoadingState(false);
             }
         } catch (err) {
+            setErrorState('Error adding items to list');
             console.error(err);
         }
     }
 
     const updateRecipeHandler = async (event) => {
         event.preventDefault();
+        setUpdating(true);
         const updatedIngredients = editFormIngedientsState.map(ingredient => {
             return { name: ingredient.name, amount: `${ingredient.quantity} ${ingredient.unit}` }
         });
-        console.log(name, editFormNameState, updatedIngredients, editFormIngedientsState, _id)
         try {
             const { data } = await updateRecipe({
                 variables: {
@@ -152,28 +156,48 @@ const RecipeModal = ({ recipe, refetch, userId }) => {
             if (data) {
                 toggleEdit(event);
                 refetch();
+                setUpdating(false);
             }
         }
         catch (err) {
+            setModalError('Error updating recipe');
             console.error(err);
         }
     };
 
     const removeRecipe = async (event) => {
         event.preventDefault();
+        setDeleting(false);
+        setLoadingState(true);
         try {
             const { data } = await deleteRecipe({
                 variables: { recipeId: _id },
             });
-            if (data) { refetch(); }
+            if (data) {
+                refetch();
+                setLoadingState(false);
+            }
         } catch (err) {
+            setErrorState('Error deleting recipe');
             console.error(err);
         }
     };
 
     return (
         <div className="modal-dialog modal-lg">
-            <div className="modal-content bg-light-yellow">
+            <div className="modal-content">
+                {updating &&
+                    <div className="d-flex justify-content-center align-items-center m-5">
+                        <div className="spinner-border" role="status">
+                            <span className="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                }
+                {modalError &&
+                    <div className="alert alert-danger" role="alert">
+                        {modalError}
+                    </div>
+                }
                 {editing || addingToList ? (
                     <div>
                         {editing ? (
@@ -255,8 +279,8 @@ const RecipeModal = ({ recipe, refetch, userId }) => {
                                 {img ? (<img className={isMobile ? "img max-img-height col-10 m-1" : "img max-img-height col-5 m-1"} src={img} alt={name} />) : (null)}
                                 <div className={isMobile ? "col-10 m-1" : "col-6 m-1"} >
                                     <h2 className="col-12 text-center text-decoration-underline">Ingredients</h2>
-                                    {ingredients.map((ingredient) => (
-                                        <div key={ingredient._id} className="col-12 d-flex justify-content-between border-dark border">
+                                    {ingredients.map((ingredient, index) => (
+                                        <div key={index} className="col-12 d-flex justify-content-between border-dark border">
                                             <p className="m-1">{ingredient.name}</p>
                                             <p className="m-1">{ingredient.amount}</p>
                                         </div>

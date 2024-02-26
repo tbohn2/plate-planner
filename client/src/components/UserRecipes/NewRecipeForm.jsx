@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useMutation } from '@apollo/client';
 import { CREATE_RECIPE, SAVE_RECIPE_TO_USER } from '../../utils/mutations';
 
-const NewRecipeForm = ({ id, refetch }) => {
+const NewRecipeForm = ({ id, refetch, setLoadingState, setErrorState }) => {
 
     const [createRecipe] = useMutation(CREATE_RECIPE);
     const [saveRecipeToUser] = useMutation(SAVE_RECIPE_TO_USER);
@@ -52,6 +52,7 @@ const NewRecipeForm = ({ id, refetch }) => {
 
     const handleNewRecipe = async (e) => {
         e.preventDefault();
+        setLoadingState(true);
         const newIngredients = ingredientsState.map(ingredient => {
             const amount = `${ingredient.quantity} ${ingredient.unit}`;
             return { name: ingredient.name, amount: amount };
@@ -77,8 +78,11 @@ const NewRecipeForm = ({ id, refetch }) => {
                 setnewRecipeNameState('');
                 setIngredientsState([{ name: '', quantity: '', unit: '' }]);
                 refetch();
+                setLoadingState(false);
             }
         } catch (err) {
+            setErrorState('Error creating recipe. Please try again.'
+            )
             console.error(err);
         }
     }

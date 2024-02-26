@@ -203,18 +203,13 @@ const UserRecipes = () => {
         }
     }
 
-
     return (
         <div>
             <div className='body-bg'></div>
             {loadingState &&
-                <div>
-                    <h1 className='col-12 text-center fst-italic'>Welcome!</h1>
-                    <h2 className='col-12 text-center fst-italic'>Loading Data</h2>
-                    <div className="d-flex justify-content-center align-items-center m-5">
-                        <div className="spinner-border" role="status">
-                            <span className="visually-hidden">Loading...</span>
-                        </div>
+                <div className="d-flex justify-content-center align-items-center m-5">
+                    <div className="spinner-border" role="status">
+                        <span className="visually-hidden">Loading...</span>
                     </div>
                 </div>
             }
@@ -239,6 +234,7 @@ const UserRecipes = () => {
                     removeAllItems={removeAllItems}
                     toggleEdit={toggleEdit}
                     toggleRemove={toggleRemove}
+                    setErrorState={setErrorState}
                 />
             ) : (
                 <div className='myRecipes d-flex fade-in mt-3'>
@@ -259,12 +255,12 @@ const UserRecipes = () => {
                             Create New Recipe
                         </button>
                         <div className="modal fade" id="NewRecipeModal" tabIndex="-1" aria-labelledby="NewRecipeModalLabel" aria-hidden="true">
-                            <NewRecipeForm id={id} refetch={refetchHandler} />
+                            <NewRecipeForm id={id} refetch={refetchHandler} loadingState={loadingState} setLoadingState={setLoadingState} setErrorState={setErrorState} />
                         </div>
 
                         <div className='d-flex flex-wrap col-12 justify-content-center'>
                             {myRecipes.map((recipe) => (
-                                <RecipeCard recipe={recipe} refetch={refetchHandler} userId={id} />
+                                <RecipeCard key={recipe._id} recipe={recipe} refetch={refetchHandler} userId={id} setLoadingState={setLoadingState} setErrorState={setErrorState} />
                             ))}
                         </div>
                     </div>

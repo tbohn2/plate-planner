@@ -4,7 +4,7 @@ import '../../styles/root.css';
 import '../../styles/UserRecipes/recipeCard.css';
 import placholderImg from '../../assets/placeholder.jpg';
 
-const RecipeCard = ({ recipe, refetch, userId }) => {
+const RecipeCard = ({ recipe, refetch, userId, setLoadingState, setErrorState }) => {
 
     const [loaded, setLoaded] = useState(false);
     const img = recipe.img ? recipe.img : placholderImg;
@@ -17,7 +17,7 @@ const RecipeCard = ({ recipe, refetch, userId }) => {
             </div>
 
             <div className="modal fade" id={`RecipeModal-${recipe._id}`} tabIndex="-1" aria-labelledby={`RecipeModalLabel-${recipe._id}`} aria-hidden="true">
-                <RecipeModal recipe={recipe} refetch={refetch} userId={userId} />
+                <RecipeModal recipe={recipe} refetch={refetch} userId={userId} setLoadingState={setLoadingState} setErrorState={setErrorState} />
             </div>
         </div>
     )
