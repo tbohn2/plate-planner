@@ -42,6 +42,7 @@ const Search = () => {
             const data = await res.json();
             if (data) {
                 setRecipes(data.meals);
+                setFetching(false);
             }
 
         } catch (error) {
@@ -68,6 +69,7 @@ const Search = () => {
             const data = await response.json();
             if (data) {
                 setRecipes(data.meals);
+                setFetching(false);
             }
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -132,7 +134,7 @@ const Search = () => {
                 <div className="d-flex flex-wrap justify-content-evenly fade-in">
                     {recipes.map((recipe) => {
                         return (
-                            <SearchCard key={recipe.idMeal} recipe={recipe} refetch={refetchData} setFetching={setFetching} />
+                            <SearchCard key={recipe.idMeal} recipe={recipe} refetch={refetchData} />
                         );
                     })}
                 </div>

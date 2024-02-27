@@ -5,7 +5,7 @@ import Auth from "../../utils/auth";
 import "../../styles/root.css";
 import "../../styles/search.css";
 
-const SearchCard = ({ recipe, refetch, setFetching }) => {
+const SearchCard = ({ recipe, refetch }) => {
     const user = Auth.getProfile();
     const id = user.data._id;
 
@@ -79,7 +79,7 @@ const SearchCard = ({ recipe, refetch, setFetching }) => {
     }
 
     return (
-        <div key={recipe.idMeal} className={`card my-3 col-lg-5 col-md-9 col-10 d-flex flex-column align-items-center justify-content-between border border-dark ${loaded ? 'fade-in' : 'visually-hidden'}`}>
+        <div key={recipe.idMeal} className='card fade-in my-3 col-lg-5 col-md-9 col-10 d-flex flex-column align-items-center justify-content-between border border-dark'>
             <a href={URL} className="col-12 text-center fs-1 text-decoration-none link-dark">{name}</a>
             <div className={`col-12 d-flex flex-wrap ${isMobile ? 'flex-column flex-column-reverse align-items-center' : ''}`}>
                 <div className="col-md-5 col-10 d-flex flex-column align-items-center">
@@ -92,8 +92,13 @@ const SearchCard = ({ recipe, refetch, setFetching }) => {
                         })}
                     </ul>
                 </div>
-                {!loaded && <img className="img col-md-6 col-8" src={img} alt={name} onLoad={() => { setLoaded(true); setFetching(false) }} />}
-                <img className="img col-md-6 col-8" src={img} alt={name} onLoad={() => { setLoaded(true); setFetching(false) }} />
+                <img className={`img col-md-6 col-8 ${loaded ? 'fade-in' : 'visually-hidden'}`} src={img} alt={name} onLoad={() => { setLoaded(true) }} />
+                {!loaded &&
+                    <div className="d-flex justify-content-center align-items-center m-5">
+                        <div className="spinner-border spinner-border-sm" role="status">
+                            <span className="visually-hidden">Loading...</span>
+                        </div>
+                    </div>}
             </div>
             <div className="d-flex flex-column align-items-center m-1">
                 <h2 className="col-12 text-center">Instructions</h2>
