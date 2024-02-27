@@ -87,11 +87,12 @@ const SearchCard = ({ recipe, refetch, setFetching }) => {
                     <ul>
                         {ingredients.map((ingredient) => {
                             return (
-                                <li key={ingredient.name + ingredient.amount}>{ingredient.name} - {ingredient.amount}</li>
+                                <li key={ingredient.name + ingredient.amount}>{ingredient.name} {ingredient.amount && `- ${ingredient.amount}`}</li>
                             );
                         })}
                     </ul>
                 </div>
+                {!loaded && <img className="img col-md-6 col-8" src={img} alt={name} onLoad={() => { setLoaded(true); setFetching(false) }} />}
                 <img className="img col-md-6 col-8" src={img} alt={name} onLoad={() => { setLoaded(true); setFetching(false) }} />
             </div>
             <div className="d-flex flex-column align-items-center m-1">
