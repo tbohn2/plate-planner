@@ -198,7 +198,7 @@ const List = () => {
                     )}
                 </div>
                 {removing || editing ? (
-                    <div className="my-3">
+                    <div className="my-1">
                         {editing ? (
                             <div>
                                 <button type="button" className="btn btn-success" onClick={updateShoppingListHandler}>Save changes</button>
@@ -212,13 +212,11 @@ const List = () => {
                         )}
                     </div>
                 ) : (
-                    <div className="my-3">
+                    <div className="my-1">
                         <button type="button" className="btn btn-primary" onClick={toggleEdit}>Edit List</button>
                         <button type="button" className="btn btn-danger mx-1" onClick={toggleRemove}>Clear List</button>
                     </div>
                 )}
-
-
             </div>
         </div>
     );

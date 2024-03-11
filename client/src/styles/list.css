@@ -2,12 +2,13 @@
     border: 1px solid var(--blue);
     border-radius: 15px;
     max-height: 82vh;
+    position: relative;
 }
 
 .main-shopping-list {
     overflow-y: auto !important;
     position: relative !important;
-    max-height: 70vh !important;
+    max-height: 65vh !important;
 }
 
 .main-shopping-list::-webkit-scrollbar {
