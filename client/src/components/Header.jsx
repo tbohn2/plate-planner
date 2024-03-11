@@ -26,7 +26,7 @@ const Header = ({ loggedIn, handleLogout }) => {
                     <header className='d-flex justify-content-center my-header'>
                         <Link to='/'><img src={logo1} alt='logo1' className='header-logo' /></Link>
                         <div className="btn-group position-absolute top-0 end-0">
-                            <button type="button" className="mobile-nav-btn z-0 noTextDec fs-1 border border-light text-light d-flex justify-content-center align-items-center" data-bs-toggle="dropdown" aria-expanded="false">
+                            <button type="button" className="mobile-nav-btn z-0 noTextDec d-flex justify-content-center align-items-center" data-bs-toggle="dropdown" aria-expanded="false">
                                 ☰
                             </button>
                             <ul className="dropdown-menu bg-w">

@@ -54,11 +54,13 @@
 }
 
 .mobile-nav-btn {
-    background-color: var(--green);
-    height: 50px;
-    width: 50px;
+    color: var(--green);
+    background-color: var(--white);
+    font-size: 40px;
+    font-weight: bold;
+    border: none;
     border-radius: 7px;
-    margin: 10px;
+    margin: 10px 20px;
 }
 
 .dropdown-item {
@@ -98,9 +100,7 @@
 
 @media screen and (max-width: 450px) {
     .mobile-nav-btn {
-        height: 40px;
-        width: 40px;
-        border-radius: 7px;
         margin: 5px;
+        font-size: 32px;
     }
 }
