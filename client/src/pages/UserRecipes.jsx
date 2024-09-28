@@ -206,7 +206,6 @@ const UserRecipes = () => {
 
     return (
         <div>
-            <div className='body-bg'></div>
             {loadingState &&
                 <div className="d-flex justify-content-center align-items-center m-5">
                     <div className="spinner-border" role="status">
@@ -240,7 +239,7 @@ const UserRecipes = () => {
                 />
             ) : (
                 <div className='myRecipes d-flex fade-in mt-3'>
-                    <div className='col-lg-9 col-8 d-flex flex-column align-items-center myBody'>
+                    <div className='col-lg-9 col-8 d-flex flex-column align-items-center'>
                         <h1 className='border-bottom-blue bubblegum col-3 text-center'>My Recipes</h1>
                         <div className='col-3'>
                             <input

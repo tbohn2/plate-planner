@@ -20,12 +20,12 @@ const Header = ({ loggedIn, handleLogout }) => {
     }, []);
 
     return (
-        <div className='fade-in my-1'>
+        <div className='bg-w fade-in'>
             {isMobile ?
                 (
                     <header className='d-flex justify-content-center my-header'>
                         <Link to='/'><img src={logo1} alt='logo1' className='header-logo' /></Link>
-                        <div className="btn-group position-absolute top-0 end-0">
+                        <div id='nav-btn-group' className="btn-group">
                             <button type="button" className="mobile-nav-btn z-0 noTextDec d-flex justify-content-center align-items-center" data-bs-toggle="dropdown" aria-expanded="false">
                                 ☰
                             </button>
@@ -46,14 +46,14 @@ const Header = ({ loggedIn, handleLogout }) => {
                 (
                     <header className='d-flex justify-content-between py-1 my-header'>
                         <Link to='/'><img src={logo1} alt='logo1' className='header-logo' /></Link>
-                        <nav className='d-flex align-items-center justify-content-evenly col-xxl-6 col-xl-7 col-lg-7 col-8'>
-                            <Link className='text-decoration-none navBtn px-1 mx-1 text-center' to='/myRecipes'>My Recipes</Link>
-                            <Link className='text-decoration-none navBtn px-1 mx-1 text-center' to='/list'>My List</Link>
-                            <Link className='text-decoration-none navBtn px-1 mx-1 text-center' to='/search'>Browse Recipes</Link>
+                        <nav className='d-flex align-items-center justify-content-evenly col-7'>
+                            <Link className='navBtn' to='/myRecipes'>My Recipes</Link>
+                            <Link className='navBtn' to='/list'>My List</Link>
+                            <Link className='navBtn' to='/search'>Browse Recipes</Link>
                             {loggedIn ? (
-                                <Link className='text-decoration-none loginBtn px-1 mx-1' onClick={handleLogout}>Logout</Link>
+                                <Link className='loginBtn' onClick={handleLogout}>Logout</Link>
                             ) : (
-                                <Link className='text-decoration-none loginBtn px-1 mx-1' to='/login'>Login</Link>
+                                <Link className='loginBtn' to='/login'>Login</Link>
                             )}
                         </nav>
                     </header>

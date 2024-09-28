@@ -31,6 +31,18 @@ const client = new ApolloClient({
 function App() {
   const [loggedIn, setLoggedIn] = useState(Auth.loggedIn());
 
+  function updateGradientAngle() {
+    const vh = window.innerHeight * 0.84;
+    const vw = window.innerWidth;
+    const angle = 180 - Math.atan(vh / vw) * (180 / Math.PI);
+
+    document.documentElement.style.setProperty('--dynamic-angle', `${angle}deg`);
+  }
+
+  window.addEventListener('resize', updateGradientAngle);
+  updateGradientAngle();
+
+
   const handleLogin = () => {
     setLoggedIn(true);
   }
@@ -44,9 +56,8 @@ function App() {
     <ApolloProvider client={client}>
       <Router basename='/plate-planner'>
         <div className='myBody'>
-          <div className='app-bg'></div>
           <Header loggedIn={loggedIn} handleLogout={handleLogout} />
-          <div className='overflow-x-hidden'>
+          <div id='main-content' className='overflow-x-hidden'>
             <Routes>
               <Route exact path='/' element={<Home />} />
               <Route exact path='/list' element={loggedIn ? <List /> : <Navigate to="/login" replace />} />

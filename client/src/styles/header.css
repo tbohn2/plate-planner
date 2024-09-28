@@ -6,7 +6,11 @@
 }
 
 .my-header nav a {
-    font-size: 32px;
+    font-size: 28px;
+    margin: 0px 0px;
+    padding: 5px 7px;
+    text-decoration: none;
+    text-align: center;
 }
 
 .header-logo {
@@ -23,9 +27,9 @@
 }
 
 .navBtn:hover {
-    color: white;
+    color: var(--blue);
     background-color: var(--yellow);
-    box-shadow: 0 0 10px var(--yellow);
+    box-shadow: 0 0 10px var(--blue);
 }
 
 .navBtn,
@@ -36,7 +40,7 @@
 }
 
 .loginBtn {
-    color: white;
+    color: var(--white);
     background-color: var(--green);
     border-radius: 7px;
     text-align: center;
@@ -53,14 +57,20 @@
     transition: box-shadow 0.2s ease-in-out;
 }
 
+#nav-btn-group {
+    position: absolute;
+    right: 7vw;
+    top: 15px;
+    width: 35px;
+}
+
 .mobile-nav-btn {
-    color: var(--green);
-    background-color: var(--white);
-    font-size: 40px;
+    width: 35px;
+    color: var(--blue);
+    background: none;
+    font-size: 35px;
     font-weight: bold;
     border: none;
-    border-radius: 7px;
-    margin: 10px 20px;
 }
 
 .dropdown-item {
@@ -74,13 +84,12 @@
 
 @media screen and (max-width: 1200px) {
     .my-header nav a {
-        font-size: 27px;
+        font-size: 23.5px;
     }
 
     .header-logo {
-        margin-left: 15px;
+        margin-left: 5px;
     }
-
 }
 
 @media screen and (max-width: 992px) {
@@ -89,7 +98,7 @@
     }
 
     .my-header nav a {
-        font-size: 22px;
+        font-size: 18px;
     }
 
     .header-logo {
@@ -98,9 +107,10 @@
     }
 }
 
-@media screen and (max-width: 450px) {
-    .mobile-nav-btn {
-        margin: 5px;
-        font-size: 32px;
+@media screen and (max-width: 768px) {
+    .header-logo {
+        height: auto;
+        width: 250px;
+        margin-left: 0px;
     }
 }

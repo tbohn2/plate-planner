@@ -1,12 +1,13 @@
 :root {
     --orange: #c85103;
-    --yellow: #e0cc57;
+    --yellow: #FAF3C0;
     --green: #229928;
     --brown: #8E735B;
     --blue: #05347e;
     --navy: #070974;
     --red: #eb2525;
     --white: #f6f6f6;
+    --dynamic-angle: 40deg;
 }
 
 @keyframes fade-in {
@@ -26,39 +27,17 @@
 .myBody {
     font-family: 'Lato', sans-serif;
     color: var(--navy);
+    background-color: var(--white);
 }
 
 .text-blue {
     color: var(--blue) !important;
 }
 
-.app-bg {
-    background-color: var(--white);
-    height: 100vh;
-    width: 100vw;
-    z-index: -2;
-    position: fixed;
-}
-
-.body-bg {
-    width: 100vw;
-    height: 84vh;
-    background-color: var(--white);
-    overflow: hidden;
-    position: fixed;
-    z-index: -1;
-}
-
-.body-bg::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 0;
-    width: 0;
-    border-left: 100vw solid transparent;
-    border-bottom: 84vh solid var(--blue);
-    z-index: -1;
+#main-content {
+    min-height: 84vh;
+    background-image: linear-gradient(var(--dynamic-angle), var(--white) 49.9%, var(--blue) 50%);
+    background-attachment: fixed;
 }
 
 .bubblegum {
@@ -168,10 +147,4 @@ input {
 
 .max-img-height {
     max-height: 300px;
-}
-
-@media screen and (max-width: 992px) {
-    .body-bg {
-        height: 88vh;
-    }
 }

@@ -74,7 +74,7 @@ const Login = ({ loggedIn, handleLogin }) => {
     };
 
     return (
-        <div className='fade-in loginPage'>
+        <div className='fade-in body-bg loginPage'>
             <div className='body-bg'></div>
             {loggedIn && <Navigate to='/myRecipes' />}
             {signingUp ? (
@@ -110,11 +110,11 @@ const Login = ({ loggedIn, handleLogin }) => {
                             onChange={updateForm}
                             required
                         />
-                        <button className='my-1 btn btn-success col-12' type='submit'>
-                            {loading ? <div className='spinner-border spinner-border-sm col-3' role='status'></div> : 'Log In'}
+                        <button className='my-1 fs-4 btn btn-success col-12' type='submit'>
+                            {loading ? <div className='spinner-border spinner-border-sm col-3' role='status'></div> : 'Sign Up'}
                         </button>
                     </form>
-                    <button className='my-1 btn btn-primary col-12' onClick={toggleSignup}>
+                    <button className='my-1 fs-4 btn btn-primary col-12' onClick={toggleSignup}>
                         Already have an account?
                     </button>
                 </div>
@@ -142,12 +142,12 @@ const Login = ({ loggedIn, handleLogin }) => {
                             onChange={updateForm}
                             required
                         />
-                        <button className='mt-3 fs-5 btn btn-success col-12' type='submit'>
+                        <button className='mt-3 fs-4 btn btn-success col-12' type='submit'>
                             {loading ? <div className='spinner-border spinner-border-sm col-3' role='status'></div> : 'Log In'}
                         </button>
                     </form>
-                    <button className='mt-3 fs-5 btn btn-primary col-12' onClick={toggleSignup}>
-                        Click here to create an account
+                    <button className='mt-3 fs-4 btn btn-primary col-12' onClick={toggleSignup}>
+                        Create an account
                     </button>
                 </div>
             )}

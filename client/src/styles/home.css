@@ -18,11 +18,8 @@
 }
 
 .intro-container {
-    position: absolute;
-    top: 20%;
-    left: 50%;
-    transform: translate(-50%, 0%);
-    height: 550px;
+    min-height: 84vh;
+    background-image: linear-gradient(var(--dynamic-angle), var(--white)49.9%, var(--blue) 50%);
 }
 
 .circleImg {
