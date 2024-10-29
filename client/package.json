@@ -3,7 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "homepage": "https://tbohn2.github.io/plate-planner",
+  "homepage": "https://plate-planner.com",
   "scripts": {
     "deploy": "gh-pages -d dist",
     "dev": "vite",
