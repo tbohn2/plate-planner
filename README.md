@@ -2,7 +2,7 @@
 
 Plate Planner is a web application designed to streamline meal planning and grocery shopping. Built with a modern stack, it integrates the MERN stack (MongoDB, Express, React, Node.js) with GraphQL for flexible data querying and Vite for a fast and efficient development experience.
 
-Click [here](https://tbohn2.github.io/plate-planner/) to visit.
+Click [here](https://plate-planner.com) to visit.
 
 ## Description
 
