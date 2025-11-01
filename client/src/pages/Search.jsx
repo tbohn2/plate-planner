@@ -38,7 +38,7 @@ const Search = () => {
         }
         setFetching(true);
         try {
-            const res = await fetch('https://hidden-atoll-84159-73053ccb91cd.herokuapp.com/api/random')
+            const res = await fetch('/api/random')
             const data = await res.json();
             if (data) {
                 setRecipes(data.meals);
@@ -59,7 +59,7 @@ const Search = () => {
         }
         setFetching(true);
         try {
-            const response = await fetch(`https://hidden-atoll-84159-73053ccb91cd.herokuapp.com/api/searchByName?name=${searchName}&category=${category}`, {
+            const response = await fetch(`/api/searchByName?name=${searchName}&category=${category}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',

@@ -10,7 +10,7 @@ import './styles/root.css'
 
 const httpLink = createHttpLink({
   // uri: 'http://localhost:3001/graphql', // for development
-  uri: 'https://plate-planner-czqw.onrender.com/graphql',
+  uri: '/graphql',
 });
 
 const authLink = setContext((_, { headers }) => {
