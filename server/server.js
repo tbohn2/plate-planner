@@ -1,6 +1,7 @@
 const express = require('express');
 const { ApolloServer } = require('apollo-server-express');
 const path = require('path');
+const fs = require('fs');
 const { authMiddleware } = require('./utils/auth');
 
 const { typeDefs, resolvers } = require('./schemas');
@@ -35,18 +36,38 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(mealDBRoutes);
 
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '../client/dist')));
+const staticPath = path.join(__dirname, '../client/dist');
+if (fs.existsSync(staticPath)) {
+  app.use(express.static(staticPath));
+  console.log(`✓ Serving static files from ${staticPath}`);
+} else {
+  console.error(`ERROR: Static files directory not found at ${staticPath}`);
 }
 
 const startApolloServer = async () => {
   await server.start();
   server.applyMiddleware({ app });
 
-  // Catch-all handler for React Router
-  if (process.env.NODE_ENV === 'production') {
+
+  const distPath = path.join(__dirname, '../client/dist');
+  const indexPath = path.join(distPath, 'index.html');
+
+  console.log(`✓ Serving static files from ${distPath}`);
+
+  // Verify dist folder exists
+  if (!fs.existsSync(distPath)) {
+    console.error(`ERROR: dist folder not found at ${distPath}`);
+    console.error(`Current __dirname: ${__dirname}`);
+    console.error(`Resolved absolute path: ${path.resolve(distPath)}`);
+
     app.get('*', (req, res) => {
-      res.sendFile(path.join(__dirname, '../client/dist/index.html'));
+      res.sendFile(indexPath, (err) => {
+        if (err) {
+          console.error(`Error sending index.html: ${err.message}`);
+          console.error(`Attempted path: ${indexPath}`);
+          res.status(500).send('Error loading application');
+        }
+      });
     });
   }
 
